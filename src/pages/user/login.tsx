@@ -4,12 +4,29 @@ import { Button, Col, Form, Icon, Input, message, Row } from 'antd'
 import { formatMessage, FormattedMessage } from 'umi-plugin-react/locale'
 import styles from './login.less'
 
-
 @Form.create()
 class Login extends PureComponent {
+  // state = {
+  //   emailSuffix: [],
+  // }
+
+  // handleChange = (value) => {
+  //   this.setState({
+  //     emailSuffix:
+  //       !value || value.indexOf('@') >= 0
+  //         ? []
+  //         : [`${value}@gmail.com`, `${value}@163.com`, `${value}@qq.com`, `${value}@live.cn`],
+  //   })
+  // }
+
   handleOk = (e) => {
     e.preventDefault()
     message.success('ok')
+    this.props.form.validateFields((err, values) => {
+      if (!err) {
+        console.log('Received values of form: ', values)
+      }
+    })
   }
 
   render() {
@@ -22,24 +39,42 @@ class Login extends PureComponent {
           <Fragment>
             <Form>
               <Form.Item>
-                <Input
-                  name="username"
-                  suffix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
-                  onPressEnter={this.handleOk}
-                  placeholder={formatMessage({id: 'user.login.username'})}
-                />
+                {getFieldDecorator('username', {
+                  rules: [
+                    {
+                      required: true,
+                      message: formatMessage({id: 'user.login.username.errorMessage'}),
+                    },
+                  ],
+                })(
+                  <Input
+                    name="username"
+                    suffix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
+                    onPressEnter={this.handleOk}
+                    placeholder={formatMessage({id: 'user.login.username'})}
+                  />,
+                )}
+
+                {/*邮箱后缀补全*/}
+                {/*<AutoComplete*/}
+                {/*  dataSource={this.state.emailSuffix}*/}
+                {/*  onChange={this.handleChange}*/}
+                {/*  placeholder={formatMessage({id: 'user.login.username'})}*/}
+                {/*/>*/}
               </Form.Item>
               <Form.Item>
                 {getFieldDecorator('password', {
                   rules: [
                     {
                       required: true,
-                      message: 'Please input your username!',
+                      message: formatMessage({id: 'user.login.password.errorMessage'}),
                     },
                   ],
                 })(
-                  <Input
+                  <Input.Password
                     type="password"
+                    autoComplete="false"
+                    allowClear
                     suffix={<Icon type="eye-invisible" style={{opacity: 0.5}}/>}
                     onPressEnter={this.handleOk}
                     placeholder={formatMessage({id: 'user.login.password'})}
