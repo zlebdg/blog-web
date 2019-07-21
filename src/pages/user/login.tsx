@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { Button, Col, Form, Icon, Input, message, Row } from 'antd'
 import { formatMessage, FormattedMessage } from 'umi-plugin-react/locale'
 import styles from './login.less'
+import { router } from 'umi'
 
 @Form.create()
 class Login extends PureComponent {
@@ -21,10 +22,13 @@ class Login extends PureComponent {
 
   handleOk = (e) => {
     e.preventDefault()
-    message.success('ok')
     this.props.form.validateFields((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values)
+        message.success('ok')
+
+        // 路由切换
+        router.push('/')
       }
     })
   }
