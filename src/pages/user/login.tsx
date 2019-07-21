@@ -3,9 +3,29 @@ import PropTypes from 'prop-types'
 import { Button, Col, Form, Icon, Input, message, Row } from 'antd'
 import { formatMessage, FormattedMessage } from 'umi-plugin-react/locale'
 import styles from './login.less'
-import { router } from 'umi'
+import { connect } from 'dva'
+
+const namespace = 'userLogin'
 
 @Form.create()
+@connect(
+  state => {
+    return {
+      username: state[namespace].username,
+      message: state[namespace].message,
+    }
+  },
+  dispatch => {
+    return {
+      userLogin: () => {
+        message.info('userLogin request')
+        dispatch({
+          type: namespace + '/userLogin',
+        })
+      },
+    }
+  },
+)
 class Login extends PureComponent {
   // state = {
   //   emailSuffix: [],
@@ -25,10 +45,19 @@ class Login extends PureComponent {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values)
-        message.success('ok')
+
+        // 原生fetch
+        // fetch('/api/currentUser').then(r => {
+        //   return r.text()
+        // }).then(text => {
+        //   message.success(text)
+        // })
 
         // 路由切换
-        router.push('/')
+        // router.push('/')
+
+        // umi request
+        this.props.userLogin()
       }
     })
   }
@@ -127,6 +156,7 @@ class Login extends PureComponent {
 }
 
 Login.propTypes = {
+  props: PropTypes.any,
   form: PropTypes.object,
   dispatch: PropTypes.func,
   loading: PropTypes.object,
