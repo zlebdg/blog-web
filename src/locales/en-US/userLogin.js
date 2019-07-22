@@ -6,4 +6,5 @@ export default {
   'user.login.Password': 'Password',
   'user.login.password': 'password',
   'user.login.password.errorMessage': 'please input your password',
+  'user.login.errorMessage': 'login failed',
 };
