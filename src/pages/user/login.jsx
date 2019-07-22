@@ -65,11 +65,12 @@ class Login extends PureComponent {
         userLogin2(values.username, values.password).then(resp => {
           // {"code":200,"message":"OK","data":{"authorities":[{"authority":"ROLE_test"}],"details":null,"authenticated":true,"principal":{"password":null,"username":"test","authorities":[{"authority":"ROLE_test"}],"accountNonExpired":true,"accountNonLocked":true,"credentialsNonExpired":true,"enabled":true},"credentials":null,"name":"test"}}
           console.log(resp);
-          if ('OK' === resp.message) {
+          if (200 === resp.code) {
             sessionStorage.setItem('CURRENT_USER', JSON.stringify(resp.data));
             router.push('/');
           } else {
-            message.error(formatMessage({ id: 'user.login.errorMessage' }));
+            // message.error(formatMessage({ id: 'user.login.errorMessage' }));
+            message.error(formatMessage({ id: resp.message }));
           }
         });
       }

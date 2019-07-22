@@ -9,7 +9,7 @@ export default async function userLogin2(username, password) {
   const formData = new FormData();
   formData.append('username', username);
   formData.append('password', password);
-  return fetch('http://dev.local:16000/test/login', {
+  return fetch('/test/login', {
     method: 'post',
     body: formData,
     headers: {

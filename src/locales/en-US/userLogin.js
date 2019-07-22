@@ -7,4 +7,5 @@ export default {
   'user.login.password': 'password',
   'user.login.password.errorMessage': 'please input your password',
   'user.login.errorMessage': 'login failed',
+  'Bad credentials': 'Bad credentials',
 };

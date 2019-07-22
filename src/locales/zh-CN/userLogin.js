@@ -7,4 +7,5 @@ export default {
   'user.login.Password': '密码',
   'user.login.password.errorMessage': '请输入你的密码',
   'user.login.errorMessage': '登录失败',
+  'Bad credentials': '密码不正确',
 };
