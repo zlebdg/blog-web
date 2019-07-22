@@ -152,7 +152,7 @@ export default {
     },
   },
   manifest: {
-    basePath: '/',
+    basePath: '/antd/',
   },
   chainWebpack: webpackPlugin,
   /*
