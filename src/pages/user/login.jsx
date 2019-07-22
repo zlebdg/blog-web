@@ -4,6 +4,7 @@ import { Button, Col, Form, Icon, Input, message, Row } from 'antd'
 import { formatMessage, FormattedMessage } from 'umi-plugin-react/locale'
 import styles from './login.less'
 import { connect } from 'dva'
+import userLogin2 from '../../services/userLogin'
 
 const namespace = 'userLogin'
 
@@ -57,14 +58,23 @@ class Login extends PureComponent {
         // router.push('/')
 
         // umi request
-        this.props.userLogin()
+        // this.props.userLogin()
+
+        // 封装的请求
+        userLogin2(values.username, values.password)
+          .then(response => {
+            return response.text()
+          })
+          .then(text => {
+            message.success(text)
+          })
       }
     })
   }
 
   render() {
-    const {loading, form, dispatch} = this.props
-    const {getFieldDecorator} = form
+    const { loading, form, dispatch } = this.props
+    const { getFieldDecorator } = form
 
     return (
       <Row justify="center" type="flex">
@@ -76,15 +86,15 @@ class Login extends PureComponent {
                   rules: [
                     {
                       required: true,
-                      message: formatMessage({id: 'user.login.username.errorMessage'}),
+                      message: formatMessage({ id: 'user.login.username.errorMessage' }),
                     },
                   ],
                 })(
                   <Input
                     name="username"
-                    suffix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
+                    suffix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }}/>}
                     onPressEnter={this.handleOk}
-                    placeholder={formatMessage({id: 'user.login.username'})}
+                    placeholder={formatMessage({ id: 'user.login.username' })}
                   />,
                 )}
 
@@ -100,7 +110,7 @@ class Login extends PureComponent {
                   rules: [
                     {
                       required: true,
-                      message: formatMessage({id: 'user.login.password.errorMessage'}),
+                      message: formatMessage({ id: 'user.login.password.errorMessage' }),
                     },
                   ],
                 })(
@@ -108,9 +118,9 @@ class Login extends PureComponent {
                     type="password"
                     autoComplete="false"
                     allowClear
-                    suffix={<Icon type="eye-invisible" style={{opacity: 0.5}}/>}
+                    suffix={<Icon type="eye-invisible" style={{ opacity: 0.5 }}/>}
                     onPressEnter={this.handleOk}
-                    placeholder={formatMessage({id: 'user.login.password'})}
+                    placeholder={formatMessage({ id: 'user.login.password' })}
                   />,
                 )}
               </Form.Item>
