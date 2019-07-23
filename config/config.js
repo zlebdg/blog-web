@@ -166,5 +166,6 @@ export default {
   */
   base: '/antd/',
   publicPath: '/antd/',
+  outputPath: 'dist/antd/',
   history: 'hash',
 };
