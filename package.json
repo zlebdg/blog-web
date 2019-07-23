@@ -25,6 +25,7 @@
     "test:all": "node ./tests/run-tests.js",
     "test:component": "umi test ./src/components"
   },
+  "husky": { "hooks": { "pre-commit": "yarn build" } },
   "lint-staged": {
     "**/*.less": "stylelint --syntax less",
     "**/*.{js,jsx,tsx,ts,less,md,json}": ["prettier --write", "git add"],
