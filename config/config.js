@@ -118,13 +118,34 @@ export default {
             {
               path: '/aMenu2/sub0',
               name: 'sub menu 0',
-              component: './aMenu2/sub0', // 也可以带icon
-              icon: 'heat-map',
+              component: './aMenu2/sub0',
             },
             {
               path: '/aMenu2/sub1',
               name: 'sub menu 1',
               component: './aMenu2/sub1',
+              icon: 'heat-map', // 也可以带icon
+            },
+            {
+              path: '/aMenu2/sub3',
+              name: 'sub menu 3',
+              routes: [
+                {
+                  path: '/aMenu2/sub3/xs0',
+                  name: 'xs menu 0',
+                  component: './aMenu2/sub3/xs0',
+                },
+                {
+                  path: '/aMenu2/sub3/xs1',
+                  name: 'xs menu 1',
+                  component: './aMenu2/sub3/xs1',
+                },
+                {
+                  path: '/aMenu2/sub3/xs2',
+                  name: 'xs menu 2',
+                  component: './aMenu2/sub3/xs2',
+                },
+              ],
             },
           ],
         },

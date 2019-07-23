@@ -51,4 +51,8 @@ export default {
   'menu.aMenu2': '第二个菜单',
   'menu.aMenu2.sub menu 0': '子菜单 0',
   'menu.aMenu2.sub menu 1': '子菜单 1',
+  'menu.aMenu2.sub menu 3': '多级菜单',
+  'menu.aMenu2.sub menu 3.xs menu 0': '孙菜单 0',
+  'menu.aMenu2.sub menu 3.xs menu 1': '孙菜单 1',
+  'menu.aMenu2.sub menu 3.xs menu 2': '孙菜单 2',
 };

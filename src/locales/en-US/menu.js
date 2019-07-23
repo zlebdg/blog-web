@@ -51,4 +51,8 @@ export default {
   'menu.aMenu2': 'Another menu',
   'menu.aMenu2.sub menu 0': 'sub menu 0',
   'menu.aMenu2.sub menu 1': 'sub menu 1',
+  'menu.aMenu2.sub menu 3': 'sub menu 3',
+  'menu.aMenu2.sub menu 3.xs menu 0': 'xs menu 0',
+  'menu.aMenu2.sub menu 3.xs menu 1': 'xs menu 1',
+  'menu.aMenu2.sub menu 3.xs menu 2': 'xs menu 2',
 };
