@@ -105,6 +105,12 @@ export default {
           component: './Welcome',
         },
         {
+          path: '/aMenu',
+          name: 'aMenu',
+          icon: 'italic',
+          component: './a',
+        },
+        {
           component: './404',
         },
       ],
