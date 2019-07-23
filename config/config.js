@@ -1,12 +1,12 @@
-import defaultSettings from './defaultSettings'; // https://umijs.org/config/
-import slash from 'slash2';
-import webpackPlugin from './plugin.config';
+import defaultSettings from './defaultSettings' // https://umijs.org/config/
+import slash from 'slash2'
+import webpackPlugin from './plugin.config'
 
-const {pwa, primaryColor} = defaultSettings; // preview.pro.ant.design only do not use in your production ;
+const { pwa, primaryColor } = defaultSettings // preview.pro.ant.design only do not use in your production ;
 // preview.pro.ant.design 专用环境变量，请不要在你的项目中使用它。
 
-const {ANT_DESIGN_PRO_ONLY_DO_NOT_USE_IN_YOUR_PRODUCTION} = process.env;
-const isAntDesignProPreview = ANT_DESIGN_PRO_ONLY_DO_NOT_USE_IN_YOUR_PRODUCTION === 'site';
+const { ANT_DESIGN_PRO_ONLY_DO_NOT_USE_IN_YOUR_PRODUCTION } = process.env
+const isAntDesignProPreview = ANT_DESIGN_PRO_ONLY_DO_NOT_USE_IN_YOUR_PRODUCTION === 'site'
 const plugins = [
   [
     'umi-plugin-react',
@@ -52,7 +52,7 @@ const plugins = [
       autoAddMenu: true,
     },
   ],
-]; // 针对 preview.pro.ant.design 的 GA 统计代码
+] // 针对 preview.pro.ant.design 的 GA 统计代码
 
 if (isAntDesignProPreview) {
   plugins.push([
@@ -60,13 +60,13 @@ if (isAntDesignProPreview) {
     {
       code: 'UA-72788897-6',
     },
-  ]);
+  ])
   plugins.push([
     'umi-plugin-pro',
     {
       serverUrl: 'https://ant-design-pro.netlify.com',
     },
-  ]);
+  ])
 }
 
 export default {
@@ -108,7 +108,25 @@ export default {
           path: '/aMenu',
           name: 'aMenu',
           icon: 'italic',
-          component: './a',
+          component: './aMenu',
+        },
+        {
+          path: '/aMenu2',
+          name: 'aMenu2',
+          icon: 'font-colors',
+          routes: [
+            {
+              path: '/aMenu2/sub0',
+              name: 'sub menu 0',
+              component: './aMenu2/sub0', // 也可以带icon
+              icon: 'heat-map',
+            },
+            {
+              path: '/aMenu2/sub1',
+              name: 'sub menu 1',
+              component: './aMenu2/sub1',
+            },
+          ],
         },
         {
           component: './404',
@@ -140,21 +158,21 @@ export default {
         context.resourcePath.includes('ant.design.pro.less') ||
         context.resourcePath.includes('global.less')
       ) {
-        return localName;
+        return localName
       }
 
-      const match = context.resourcePath.match(/src(.*)/);
+      const match = context.resourcePath.match(/src(.*)/)
 
       if (match && match[1]) {
-        const antdProPath = match[1].replace('.less', '');
+        const antdProPath = match[1].replace('.less', '')
         const arr = slash(antdProPath)
           .split('/')
           .map(a => a.replace(/([A-Z])/g, '-$1'))
-          .map(a => a.toLowerCase());
-        return `antd-pro${arr.join('-')}-${localName}`.replace(/--/g, '-');
+          .map(a => a.toLowerCase())
+        return `antd-pro${arr.join('-')}-${localName}`.replace(/--/g, '-')
       }
 
-      return localName;
+      return localName
     },
   },
   manifest: {
@@ -193,4 +211,4 @@ export default {
   outputPath: 'dist/antd/',
   // //
   history: 'hash',
-};
+}

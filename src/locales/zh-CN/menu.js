@@ -48,4 +48,7 @@ export default {
   'menu.editor.mind': '脑图编辑器',
   'menu.editor.koni': '拓扑编辑器',
   'menu.aMenu': '一个菜单',
+  'menu.aMenu2': '第二个菜单',
+  'menu.aMenu2.sub menu 0': '子菜单 0',
+  'menu.aMenu2.sub menu 1': '子菜单 1',
 };

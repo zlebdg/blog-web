@@ -47,5 +47,8 @@ export default {
   'menu.editor.flow': 'Flow Editor',
   'menu.editor.mind': 'Mind Editor',
   'menu.editor.koni': 'Koni Editor',
-  'menu.aMenu': 'a menu',
+  'menu.aMenu': 'A menu',
+  'menu.aMenu2': 'Another menu',
+  'menu.aMenu2.sub menu 0': 'sub menu 0',
+  'menu.aMenu2.sub menu 1': 'sub menu 1',
 };
