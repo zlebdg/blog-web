@@ -164,8 +164,27 @@ export default {
     },
   },
   */
+  // 如果项目要发布到非根目录下
+  // 以下 (base/publicPath/outputPath) 几个参数如何配置
+  // 是与反向代理嗠器nginx配置相关的
+  // 方式一
+  // nginx:
+  // location /antd/ {
+  //   proxy_pass http://dev.local:5000/;
+  // }
+  // umi:
+  // base: '/antd/',
+  // publicPath: '/antd/',
+  // //
+  // 方式二
+  // nginx:
+  // location /antd/ {
+  //   proxy_pass http://dev.local:5000/antd/;
+  // }
+  // umi:
   base: '/antd/',
   publicPath: '/antd/',
   outputPath: 'dist/antd/',
+  // //
   history: 'hash',
 };
