@@ -8,4 +8,5 @@ export default {
   'user.login.password.errorMessage': '请输入你的密码',
   'user.login.errorMessage': '登录失败',
   'Bad credentials': '密码不正确',
+  'antd.intro.logo.under': 'Ant Design 是西湖区最具影响力的 Web 设计规范',
 };
