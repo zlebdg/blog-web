@@ -109,7 +109,7 @@ class Index extends PureComponent {
                 </Form.Item>
               </Col>
               <Col xs={10} span={8}>
-                <RegisterCaptcha src="http://192.168.124.95:20010/captcha"
+                <RegisterCaptcha src="/captcha"
                                  alt={formatMessage({id: 'user.register.captcha.alt'})}
                                  tips={formatMessage({id: 'user.register.captcha.tips'})}/>
               </Col>
