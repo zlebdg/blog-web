@@ -1,6 +1,6 @@
 import React from 'react'
 import { PageHeaderWrapper } from '@ant-design/pro-layout'
-import { Breadcrumb, Button, Dropdown, Icon, Menu, Pagination, Steps, Table } from 'antd'
+import { BackTop, Breadcrumb, Button, Dropdown, Icon, Menu, Pagination, Steps, Table } from 'antd'
 
 // 使用已有项目的url创建iconfont图标
 const IconFont = Icon.createFromIconfontCN({
@@ -180,11 +180,12 @@ export default () => (
       <Steps.Step title="Finished" description="This is a description."/>
       <Steps.Step title="In Progress" description="This is a description."/>
       <Steps.Step title="Waiting" description="This is a description."/>
-    </Steps><Steps direction="vertical" size="small" current={1}>
-    <Steps.Step title="Finished" description="This is a description."/>
-    <Steps.Step title="In Progress" description="This is a description."/>
-    <Steps.Step title="Waiting" description="This is a description."/>
-
-  </Steps>
+    </Steps>
+    <Steps direction="vertical" size="small" current={1}>
+      <Steps.Step title="Finished" description="This is a description."/>
+      <Steps.Step title="In Progress" description="This is a description."/>
+      <Steps.Step title="Waiting" description="This is a description."/>
+    </Steps>
+    <BackTop/>
   </PageHeaderWrapper>
 );
