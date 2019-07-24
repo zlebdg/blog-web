@@ -84,7 +84,7 @@ class Login extends PureComponent {
 
     return (
       <Row justify="space-around" type="flex">
-        <Col xs={16} sm={12} md={10} lg={6}>
+        <Col xs={16} sm={12} md={8} lg={6} xl={4}>
           <Form>
             <Form.Item>
               {getFieldDecorator('username', {

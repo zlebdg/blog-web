@@ -1,0 +1,16 @@
+export default {
+  'user.register': '注册',
+  'user.Register': '注册',
+  'user.register.username': '用户名',
+  'user.register.Username': '用户名',
+  'user.register.email': '邮箱',
+  'user.register.Email': '邮箱',
+  'user.register.captcha': '图形验证码',
+  'user.register.Captcha': '图形验证码',
+  'user.register.username.errorMessage': '请输入你的用户名',
+  'user.register.email.errorMessage': '请输入你的邮箱',
+  'user.register.captcha.errorMessage': '请输入图片验证码',
+  'user.register.captcha.tips': '看不清?点击刷新',
+  'user.register.captcha.alt': '刷新验证码',
+  '注册成功! 请检查你的邮箱并完成验证': '注册成功! 请检查你的邮箱并完成验证',
+}

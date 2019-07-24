@@ -1,0 +1,15 @@
+export default {
+  'user.register': 'register',
+  'user.Register': 'Register',
+  'user.register.username': 'username',
+  'user.register.Username': 'Username',
+  'user.register.email': 'email',
+  'user.register.Email': 'Email',
+  'user.register.captcha': 'captcha',
+  'user.register.Captcha': 'Captcha',
+  'user.register.username.errorMessage': 'please input your username',
+  'user.register.email.errorMessage': 'please input your email',
+  'user.register.captcha.errorMessage': 'please input captcha',
+  'user.register.captcha.tips': 'click refresh',
+  'user.register.captcha.alt': 'refresh captcha',
+};

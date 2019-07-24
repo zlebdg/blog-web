@@ -5,6 +5,7 @@ import pwa from './en-US/pwa';
 import settingDrawer from './en-US/settingDrawer';
 import settings from './en-US/settings';
 import userLogin from './en-US/userLogin';
+import userRegister from './en-US/userRegister';
 export default {
   'navBar.lang': 'Languages',
   'layout.user.link.help': 'Help',
@@ -18,4 +19,5 @@ export default {
   ...pwa,
   ...component,
   ...userLogin,
+  ...userRegister,
 };
