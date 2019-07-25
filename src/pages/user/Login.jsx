@@ -4,8 +4,7 @@ import { Button, Col, Form, Icon, Input, message, Row } from 'antd'
 import { formatMessage, FormattedMessage } from 'umi-plugin-react/locale'
 import styles from './login.less'
 import { connect } from 'dva'
-import { router } from 'umi'
-import userLogin2 from '../../services/userLogin'
+import { userLogin } from '../../services/userLogin'
 
 const namespace = 'userLogin'
 
@@ -45,37 +44,37 @@ class Login extends PureComponent {
   handleOk = e => {
     e.preventDefault()
     this.props.form.validateFields((err, values) => {
-      if (!err) {
-        console.log('Received values of form: ', values)
+        if (!err) {
+          console.log('Received values of form: ', values)
 
-        // 原生fetch
-        // fetch('/api/currentUser').then(r => {
-        //   return r.text()
-        // }).then(text => {
-        //   message.success(text)
-        // })
+          // 原生fetch
+          // fetch('/api/currentUser').then(r => {
+          //   return r.text()
+          // }).then(text => {
+          //   message.success(text)
+          // })
 
-        // 路由切换
-        // router.push('/')
+          // 路由切换
+          // router.push('/')
 
-        // umi request
-        // this.props.userLogin()
+          // umi request
+          // this.props.userLogin()
 
-        // 封装的请求
-        userLogin2(values.username, values.password)
-          .then(resp => {
-            // {"code":200,"message":"OK","data":{"authorities":[{"authority":"ROLE_test"}],"details":null,"authenticated":true,"principal":{"password":null,"username":"test","authorities":[{"authority":"ROLE_test"}],"accountNonExpired":true,"accountNonLocked":true,"credentialsNonExpired":true,"enabled":true},"credentials":null,"name":"test"}}
-            console.log(resp)
-            if (200 === resp.code) {
-              sessionStorage.setItem('CURRENT_USER', JSON.stringify(resp.data))
-              router.push('/')
-            } else {
-              // message.error(formatMessage({ id: 'user.login.errorMessage' }));
-              message.error(formatMessage({ id: resp.message }))
-            }
-          })
-      }
-    })
+          // 封装的请求
+          userLogin(values.username, values.password)
+            .then(resp => {
+                // {"code":200,"message":"OK","data":{"authorities":[{"authority":"ROLE_test"}],"details":null,"authenticated":true,"principal":{"password":null,"username":"test","authorities":[{"authority":"ROLE_test"}],"accountNonExpired":true,"accountNonLocked":true,"credentialsNonExpired":true,"enabled":true},"credentials":null,"name":"test"}}
+                console.log(resp)
+                // console.log(resp.body())
+                // sessionStorage.setItem('CURRENT_USER', JSON.stringify(resp.data))
+                // router.push('/')
+                // message.error(formatMessage({ id: 'user.login.errorMessage' }));
+                // message.error(formatMessage({ id: resp.message }))
+              },
+            )
+        }
+      },
+    )
   }
 
   render() {

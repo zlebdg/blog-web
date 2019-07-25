@@ -9,4 +9,5 @@ export default {
   'user.login.errorMessage': '登录失败',
   'Bad credentials': '密码不正确',
   'antd.intro.logo.under': 'Ant Design 是西湖区最具影响力的 Web 设计规范',
+  'Not Found': '请求路径404',
 };
