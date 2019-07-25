@@ -205,15 +205,16 @@ export default {
     basePath: '/',
   },
   chainWebpack: webpackPlugin,
-  /*
   proxy: {
-    '/server/api/': {
-      target: 'https://preview.pro.ant.design/',
+    '/auth': {
+      target: 'http://dev.local:20010/',
       changeOrigin: true,
-      pathRewrite: { '^/server': '' },
+    },
+    '/test': {
+      target: 'http://dev.local:20010/',
+      changeOrigin: true,
     },
   },
-  */
   // 如果项目要发布到非根目录下
   // 以下 (base/publicPath/outputPath) 几个参数如何配置
   // 是与反向代理嗠器nginx配置相关的
