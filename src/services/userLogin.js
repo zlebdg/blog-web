@@ -5,17 +5,19 @@ import { message } from 'antd'
 export async function userLogin(username, password) {
   return request('/test/login', {
     method: 'post',
+    requestType: 'form',
     data: {
       username: username,
       password: password,
     },
+    params: {},
     errorHandler: (error) => { // 出错处理
-      const { response, data } = error
+      const {response, data} = error
       console.log(response)
       console.log(data)
       if (data && data.message) {
         try {
-          message.error(formatMessage({ id: data.message }))
+          message.error(formatMessage({id: data.message}))
         } catch (e) { // 缺少i18n则降级成直接显示server返回的message
           message.error()
         }
