@@ -1,1 +1,0 @@
-(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([[7],{XCZ0:function(e,t,n){"use strict";var a=n("g09b");Object.defineProperty(t,"__esModule",{value:!0}),t.default=void 0;var u=a(n("q1tI")),r=n("y1Nh"),l=function(){return u.default.createElement(r.PageHeaderWrapper,null,u.default.createElement("p",{style:{textAlign:"center"}},"aMenu2 ^-^ sub1"))};t.default=l}}]);

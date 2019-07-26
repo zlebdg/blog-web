@@ -82,6 +82,16 @@ export default {
   // umi routes: https://umijs.org/zh/guide/router.html
   routes: [
     {
+      path: '/blank',
+      component: '../layouts/BlankLayout',
+      routes: [
+        {
+          path: '/blank/user/register/waitingForEmail',
+          component: './user/RegisterWaitingForEmail',
+        },
+      ]
+    },
+    {
       path: '/user',
       component: '../layouts/UserLayout',
       routes: [

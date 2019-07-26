@@ -2,6 +2,7 @@ export default {
   'user.login.signIn': 'Sign in',
   'user.login.Username': 'Username',
   'user.login.username': 'username',
+  'user.login.username.forTest': 'Test Account',
   'user.login.username.errorMessage': 'please input your username',
   'user.login.Password': 'Password',
   'user.login.password': 'password',
@@ -9,4 +10,7 @@ export default {
   'user.login.errorMessage': 'login failed',
   'Bad credentials': 'Bad credentials',
   'antd.intro.logo.under': 'Ant Design is Good',
+  'Not Found': 'Not Found',
+  'Login Success': 'Login Success',
+  'user.login.toRegister': 'Register',
 };

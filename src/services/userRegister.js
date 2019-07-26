@@ -2,7 +2,7 @@ import request from '@/utils/request'
 import { formatMessage } from 'umi-plugin-react/locale'
 import { message } from 'antd'
 
-export default async function register(username, email, captcha) {
+export async function register(username, email, captcha) {
   return request('/auth/register', {
     method: 'post',
     requestType: 'form',
@@ -10,6 +10,30 @@ export default async function register(username, email, captcha) {
       username: username,
       email: email,
       captcha: captcha,
+    },
+    params: {},
+    errorHandler: (error) => { // 出错处理
+      const { response, data } = error
+      console.log(response)
+      console.log(data)
+      if (data && data.message) {
+        try {
+          message.error(formatMessage({ id: data.message }))
+        } catch (e) { // 缺少i18n则降级成直接显示server返回的message
+          message.error()
+        }
+      }
+    },
+  })
+}
+
+export async function resendEmail(username, email) {
+  return request('/auth/register/resendEmail', {
+    method: 'post',
+    requestType: 'form',
+    data: {
+      username: username,
+      email: email,
     },
     params: {},
     errorHandler: (error) => { // 出错处理

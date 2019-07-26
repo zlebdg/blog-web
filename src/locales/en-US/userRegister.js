@@ -12,5 +12,6 @@ export default {
   'user.register.captcha.errorMessage': 'please input captcha',
   'user.register.captcha.tips': 'click refresh',
   'user.register.captcha.alt': 'refresh captcha',
-  'Not Found': 'Not Found',
+  'user.register.toLogin': 'Sign in',
+  'user.register.forgetPassword': 'Forget password',
 };

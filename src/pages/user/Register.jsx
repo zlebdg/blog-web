@@ -3,7 +3,9 @@ import { AutoComplete, Button, Col, Form, Icon, Input, Row } from 'antd'
 import { formatMessage, FormattedMessage } from 'umi-plugin-react/locale'
 import styles from './login.less'
 import RegisterCaptcha from '../../components/Img/RegisterCaptcha'
-import register from '../../services/userRegister'
+import { register } from '../../services/userRegister'
+import Link from 'umi/link'
+import router from 'umi/router'
 
 const namespace = 'userRegister'
 
@@ -28,10 +30,16 @@ class Index extends PureComponent {
       if (!err) {
         console.log('Received values of form: ', values)
 
+        // sessionStorage.setItem('register.username', values.username)
+        // sessionStorage.setItem('register.email', values.email)
+
         //
         register(values.username, values.email, values.captcha)
           .then(resp => {
             console.log(resp)
+            if (null != resp && 200 === resp.code) {
+              router.push('/blank/user/register/waitingForEmail')
+            }
           })
       }
     })
@@ -112,6 +120,25 @@ class Index extends PureComponent {
               <Button type="primary" className={styles.button} onClick={this.handleOk}>
                 {<FormattedMessage id={'user.Register'}></FormattedMessage>}
               </Button>
+            </Row>
+            <Row>
+              <Col span={12} style={{
+                textAlign: 'left',
+              }}>
+                <Link to="/user/reset">
+                  <Button type="link" style={{ padding: '0' }}>
+                    <FormattedMessage id={'user.register.forgetPassword'}/>
+                  </Button>
+                </Link>
+              </Col>
+              <Col span={12} style={{ textAlign: 'right' }}>
+                <Link to="/user/login">
+                  <Button type="link" style={{ padding: '0' }}>
+                    {/*&lt;&lt;<FormattedMessage id={'user.register.toLogin'}/>*/}
+                    <FormattedMessage id={'user.register.toLogin'}/>&gt;&gt;
+                  </Button>
+                </Link>
+              </Col>
             </Row>
           </Form>
         </Col>

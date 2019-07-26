@@ -12,5 +12,6 @@ export default {
   'user.register.captcha.errorMessage': '请输入图片验证码',
   'user.register.captcha.tips': '看不清?点击刷新',
   'user.register.captcha.alt': '刷新验证码',
-  '注册成功! 请检查你的邮箱并完成验证': '注册成功! 请检查你的邮箱并完成验证',
+  'user.register.toLogin': '去登录',
+  'user.register.forgetPassword': '找回密码',
 }

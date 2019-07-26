@@ -5,6 +5,8 @@ import { formatMessage, FormattedMessage } from 'umi-plugin-react/locale'
 import styles from './login.less'
 import { connect } from 'dva'
 import { userLogin } from '../../services/userLogin'
+import Link from 'umi/link'
+import router from 'umi/router'
 
 const namespace = 'userLogin'
 
@@ -65,11 +67,11 @@ class Login extends PureComponent {
             .then(resp => {
                 // {"code":200,"message":"OK","data":{"authorities":[{"authority":"ROLE_test"}],"details":null,"authenticated":true,"principal":{"password":null,"username":"test","authorities":[{"authority":"ROLE_test"}],"accountNonExpired":true,"accountNonLocked":true,"credentialsNonExpired":true,"enabled":true},"credentials":null,"name":"test"}}
                 console.log(resp)
-                // console.log(resp.body())
-                // sessionStorage.setItem('CURRENT_USER', JSON.stringify(resp.data))
-                // router.push('/')
-                // message.error(formatMessage({ id: 'user.login.errorMessage' }));
-                // message.error(formatMessage({ id: resp.message }))
+                if (null != resp && 200 === resp.code) {
+                  sessionStorage.setItem('CURRENT_USER', JSON.stringify(resp.data))
+                  message.success('登录成功')
+                  router.push('/')
+                }
               },
             )
         }
@@ -147,15 +149,34 @@ class Login extends PureComponent {
               {/*  </Col>*/}
               {/*</Row>*/}
 
-              {/*文字两端对齐*/}
-              <Row justify="space-between" type="flex">
+            </Row>
+            <Row>
+              <Col span={12} style={{
+                textAlign: 'left',
+              }}>
+                <Link to="/user/reset">
+                  <Button type="link" style={{ padding: '0' }}>
+                    <FormattedMessage id={'user.register.forgetPassword'}/>
+                  </Button>
+                </Link>
+              </Col>
+              <Col span={12} style={{ textAlign: 'right' }}>
+                <Link to="/user/register">
+                  <Button type="link" style={{ padding: '0' }}>
+                    {/*&lt;&lt;<FormattedMessage id={'user.register.toLogin'}/>*/}
+                    <FormattedMessage id={'user.login.toRegister'}/>&gt;&gt;
+                  </Button>
+                </Link>
+              </Col>
+            </Row>
+            {/*文字两端对齐*/}
+            <Row justify="space-between" type="flex">
                   <span>
-                    {<FormattedMessage id={'user.login.Username'}></FormattedMessage>}: test
+                    {<FormattedMessage id={'user.login.username.forTest'}></FormattedMessage>}: test
                   </span>
-                <span>
+              <span>
                     {<FormattedMessage id={'user.login.Password'}></FormattedMessage>}: 123456
                   </span>
-              </Row>
             </Row>
           </Form>
         </Col>
