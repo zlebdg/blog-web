@@ -206,6 +206,10 @@ export default {
   },
   chainWebpack: webpackPlugin,
   proxy: {
+    '/captcha': {
+      target: 'http://dev.local:20010/',
+      changeOrigin: true,
+    },
     '/auth': {
       target: 'http://dev.local:20010/',
       changeOrigin: true,

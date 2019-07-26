@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react'
-import { AutoComplete, Button, Col, Form, Icon, Input, message, Row } from 'antd'
+import { AutoComplete, Button, Col, Form, Icon, Input, Row } from 'antd'
 import { formatMessage, FormattedMessage } from 'umi-plugin-react/locale'
 import styles from './login.less'
 import RegisterCaptcha from '../../components/Img/RegisterCaptcha'
@@ -32,21 +32,14 @@ class Index extends PureComponent {
         register(values.username, values.email, values.captcha)
           .then(resp => {
             console.log(resp)
-            if (resp && 200 === resp.code) {
-              message.success(formatMessage({id: '注册成功! 请检查你的邮箱并完成验证'}))
-            } else {
-              // todo, i18n
-              // message.error(formatMessage({id: resp.message}))
-              message.error(resp.message)
-            }
           })
       }
     })
   }
 
   render() {
-    const {form} = this.props
-    const {getFieldDecorator} = form
+    const { form } = this.props
+    const { getFieldDecorator } = form
 
     return (
       <Row justify="space-around" type="flex">
@@ -57,15 +50,15 @@ class Index extends PureComponent {
                 rules: [
                   {
                     required: true,
-                    message: formatMessage({id: 'user.register.username.errorMessage'}),
+                    message: formatMessage({ id: 'user.register.username.errorMessage' }),
                   },
                 ],
               })(
                 <Input
                   name="username"
-                  suffix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
+                  suffix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }}/>}
                   onPressEnter={this.handleOk}
-                  placeholder={formatMessage({id: 'user.register.username'})}
+                  placeholder={formatMessage({ id: 'user.register.username' })}
                 />,
               )}
 
@@ -76,7 +69,7 @@ class Index extends PureComponent {
                 rules: [
                   {
                     required: true,
-                    message: formatMessage({id: 'user.register.email.errorMessage'}),
+                    message: formatMessage({ id: 'user.register.email.errorMessage' }),
                   },
                 ],
               })(
@@ -84,8 +77,8 @@ class Index extends PureComponent {
                   name="email"
                   dataSource={this.state.emailSuffix}
                   onChange={this.handleEmail}
-                  placeholder={formatMessage({id: 'user.register.email'})}>
-                  <Input suffix={<Icon type="mail" style={{color: 'rgba(0,0,0,.25)'}}/>}/>
+                  placeholder={formatMessage({ id: 'user.register.email' })}>
+                  <Input suffix={<Icon type="mail" style={{ color: 'rgba(0,0,0,.25)' }}/>}/>
                 </AutoComplete>,
               )}
             </Form.Item>
@@ -96,22 +89,23 @@ class Index extends PureComponent {
                     rules: [
                       {
                         required: true,
-                        message: formatMessage({id: 'user.register.captcha.errorMessage'}),
+                        message: formatMessage({ id: 'user.register.captcha.errorMessage' }),
                       },
                     ],
                   })(
                     <Input
                       name="captcha"
-                      suffix={<Icon type="safety-certificate" style={{color: 'rgba(0,0,0,.25)'}}/>}
-                      placeholder={formatMessage({id: 'user.register.captcha'})}
+                      suffix={<Icon type="safety-certificate"
+                                    style={{ color: 'rgba(0,0,0,.25)' }}/>}
+                      placeholder={formatMessage({ id: 'user.register.captcha' })}
                     />,
                   )}
                 </Form.Item>
               </Col>
               <Col xs={10} span={8}>
                 <RegisterCaptcha src="/captcha"
-                                 alt={formatMessage({id: 'user.register.captcha.alt'})}
-                                 tips={formatMessage({id: 'user.register.captcha.tips'})}/>
+                                 alt={formatMessage({ id: 'user.register.captcha.alt' })}
+                                 tips={formatMessage({ id: 'user.register.captcha.tips' })}/>
               </Col>
             </Row>
             <Row>

@@ -1,24 +1,28 @@
+import request from '@/utils/request'
+import { formatMessage } from 'umi-plugin-react/locale'
 import { message } from 'antd'
 
 export default async function register(username, email, captcha) {
-  const formData = new FormData()
-  formData.append('username', username)
-  formData.append('email', email)
-  formData.append('captcha', captcha)
-  return fetch('/auth/register', {
+  return request('/auth/register', {
     method: 'post',
-    body: formData,
-    headers: {
-      Accept: 'application/json',
-      'Cache-Control': 'no-cache',
+    requestType: 'form',
+    data: {
+      username: username,
+      email: email,
+      captcha: captcha,
     },
-    credentials: 'include',
+    params: {},
+    errorHandler: (error) => { // 出错处理
+      const { response, data } = error
+      console.log(response)
+      console.log(data)
+      if (data && data.message) {
+        try {
+          message.error(formatMessage({ id: data.message }))
+        } catch (e) { // 缺少i18n则降级成直接显示server返回的message
+          message.error()
+        }
+      }
+    },
   })
-    .then(response => {
-      return response.json()
-    })
-    .catch(error => {
-      console.log(error)
-      message.error(error)
-    })
 }
