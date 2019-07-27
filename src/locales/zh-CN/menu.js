@@ -57,4 +57,5 @@ export default {
   'menu.aMenu2.sub menu 3.xs menu 2': '孙菜单 2',
   'menu.register waiting': '注册验证',
   'menu.register verify': '设置登录密码',
-};
+  'menu.reset': '重置登录密码',
+}

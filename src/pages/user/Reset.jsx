@@ -1,28 +1,16 @@
 import React, { PureComponent } from 'react'
-import { AutoComplete, Button, Col, Form, Icon, Input, Row } from 'antd'
+import { Button, Col, Form, Icon, Input, Row } from 'antd'
 import { formatMessage, FormattedMessage } from 'umi-plugin-react/locale'
 import styles from './login.less'
 import AppCaptcha from '../../components/Img/AppCaptcha'
-import { register } from '../../services/userRegister'
+import { reset } from '../../services/userReset'
 import Link from 'umi/link'
 import router from 'umi/router'
-
-const namespace = 'userRegister'
 
 @Form.create()
 class Index extends PureComponent {
   state = {
-    emailSuffix: [],
     captcha: '/captcha',
-  }
-
-  handleEmail = (value) => {
-    this.setState({
-      emailSuffix:
-        !value || value.indexOf('@') >= 0
-          ? []
-          : [`${value}@qq.com`, `${value}@163.com`, `${value}@gmail.com`, `${value}@live.cn`],
-    })
   }
 
   handleOk = e => {
@@ -30,13 +18,9 @@ class Index extends PureComponent {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values)
-
-        //
-        sessionStorage.setItem('register.username', values.username)
-        sessionStorage.setItem('register.email', values.email)
-
-        //
-        register(values.username, values.email, values.captcha)
+        const username = values.usernameOrEmail.indexOf('@') >= 0 ? null : values.usernameOrEmail
+        const email = values.usernameOrEmail.indexOf('@') >= 0 ? values.usernameOrEmail : null
+        reset(username, email, values.captcha)
           .then(resp => {
             console.log(resp)
             if (null != resp && 200 === resp.code) {
@@ -60,41 +44,22 @@ class Index extends PureComponent {
         <Col xs={16} sm={12} md={8} lg={6} xl={4}>
           <Form>
             <Form.Item>
-              {getFieldDecorator('username', {
+              {getFieldDecorator('usernameOrEmail', {
                 rules: [
                   {
                     required: true,
-                    message: formatMessage({ id: 'user.register.username.errorMessage' }),
+                    message: formatMessage({ id: 'user.reset.usernameOrEmail.errorMessage' }),
                   },
                 ],
               })(
                 <Input
-                  name="username"
+                  name="usernameOrEmail"
                   suffix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }}/>}
                   onPressEnter={this.handleOk}
-                  placeholder={formatMessage({ id: 'user.register.username' })}
+                  placeholder={formatMessage({ id: 'user.reset.usernameOrEmail' })}
                 />,
               )}
 
-            </Form.Item>
-            {/*邮箱后缀补全*/}
-            <Form.Item>
-              {getFieldDecorator('email', {
-                rules: [
-                  {
-                    required: true,
-                    message: formatMessage({ id: 'user.register.email.errorMessage' }),
-                  },
-                ],
-              })(
-                <AutoComplete
-                  name="email"
-                  dataSource={this.state.emailSuffix}
-                  onChange={this.handleEmail}
-                  placeholder={formatMessage({ id: 'user.register.email' })}>
-                  <Input suffix={<Icon type="mail" style={{ color: 'rgba(0,0,0,.25)' }}/>}/>
-                </AutoComplete>,
-              )}
             </Form.Item>
             <Row type="flex" justify="space-between">
               <Col span={12}>
@@ -124,24 +89,23 @@ class Index extends PureComponent {
             </Row>
             <Row>
               <Button type="primary" className={styles.button} onClick={this.handleOk}>
-                {<FormattedMessage id={'user.Register'}></FormattedMessage>}
+                {<FormattedMessage id={'user.reset.ok'}></FormattedMessage>}
               </Button>
             </Row>
             <Row>
               <Col span={12} style={{
                 textAlign: 'left',
               }}>
-                <Link to="/user/reset">
+                <Link to="/user/register">
                   <Button type="link" style={{ padding: '0' }}>
-                    <FormattedMessage id={'user.register.forgetPassword'}/>
+                    <FormattedMessage id={'user.reset.toRegister'}/>
                   </Button>
                 </Link>
               </Col>
               <Col span={12} style={{ textAlign: 'right' }}>
                 <Link to="/user/login">
                   <Button type="link" style={{ padding: '0' }}>
-                    {/*&lt;&lt;<FormattedMessage id={'user.register.toLogin'}/>*/}
-                    <FormattedMessage id={'user.register.toLogin'}/>&gt;&gt;
+                    <FormattedMessage id={'user.reset.toLogin'}/>&gt;&gt;
                   </Button>
                 </Link>
               </Col>

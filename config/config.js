@@ -111,6 +111,16 @@ export default {
           name: 'register verify',
           component: './user/RegisterVerify',
         },
+        {
+          path: '/user/reset',
+          name: 'reset',
+          component: './user/Reset',
+        },
+        {
+          path: '/user/resetVerify',
+          name: 'reset verify',
+          component: './user/ResetVerify',
+        },
       ],
     },
     {

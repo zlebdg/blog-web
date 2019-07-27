@@ -1,11 +1,13 @@
-import component from './zh-CN/component';
-import globalHeader from './zh-CN/globalHeader';
-import menu from './zh-CN/menu';
-import pwa from './zh-CN/pwa';
-import settingDrawer from './zh-CN/settingDrawer';
-import settings from './zh-CN/settings';
-import userLogin from './zh-CN/userLogin';
-import userRegister from './zh-CN/userRegister';
+import component from './zh-CN/component'
+import globalHeader from './zh-CN/globalHeader'
+import menu from './zh-CN/menu'
+import pwa from './zh-CN/pwa'
+import settingDrawer from './zh-CN/settingDrawer'
+import settings from './zh-CN/settings'
+import userLogin from './zh-CN/userLogin'
+import userRegister from './zh-CN/userRegister'
+import userReset from './zh-CN/userReset'
+
 export default {
   'navBar.lang': '语言',
   'layout.user.link.help': '帮助',
@@ -20,4 +22,5 @@ export default {
   ...component,
   ...userLogin,
   ...userRegister,
-};
+  ...userReset,
+}
