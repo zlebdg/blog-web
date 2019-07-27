@@ -30,8 +30,9 @@ class Index extends PureComponent {
       if (!err) {
         console.log('Received values of form: ', values)
 
-        // sessionStorage.setItem('register.username', values.username)
-        // sessionStorage.setItem('register.email', values.email)
+        //
+        sessionStorage.setItem('register.username', values.username)
+        sessionStorage.setItem('register.email', values.email)
 
         //
         register(values.username, values.email, values.captcha)

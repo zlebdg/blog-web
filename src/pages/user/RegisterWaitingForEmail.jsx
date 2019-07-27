@@ -9,6 +9,7 @@ const resend = () => {
 
   if (null === username || null === email) {
     message.error('非法的请求')
+    console.log('需要在注册请求时将username, email写入sessionStorage')
     return
   }
 
