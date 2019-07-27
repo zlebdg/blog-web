@@ -55,4 +55,6 @@ export default {
   'menu.aMenu2.sub menu 3.xs menu 0': '孙菜单 0',
   'menu.aMenu2.sub menu 3.xs menu 1': '孙菜单 1',
   'menu.aMenu2.sub menu 3.xs menu 2': '孙菜单 2',
+  'menu.register waiting': '注册验证',
+  'menu.register verify': '设置登录密码',
 };

@@ -14,4 +14,8 @@ export default {
   'user.register.captcha.alt': '刷新验证码',
   'user.register.toLogin': '去登录',
   'user.register.forgetPassword': '找回密码',
+  'user.register.verify.password': '密码',
+  'user.register.verify.password.repeat': '重复密码',
+  'user.register.verify.password.errorMessage': '请设置登录密码',
+  'user.register.verify.password.repeat.errorMessage': '请再输入登录密码',
 }

@@ -87,6 +87,7 @@ export default {
       routes: [
         {
           path: '/blank/user/register/waitingForEmail',
+          name: 'register waiting',
           component: './user/RegisterWaitingForEmail',
         },
       ]
@@ -104,6 +105,11 @@ export default {
           path: '/user/register',
           name: 'register',
           component: './user/Register',
+        },
+        {
+          path: '/user/register/verify',
+          name: 'register verify',
+          component: './user/RegisterVerify',
         },
       ],
     },

@@ -35,12 +35,12 @@ class Index extends PureComponent {
         title="请查收新邮件完成注册"
         subTitle="验证邮件已发送, 但有可能被归类到垃圾邮件或被拒收, 需要你添加@xjplus.xyz为域名白名单"
         extra={[
-          <Button>
+          <Button key={'login'}>
             <Link to="/user/login">
               去登录&gt;&gt;
             </Link>
           </Button>,
-          <Button type='primary' onClick={resend}> 重发邮件 </Button>,
+          <Button key={'resend'} type='primary' onClick={resend}> 重发邮件 </Button>,
         ]}
       />
     )
