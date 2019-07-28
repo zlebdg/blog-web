@@ -1,6 +1,4 @@
 import request from '@/utils/request'
-import { formatMessage } from 'umi-plugin-react/locale'
-import { message } from 'antd'
 import basicErrorHandler from './errorHandler'
 
 export async function register(username, email, captcha) {
@@ -11,6 +9,19 @@ export async function register(username, email, captcha) {
       username: username,
       email: email,
       captcha: captcha,
+    },
+    params: {},
+    errorHandler: basicErrorHandler,
+  })
+}
+
+export async function registerVerify(verifyCode, password) {
+  return request('/auth/register/verify', {
+    method: 'post',
+    requestType: 'form',
+    data: {
+      verifyCode: verifyCode,
+      password: password,
     },
     params: {},
     errorHandler: basicErrorHandler,

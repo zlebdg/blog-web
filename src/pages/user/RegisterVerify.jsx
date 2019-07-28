@@ -1,7 +1,9 @@
 import React, { PureComponent } from 'react'
-import { Button, Col, Form, Icon, Input, Row, Steps } from 'antd'
+import { Button, Col, Form, Icon, Input, message, Row, Steps } from 'antd'
 import { formatMessage, FormattedMessage } from 'umi-plugin-react/locale'
 import styles from './login.less'
+import { registerVerify } from '../../services/userRegister'
+import router from 'umi/router'
 
 @Form.create()
 class Index extends PureComponent {
@@ -14,6 +16,17 @@ class Index extends PureComponent {
 
           // 校验通过
           console.log('Received values of form: ', values)
+          console.log('this.props.loca5ion.query ', this.props.location.query)
+
+          const { verifyCode } = this.props.location.query
+          registerVerify(verifyCode, values.password)
+            .then(resp => {
+              console.log(resp)
+              if (null != resp && 200 === resp.code) {
+                message.success('注册成功 欢迎登录')
+                router.push('/user/login')
+              }
+            })
         }
       },
     )
