@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react'
 import { Button, Form, message, Result } from 'antd'
 import { resendEmail } from '../../services/userRegister'
 import Link from 'umi/link'
-import { formatMessage, FormattedMessage } from 'umi/locale'
+import { formatMessage, FormattedMessage } from 'umi-plugin-react/locale'
 
 const resend = () => {
   const username = sessionStorage.getItem('register.username')

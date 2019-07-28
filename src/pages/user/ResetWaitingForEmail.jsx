@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import { Button, Form, Result } from 'antd'
-import { formatMessage, FormattedMessage } from 'umi/locale'
+import { formatMessage, FormattedMessage } from 'umi-plugin-react/locale'
 
 @Form.create()
 class Index extends PureComponent {
