@@ -90,6 +90,11 @@ export default {
           name: 'register waiting',
           component: './user/RegisterWaitingForEmail',
         },
+        {
+          path: '/blank/user/reset/waitingForEmail',
+          name: 'reset waiting',
+          component: './user/ResetWaitingForEmail',
+        },
       ]
     },
     {
@@ -117,7 +122,7 @@ export default {
           component: './user/Reset',
         },
         {
-          path: '/user/resetVerify',
+          path: '/user/reset/verify',
           name: 'reset verify',
           component: './user/ResetVerify',
         },

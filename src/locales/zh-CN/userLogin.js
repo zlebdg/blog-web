@@ -13,4 +13,6 @@ export default {
   'Not Found': '请求路径404',
   'Login Success': '登录成功',
   'user.login.toRegister': '去注册',
-};
+  'user.login.usernameOrEmail': '用户名或邮箱',
+  'user.login.usernameOrEmail.errorMessage': '请输入你的用户名或邮箱',
+}

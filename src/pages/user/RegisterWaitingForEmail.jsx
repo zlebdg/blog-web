@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react'
 import { Button, Form, message, Result } from 'antd'
 import { resendEmail } from '../../services/userRegister'
 import Link from 'umi/link'
+import { formatMessage, FormattedMessage } from 'umi/locale'
 
 const resend = () => {
   const username = sessionStorage.getItem('register.username')
@@ -32,15 +33,17 @@ class Index extends PureComponent {
     return (
       <Result
         status="warning"
-        title="请查收新邮件完成注册"
-        subTitle="验证邮件已发送, 但有可能被归类到垃圾邮件或被拒收, 需要你添加@xjplus.xyz为域名白名单"
+        title={formatMessage({ id: 'user.register.wait.title' })}
+        subTitle={formatMessage({ id: 'user.register.wait.subTitle' })}
         extra={[
           <Button key={'login'}>
             <Link to="/user/login">
-              去登录&gt;&gt;
+              <FormattedMessage id="user.register.wait.signIn"></FormattedMessage>&gt;&gt;
             </Link>
           </Button>,
-          <Button key={'resend'} type='primary' onClick={resend}> 重发邮件 </Button>,
+          <Button key={'resend'} type='primary' onClick={resend}>
+            <FormattedMessage id="user.register.wait.resend"></FormattedMessage>
+          </Button>,
         ]}
       />
     )

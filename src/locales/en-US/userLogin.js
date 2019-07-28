@@ -13,4 +13,6 @@ export default {
   'Not Found': 'Not Found',
   'Login Success': 'Login Success',
   'user.login.toRegister': 'Register',
+  'user.login.usernameOrEmail': 'Username or Email',
+  'user.login.usernameOrEmail.errorMessage': 'please input your username or email',
 };

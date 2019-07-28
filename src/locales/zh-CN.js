@@ -7,6 +7,7 @@ import settings from './zh-CN/settings'
 import userLogin from './zh-CN/userLogin'
 import userRegister from './zh-CN/userRegister'
 import userReset from './zh-CN/userReset'
+import message from './zh-CN/message'
 
 export default {
   'navBar.lang': '语言',
@@ -23,4 +24,5 @@ export default {
   ...userLogin,
   ...userRegister,
   ...userReset,
+  ...message,
 }

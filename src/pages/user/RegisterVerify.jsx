@@ -23,7 +23,7 @@ class Index extends PureComponent {
             .then(resp => {
               console.log(resp)
               if (null != resp && 200 === resp.code) {
-                message.success('注册成功 欢迎登录')
+                message.success(formatMessage({ id: '注册成功' }))
                 router.push('/user/login')
               }
             })
@@ -50,7 +50,9 @@ class Index extends PureComponent {
     return (
       <Row justify="space-around" type="flex">
         <Col xs={16} sm={12} md={8} lg={6} xl={4}>
-          <h3>设置登录密码</h3>
+          <h3>
+            {<FormattedMessage id={'user.register.verify.setPassword'}></FormattedMessage>}
+          </h3>
           <Form>
             <Form.Item>
               {getFieldDecorator('password', {
@@ -97,17 +99,17 @@ class Index extends PureComponent {
             </Form.Item>
             <Row>
               <Button type="primary" className={styles.button} onClick={this.handleOk}>
-                {<FormattedMessage id={'user.login.signIn'}></FormattedMessage>}
+                {<FormattedMessage id={'user.register.verify.ok'}></FormattedMessage>}
               </Button>
             </Row>
           </Form>
 
           <div style={{ margin: '1em 0' }}>
             <Steps size="small" current={2} direction="vertical">
-              <Steps.Step title="填写信息"/>
-              <Steps.Step title="邮箱验证"/>
-              <Steps.Step title="设置密码"/>
-              <Steps.Step title="注册完成"/>
+              <Steps.Step title={formatMessage({ id: 'user.register.steps.0' })}/>
+              <Steps.Step title={formatMessage({ id: 'user.register.steps.1' })}/>
+              <Steps.Step title={formatMessage({ id: 'user.register.steps.2' })}/>
+              <Steps.Step title={formatMessage({ id: 'user.register.steps.3' })}/>
             </Steps>
           </div>
         </Col>

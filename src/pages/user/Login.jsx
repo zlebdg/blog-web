@@ -69,7 +69,7 @@ class Login extends PureComponent {
                 console.log(resp)
                 if (null != resp && 200 === resp.code) {
                   sessionStorage.setItem('CURRENT_USER', JSON.stringify(resp.data))
-                  message.success('登录成功')
+                  message.success(formatMessage({ id: '登录成功' }))
                   router.push('/')
                 }
               },
@@ -92,7 +92,7 @@ class Login extends PureComponent {
                 rules: [
                   {
                     required: true,
-                    message: formatMessage({ id: 'user.login.username.errorMessage' }),
+                    message: formatMessage({ id: 'user.login.usernameOrEmail.errorMessage' }),
                   },
                 ],
               })(
@@ -100,7 +100,7 @@ class Login extends PureComponent {
                   name="username"
                   suffix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }}/>}
                   onPressEnter={this.handleOk}
-                  placeholder={formatMessage({ id: 'user.login.username' })}
+                  placeholder={formatMessage({ id: 'user.login.usernameOrEmail' })}
                 />,
               )}
 

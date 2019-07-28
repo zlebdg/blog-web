@@ -1,7 +1,9 @@
 import React, { PureComponent } from 'react'
-import { Button, Col, Form, Icon, Input, Row, Steps } from 'antd'
+import { Button, Col, Form, Icon, Input, message, Row, Steps } from 'antd'
 import { formatMessage, FormattedMessage } from 'umi-plugin-react/locale'
 import styles from './login.less'
+import { resetVerify } from '../../services/userReset'
+import router from 'umi/router'
 
 @Form.create()
 class Index extends PureComponent {
@@ -14,6 +16,16 @@ class Index extends PureComponent {
 
           // 校验通过
           console.log('Received values of form: ', values)
+
+          const { verifyCode } = this.props.location.query
+          resetVerify(verifyCode, values.password)
+            .then(resp => {
+              console.log(resp)
+              if (null != resp && 200 === resp.code) {
+                message.success(formatMessage({ id: '密码重置成功' }))
+                router.push('/user/login')
+              }
+            })
         }
       },
     )
@@ -37,14 +49,16 @@ class Index extends PureComponent {
     return (
       <Row justify="space-around" type="flex">
         <Col xs={16} sm={12} md={8} lg={6} xl={4}>
-          <h3>设置登录密码</h3>
+          <h3>
+            {<FormattedMessage id={'user.reset.verify.setPassword'}></FormattedMessage>}
+          </h3>
           <Form>
             <Form.Item>
               {getFieldDecorator('password', {
                 rules: [
                   {
                     required: true,
-                    message: formatMessage({ id: 'user.register.verify.password.errorMessage' }),
+                    message: formatMessage({ id: 'user.reset.verify.password.errorMessage' }),
                   },
                 ],
               })(
@@ -55,7 +69,7 @@ class Index extends PureComponent {
                   allowClear
                   suffix={<Icon type="eye-invisible" style={{ opacity: 0.5 }}/>}
                   onPressEnter={this.handleOk}
-                  placeholder={formatMessage({ id: 'user.register.verify.password' })}
+                  placeholder={formatMessage({ id: 'user.reset.verify.password' })}
                 />,
               )}
             </Form.Item>
@@ -64,7 +78,7 @@ class Index extends PureComponent {
                 rules: [
                   {
                     required: true,
-                    message: formatMessage({ id: 'user.register.verify.password.repeat.errorMessage' }),
+                    message: formatMessage({ id: 'user.reset.verify.password.repeat.errorMessage' }),
                   },
                   {
                     validator: this.compareTwoPassword,
@@ -78,23 +92,23 @@ class Index extends PureComponent {
                   allowClear
                   suffix={<Icon type="eye-invisible" style={{ opacity: 0.5 }}/>}
                   onPressEnter={this.handleOk}
-                  placeholder={formatMessage({ id: 'user.register.verify.password.repeat' })}
+                  placeholder={formatMessage({ id: 'user.reset.verify.password.repeat' })}
                 />,
               )}
             </Form.Item>
             <Row>
               <Button type="primary" className={styles.button} onClick={this.handleOk}>
-                {<FormattedMessage id={'user.login.signIn'}></FormattedMessage>}
+                {<FormattedMessage id={'user.reset.verify.ok'}></FormattedMessage>}
               </Button>
             </Row>
           </Form>
 
           <div style={{ margin: '1em 0' }}>
             <Steps size="small" current={2} direction="vertical">
-              <Steps.Step title="填写信息"/>
-              <Steps.Step title="邮箱验证"/>
-              <Steps.Step title="设置密码"/>
-              <Steps.Step title="注册完成"/>
+              <Steps.Step title={formatMessage({ id: 'user.reset.steps.0' })}/>
+              <Steps.Step title={formatMessage({ id: 'user.reset.steps.1' })}/>
+              <Steps.Step title={formatMessage({ id: 'user.reset.steps.2' })}/>
+              <Steps.Step title={formatMessage({ id: 'user.reset.steps.3' })}/>
             </Steps>
           </div>
         </Col>

@@ -55,4 +55,8 @@ export default {
   'menu.aMenu2.sub menu 3.xs menu 0': 'xs menu 0',
   'menu.aMenu2.sub menu 3.xs menu 1': 'xs menu 1',
   'menu.aMenu2.sub menu 3.xs menu 2': 'xs menu 2',
+  'menu.register waiting': 'Register Verify',
+  'menu.register verify': 'Set Password',
+  'menu.reset': 'Reset Password',
+  'menu.reset verify': 'Set New Password',
 };

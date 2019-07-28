@@ -24,7 +24,7 @@ class Index extends PureComponent {
           .then(resp => {
             console.log(resp)
             if (null != resp && 200 === resp.code) {
-              router.push('/blank/user/register/waitingForEmail')
+              router.push('/blank/user/reset/waitingForEmail')
             } else {
               this.setState({
                 captcha: `/captcha?${(Math.random())}`,
