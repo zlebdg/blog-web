@@ -1,6 +1,6 @@
 import request from '@/utils/request'
-import { formatMessage } from 'umi-plugin-react/locale'
 import { message } from 'antd'
+import basicErrorHandler from './errorHandler'
 
 export async function userLogin(username, password) {
   return request('/test/login', {
@@ -11,18 +11,7 @@ export async function userLogin(username, password) {
       password: password,
     },
     params: {},
-    errorHandler: (error) => { // 出错处理
-      const {response, data} = error
-      console.log(response)
-      console.log(data)
-      if (data && data.message) {
-        try {
-          message.error(formatMessage({id: data.message}))
-        } catch (e) { // 缺少i18n则降级成直接显示server返回的message
-          message.error()
-        }
-      }
-    },
+    errorHandler: basicErrorHandler,
   })
 }
 
