@@ -241,6 +241,10 @@ export default {
       target: 'http://dev.local:20010/',
       changeOrigin: true,
     },
+    '/login': {
+      target: 'http://dev.local:20010/',
+      changeOrigin: true,
+    },
     '/auth': {
       target: 'http://dev.local:20010/',
       changeOrigin: true,

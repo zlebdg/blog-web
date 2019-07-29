@@ -1,82 +1,58 @@
 import React, { PureComponent } from 'react'
-import PropTypes from 'prop-types'
 import { Button, Col, Form, Icon, Input, message, Row } from 'antd'
 import { formatMessage, FormattedMessage } from 'umi-plugin-react/locale'
 import styles from './login.less'
-import { connect } from 'dva'
-import { userLogin } from '../../services/userLogin'
+import { currentUser, userLogin } from '../../services/userLogin'
 import Link from 'umi/link'
 import router from 'umi/router'
 
-const namespace = 'userLogin'
 
 @Form.create()
-@connect(
-  state => {
-    return {
-      username: state[namespace].username,
-      message: state[namespace].message,
-    }
-  },
-  dispatch => {
-    return {
-      userLogin: () => {
-        message.info('userLogin request')
-        dispatch({
-          type: namespace + '/userLogin',
-        })
-      },
-    }
-  },
-)
 class Login extends PureComponent {
-  // state = {
-  //   emailSuffix: [],
-  // }
-
-  // handleChange = (value) => {
-  //   this.setState({
-  //     emailSuffix:
-  //       !value || value.indexOf('@') >= 0
-  //         ? []
-  //         : [`${value}@gmail.com`, `${value}@163.com`, `${value}@qq.com`, `${value}@live.cn`],
-  //   })
-  // }
+  componentDidMount() {
+    if (null == sessionStorage.getItem('autoLogin')) {
+      currentUser()
+        .then(resp => {
+          console.log(resp)
+          if (null != resp && 200 == resp.code) {
+            const user = JSON.parse(resp.data)
+            if (user.authenticated && user.username !== 'anonymousUser') {
+              sessionStorage.setItem('currentUser', resp.data)
+              setTimeout(function () {
+                message.success(formatMessage({ id: 'Auto Login Success' }))
+                sessionStorage.setItem('autoLogin', 1)
+                router.push('/')
+              }, 200)
+            }
+          }
+        })
+    }
+  }
 
   handleOk = e => {
     e.preventDefault()
     this.props.form.validateFields((err, values) => {
-        if (!err) {
-          console.log('Received values of form: ', values)
+      if (!err) {
+        console.log('Received values of form: ', values)
 
-          // 原生fetch
-          // fetch('/api/currentUser').then(r => {
-          //   return r.text()
-          // }).then(text => {
-          //   message.success(text)
-          // })
-
-          // 路由切换
-          // router.push('/')
-
-          // umi request
-          // this.props.userLogin()
-
-          // 封装的请求
-          userLogin(values.username, values.password)
-            .then(resp => {
-                // {"code":200,"message":"OK","data":{"authorities":[{"authority":"ROLE_test"}],"details":null,"authenticated":true,"principal":{"password":null,"username":"test","authorities":[{"authority":"ROLE_test"}],"accountNonExpired":true,"accountNonLocked":true,"credentialsNonExpired":true,"enabled":true},"credentials":null,"name":"test"}}
-                console.log(resp)
-                if (null != resp && 200 === resp.code) {
-                  sessionStorage.setItem('CURRENT_USER', JSON.stringify(resp.data))
-                  message.success(formatMessage({ id: '登录成功' }))
-                  router.push('/')
+        // spring security 后台实现只会返回重定向响应头, 这里暂时兼容一下 todo
+        userLogin(values.username, values.password)
+          .then(() => {
+            currentUser()
+              .then(resp => {
+                // console.log(resp)
+                if (null != resp && 200 == resp.code) {
+                  const user = JSON.parse(resp.data)
+                  if (user.authenticated && user.username !== 'anonymousUser') {
+                    sessionStorage.setItem('currentUser', resp.data)
+                    message.success(formatMessage({ id: 'Login Success' }))
+                    router.push('/')
+                  }
                 }
-              },
-            )
-        }
-      },
-    )
+              })
+          })
+      }
+    })
   }
 
   render() {
@@ -183,13 +159,6 @@ class Login extends PureComponent {
       </Row>
     )
   }
-}
-
-Login.propTypes = {
-  props: PropTypes.any,
-  form: PropTypes.object,
-  dispatch: PropTypes.func,
-  loading: PropTypes.object,
 }
 
 export default Login

@@ -15,4 +15,5 @@ export default {
   'user.login.toRegister': '去注册',
   'user.login.usernameOrEmail': '用户名或邮箱',
   'user.login.usernameOrEmail.errorMessage': '请输入你的用户名或邮箱',
+  'Auto Login Success': '自动登录成功',
 }

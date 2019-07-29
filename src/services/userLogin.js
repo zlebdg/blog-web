@@ -1,38 +1,29 @@
-import request from '@/utils/request'
-import { message } from 'antd'
+import { extend } from 'umi-request'
 import basicErrorHandler from './errorHandler'
 
+const request = extend({
+  maxCache: 10,
+  errorHandler: (error) => {
+    console.log(error)
+  },
+  credentials: 'include',
+})
+
 export async function userLogin(username, password) {
-  return request('/test/login', {
+  return request('/login', {
     method: 'post',
     requestType: 'form',
     data: {
       username: username,
       password: password,
+      'remember-me': 'true',
     },
-    params: {},
     errorHandler: basicErrorHandler,
   })
 }
 
-export default async function userLogin2(username, password) {
-  const formData = new FormData()
-  formData.append('username', username)
-  formData.append('password', password)
-  return fetch('/test/login', {
-    method: 'post',
-    body: formData,
-    headers: {
-      Accept: 'application/json',
-      'Cache-Control': 'no-cache',
-    },
-    credentials: 'include',
+export async function currentUser() {
+  return request('/auth/currentUser', {
+    errorHandler: basicErrorHandler,
   })
-    .then(response => {
-      return response.json()
-    })
-    .catch(error => {
-      console.log(error)
-      message.error(error)
-    })
 }

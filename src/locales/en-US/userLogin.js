@@ -15,4 +15,5 @@ export default {
   'user.login.toRegister': 'Register',
   'user.login.usernameOrEmail': 'Username or Email',
   'user.login.usernameOrEmail.errorMessage': 'please input your username or email',
+  'Auto Login Success': 'Auto Login Success',
 };
