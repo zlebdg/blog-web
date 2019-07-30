@@ -5,6 +5,7 @@ import styles from './login.less'
 import { currentUser, userLogin } from '../../services/userLogin'
 import Link from 'umi/link'
 import router from 'umi/router'
+import { reloadAuthorized } from '../../utils/Authorized.js'
 
 
 @Form.create()
@@ -21,10 +22,18 @@ class Login extends PureComponent {
               setTimeout(function () {
                 message.success(formatMessage({ id: 'Auto Login Success' }))
                 sessionStorage.setItem('autoLogin', 1)
+
+                // 设置umi菜单权限
+                console.log(JSON.stringify(user.authorities))
+                sessionStorage.setItem('antd-pro-authority', JSON.stringify(user.authorities))
+                reloadAuthorized() // 重新读取授权信息
                 router.push('/')
               }, 200)
             }
           }
+        })
+        .catch(error => {
+          message.error(formatMessage({ id: 'Bad credentials' }))
         })
     }
   }
@@ -46,6 +55,10 @@ class Login extends PureComponent {
                   if (user.authenticated && user.username !== 'anonymousUser') {
                     sessionStorage.setItem('currentUser', resp.data)
                     message.success(formatMessage({ id: 'Login Success' }))
+
+                    // 设置umi菜单权限
+                    sessionStorage.setItem('antd-pro-authority', JSON.stringify(user.authorities))
+                    reloadAuthorized() // 重新读取授权信息
                     router.push('/')
                   }
                 }

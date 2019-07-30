@@ -95,7 +95,7 @@ export default {
           name: 'reset waiting',
           component: './user/ResetWaitingForEmail',
         },
-      ]
+      ],
     },
     {
       path: '/user',
@@ -132,7 +132,6 @@ export default {
       path: '/',
       component: '../layouts/BasicLayout',
       Routes: ['src/pages/Authorized'],
-      authority: ['admin', 'user'],
       routes: [
         {
           path: '/',
@@ -150,21 +149,25 @@ export default {
           path: '/aMenu2',
           name: 'aMenu2',
           icon: 'font-colors',
+          authority: ['ROLE_test'],
           routes: [
             {
               path: '/aMenu2/sub0',
               name: 'sub menu 0',
               component: './aMenu2/sub0',
+              authority: ['ROLE_test'],
             },
             {
               path: '/aMenu2/sub1',
               name: 'sub menu 1',
               component: './aMenu2/sub1',
               icon: 'heat-map', // 也可以带icon
+              authority: ['ROLE_test'],
             },
             {
               path: '/aMenu2/sub3',
               name: 'sub menu 3',
+              authority: ['ROLE_test'],
               routes: [
                 {
                   path: '/aMenu2/sub3/xs0',
@@ -175,11 +178,13 @@ export default {
                   path: '/aMenu2/sub3/xs1',
                   name: 'xs menu 1',
                   component: './aMenu2/sub3/xs1',
+                  authority: ['ROLE_test'],
                 },
                 {
                   path: '/aMenu2/sub3/xs2',
                   name: 'xs menu 2',
                   component: './aMenu2/sub3/xs2',
+                  authority: ['ROLE_test'],
                 },
               ],
             },
