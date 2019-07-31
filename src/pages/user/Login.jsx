@@ -44,32 +44,30 @@ class Login extends PureComponent {
       if (!err) {
         console.log('Received values of form: ', values)
 
-        // spring security 后台实现只会返回重定向响应头, 这里暂时兼容一下 todo
+        // spring security 后台实现只会返回重定向响应头, 这里暂时兼容一下
+        // 后台已修改, 针对 Accept: application/json 的 form表单登录请求返回json
         userLogin(values.username, values.password)
-          .then(() => {
-            currentUser()
-              .then(resp => {
-                // console.log(resp)
-                if (null != resp && 200 == resp.code) {
-                  const user = JSON.parse(resp.data)
-                  if (user.authenticated && user.username !== 'anonymousUser') {
-                    sessionStorage.setItem('currentUser', resp.data)
-                    message.success(formatMessage({ id: 'Login Success' }))
+          .then(resp => {
+            // console.log(resp)
+            if (null != resp && 200 == resp.code) {
+              const user = JSON.parse(resp.data)
+              if (user.authenticated && user.username !== 'anonymousUser') {
+                sessionStorage.setItem('currentUser', resp.data)
+                message.success(formatMessage({ id: 'Login Success' }))
 
-                    // 设置umi菜单权限
-                    sessionStorage.setItem('antd-pro-authority', JSON.stringify(user.authorities))
-                    reloadAuthorized() // 重新读取授权信息
-                    router.push('/')
-                  }
-                }
-              })
+                // 设置umi菜单权限
+                sessionStorage.setItem('antd-pro-authority', JSON.stringify(user.authorities))
+                reloadAuthorized() // 重新读取授权信息
+                router.push('/')
+              }
+            }
           })
       }
     })
   }
 
   render() {
-    const { loading, form, dispatch } = this.props
+    const { form } = this.props
     const { getFieldDecorator } = form
 
     return (
