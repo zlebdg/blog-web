@@ -66,12 +66,16 @@ class Login extends PureComponent {
     })
   }
 
+  oauth = (app) => {
+   window.location = `/oauth/login/${app}`
+  }
+
   render() {
     const { form } = this.props
     const { getFieldDecorator } = form
 
     return (
-      <Row justify="space-around" type="flex">
+      <Row justify="space-around" type="flex" className={styles.main}>
         <Col xs={16} sm={12} md={8} lg={6} xl={4}>
           <Form>
             <Form.Item>
@@ -165,6 +169,13 @@ class Login extends PureComponent {
                     {<FormattedMessage id={'user.login.Password'}></FormattedMessage>}: 123456
                   </span>
             </Row>
+            <div className={styles.other}>
+              <FormattedMessage id="user.login.oauth"/>
+              <Icon key="oauth.github" type="github" className={styles.icon} theme="outlined"
+                    onClick={this.oauth.bind(this, 'github')}/>
+              <Icon key="oauth.alipay" type="alipay-circle" className={styles.icon} theme="outlined"
+                    onClick={this.oauth.bind(this, 'alipay')}/>
+            </div>
           </Form>
         </Col>
       </Row>
