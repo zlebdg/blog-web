@@ -5,8 +5,7 @@ import styles from './login.less'
 import { currentUser, userLogin } from '../../services/userLogin'
 import Link from 'umi/link'
 import router from 'umi/router'
-import { reloadAuthorized } from '../../utils/Authorized.js'
-
+import { reloadAuthorized } from '../../utils/Authorized'
 
 @Form.create()
 class Login extends PureComponent {
@@ -67,7 +66,6 @@ class Login extends PureComponent {
   }
 
   oauth = (app) => {
-    sessionStorage.removeItem('autoLogin')
     window.location = `/oauth/login/${app}`
   }
 

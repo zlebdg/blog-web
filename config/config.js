@@ -98,6 +98,17 @@ export default {
       ],
     },
     {
+      path: '/oauth',
+      component: '../layouts/BlankLayout',
+      routes: [
+        {
+          path: '/oauth/callbackPage',
+          name: 'oauth callbackPage',
+          component: './oauth/CallbackPage',
+        },
+      ],
+    },
+    {
       path: '/user',
       component: '../layouts/UserLayout',
       routes: [
