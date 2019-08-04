@@ -5,25 +5,26 @@ import router from 'umi/router'
 
 export default class CallbackPage extends PureComponent {
   componentDidMount() {
-    currentUser()
-      .then(resp => {
-        if (null != resp && 200 == resp.code) {
-          const user = JSON.parse(resp.data)
-          if (user.authenticated && user.username !== 'anonymousUser') {
-            sessionStorage.setItem('currentUser', resp.data)
+    if (null == sessionStorage.getItem('oauthCallback')) {
+      currentUser()
+        .then(resp => {
+          if (null != resp && 200 == resp.code) {
+            const user = JSON.parse(resp.data)
+            if (user.authenticated && user.username !== 'anonymousUser') {
+              sessionStorage.setItem('currentUser', resp.data)
 
-            // 设置umi菜单权限
-            sessionStorage.setItem('antd-pro-authority', JSON.stringify(user.authorities))
-            reloadAuthorized() // 重新读取授权信息
-            router.push('/welcome')
+              // 设置umi菜单权限
+              sessionStorage.setItem('antd-pro-authority', JSON.stringify(user.authorities))
+              reloadAuthorized() // 重新读取授权信息
+              router.push('/welcome')
+              sessionStorage.setItem('oauthCallback', 1)
+            }
           }
-        } else {
-          router.push('/')
-        }
-      })
-      .catch(error => {
-        router.push('/')
-      })
+        })
+        .catch(error => {
+        })
+    }
+    router.push('/')
   }
 
   render() {

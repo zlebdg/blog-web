@@ -66,6 +66,7 @@ class Login extends PureComponent {
   }
 
   oauth = (app) => {
+    sessionStorage.removeItem('oauthCallback')
     window.location = `/oauth/login/${app}`
   }
 
