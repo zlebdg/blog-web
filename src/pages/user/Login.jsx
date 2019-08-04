@@ -27,7 +27,7 @@ class Login extends PureComponent {
                 console.log(JSON.stringify(user.authorities))
                 sessionStorage.setItem('antd-pro-authority', JSON.stringify(user.authorities))
                 reloadAuthorized() // 重新读取授权信息
-                router.push('/')
+                router.push('/welcome')
               }, 200)
             }
           }
@@ -58,7 +58,7 @@ class Login extends PureComponent {
                 // 设置umi菜单权限
                 sessionStorage.setItem('antd-pro-authority', JSON.stringify(user.authorities))
                 reloadAuthorized() // 重新读取授权信息
-                router.push('/')
+                router.push('/welcome')
               }
             }
           })

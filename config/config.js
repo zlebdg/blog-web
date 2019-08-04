@@ -135,7 +135,7 @@ export default {
       routes: [
         {
           path: '/',
-          redirect: '/welcome',
+          redirect: '/user/login',
         },
         {
           path: '/welcome',
