@@ -5,6 +5,7 @@ import { connect } from 'dva'
 import router from 'umi/router'
 import HeaderDropdown from '../HeaderDropdown'
 import styles from './index.less'
+import { generateImgSrc as idcon } from '../Img/DefaultAvatar'
 
 class AvatarDropdown extends React.Component {
   componentDidUpdate() {
@@ -41,7 +42,9 @@ class AvatarDropdown extends React.Component {
     if (!menu) {
       return (
         <span className={`${styles.action} ${styles.account}`}>
-          <Avatar size="small" className={styles.avatar} src={currentUser.avatar} alt="avatar"/>
+          <Avatar size="small" className={styles.avatar}
+                  src={currentUser.avatar ? currentUser.avatar : idcon(currentUser.username)}
+                  alt="avatar"/>
           <span className={styles.name}>{currentUser.nickname}</span>
         </span>
       )
