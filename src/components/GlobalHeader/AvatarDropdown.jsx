@@ -15,6 +15,8 @@ class AvatarDropdown extends React.Component {
     // 未登录
     if (currentUser && !currentUser.authenticated) {
       router.push('/user/login')
+    } else {
+      sessionStorage.setItem('autoLogin', 1)
     }
   }
 
