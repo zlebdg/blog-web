@@ -17,4 +17,5 @@ export default {
   'user.login.usernameOrEmail.errorMessage': '请输入你的用户名或邮箱',
   'Auto Login Success': '自动登录成功',
   'user.login.oauth': '第三方登录',
+  'user.login.welcome': '欢迎回来',
 }

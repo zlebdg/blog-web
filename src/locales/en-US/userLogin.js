@@ -16,4 +16,6 @@ export default {
   'user.login.usernameOrEmail': 'Username or Email',
   'user.login.usernameOrEmail.errorMessage': 'please input your username or email',
   'Auto Login Success': 'Auto Login Success',
+  'user.login.oauth': 'OAuth Login',
+  'user.login.welcome': 'Welcome',
 };

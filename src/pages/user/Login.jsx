@@ -10,7 +10,7 @@ import { reloadAuthorized } from '../../utils/Authorized.js'
 
 @Form.create()
 class Login extends PureComponent {
-  componentDidMount() {
+  componentWillMount() {
     if (null == sessionStorage.getItem('autoLogin')) {
       currentUser()
         .then(resp => {
@@ -20,7 +20,7 @@ class Login extends PureComponent {
             if (user.authenticated && user.username !== 'anonymousUser') {
               sessionStorage.setItem('currentUser', resp.data)
               setTimeout(function () {
-                message.success(formatMessage({ id: 'Auto Login Success' }))
+                message.success(formatMessage({ id: 'user.login.welcome' }))
                 sessionStorage.setItem('autoLogin', 1)
 
                 // 设置umi菜单权限
@@ -67,7 +67,8 @@ class Login extends PureComponent {
   }
 
   oauth = (app) => {
-   window.location = `/oauth/login/${app}`
+    sessionStorage.removeItem('autoLogin')
+    window.location = `/oauth/login/${app}`
   }
 
   render() {
