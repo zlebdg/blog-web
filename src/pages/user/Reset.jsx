@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import { Button, Col, Form, Icon, Input, Row } from 'antd'
 import { formatMessage, FormattedMessage } from 'umi-plugin-react/locale'
-import styles from './login.less'
+import styles from './styles.less'
 import AppCaptcha from '../../components/Img/AppCaptcha'
 import { reset } from '../../services/userReset'
 import Link from 'umi/link'
@@ -40,7 +40,7 @@ class Index extends PureComponent {
     const { getFieldDecorator } = form
 
     return (
-      <Row justify="space-around" type="flex">
+      <Row justify="space-around" type="flex" className={styles.main}>
         <Col xs={16} sm={12} md={8} lg={6} xl={4}>
           <Form>
             <Form.Item>
@@ -77,6 +77,7 @@ class Index extends PureComponent {
                       suffix={<Icon type="safety-certificate"
                                     style={{ color: 'rgba(0,0,0,.25)' }}/>}
                       placeholder={formatMessage({ id: 'user.register.captcha' })}
+                      autoComplete="off"
                     />,
                   )}
                 </Form.Item>

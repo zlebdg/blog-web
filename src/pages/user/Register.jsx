@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import { AutoComplete, Button, Col, Form, Icon, Input, Row } from 'antd'
 import { formatMessage, FormattedMessage } from 'umi-plugin-react/locale'
-import styles from './login.less'
+import styles from './styles.less'
 import AppCaptcha from '../../components/Img/AppCaptcha'
 import { register } from '../../services/userRegister'
 import Link from 'umi/link'
@@ -56,7 +56,7 @@ class Index extends PureComponent {
     const { getFieldDecorator } = form
 
     return (
-      <Row justify="space-around" type="flex">
+      <Row justify="space-around" type="flex" className={styles.main}>
         <Col xs={16} sm={12} md={8} lg={6} xl={4}>
           <Form>
             <Form.Item>
@@ -96,9 +96,9 @@ class Index extends PureComponent {
                 </AutoComplete>,
               )}
             </Form.Item>
-            <Row type="flex" justify="space-between">
-              <Col span={12}>
-                <Form.Item>
+            <Form.Item>
+              <Row type="flex" justify="space-between">
+                <Col span={12}>
                   {getFieldDecorator('captcha', {
                     rules: [
                       {
@@ -112,16 +112,17 @@ class Index extends PureComponent {
                       suffix={<Icon type="safety-certificate"
                                     style={{ color: 'rgba(0,0,0,.25)' }}/>}
                       placeholder={formatMessage({ id: 'user.register.captcha' })}
+                      autoComplete="off"
                     />,
                   )}
-                </Form.Item>
-              </Col>
-              <Col xs={10} span={8}>
-                <AppCaptcha src={this.state.captcha}
-                            alt={formatMessage({ id: 'user.register.captcha.alt' })}
-                            tips={formatMessage({ id: 'user.register.captcha.tips' })}/>
-              </Col>
-            </Row>
+                </Col>
+                <Col xs={10} span={8}>
+                  <AppCaptcha src={this.state.captcha}
+                              alt={formatMessage({ id: 'user.register.captcha.alt' })}
+                              tips={formatMessage({ id: 'user.register.captcha.tips' })}/>
+                </Col>
+              </Row>
+            </Form.Item>
             <Row>
               <Button type="primary" className={styles.button} onClick={this.handleOk}>
                 {<FormattedMessage id={'user.Register'}></FormattedMessage>}

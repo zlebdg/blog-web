@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import { Button, Col, Form, Icon, Input, message, Row } from 'antd'
 import { formatMessage, FormattedMessage } from 'umi-plugin-react/locale'
-import styles from './login.less'
+import styles from './styles.less'
 import { currentUser, userLogin } from '../../services/userLogin'
 import Link from 'umi/link'
 import router from 'umi/router'

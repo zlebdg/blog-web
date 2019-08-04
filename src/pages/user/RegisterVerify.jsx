@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import { Button, Col, Form, Icon, Input, message, Row, Steps } from 'antd'
 import { formatMessage, FormattedMessage } from 'umi-plugin-react/locale'
-import styles from './login.less'
+import styles from './styles.less'
 import { registerVerify } from '../../services/userRegister'
 import router from 'umi/router'
 
@@ -48,7 +48,7 @@ class Index extends PureComponent {
     const { getFieldDecorator } = form
 
     return (
-      <Row justify="space-around" type="flex">
+      <Row justify="space-around" type="flex" className={styles.main}>
         <Col xs={16} sm={12} md={8} lg={6} xl={4}>
           <h3>
             {<FormattedMessage id={'user.register.verify.setPassword'}></FormattedMessage>}
