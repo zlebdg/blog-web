@@ -1,33 +1,25 @@
-import { parse, stringify } from 'qs';
-import { routerRedux } from 'dva/router';
-export function getPageQuery() {
-  return parse(window.location.href.split('?')[1]);
-}
+import { logout } from '../services/home'
+
+// import { parse, stringify } from 'qs'
+// parse('')
+// stringify({})
+
 const Model = {
   namespace: 'login',
   state: {
     status: undefined,
   },
   effects: {
-    *logout(_, { put }) {
-      const { redirect } = getPageQuery(); // redirect
-
-      if (window.location.pathname !== '/user/login' && !redirect) {
-        yield put(
-          routerRedux.replace({
-            pathname: '/user/login',
-            search: stringify({
-              redirect: window.location.href,
-            }),
-          }),
-        );
+    * logout(_, {call, put}) {
+      const response = yield call(logout)
+      if (200 === response.code) {
+        sessionStorage.removeItem('currentUser')
       }
+      yield put({
+        type: 'user/fetchCurrent',
+      })
     },
   },
-  reducers: {
-    changeLoginStatus(state, { payload }) {
-      return { ...state, status: payload.status, type: payload.type };
-    },
-  },
-};
-export default Model;
+  reducers: {},
+}
+export default Model

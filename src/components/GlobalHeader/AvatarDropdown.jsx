@@ -9,9 +9,7 @@ import { generateImgSrc as idcon } from '../Img/DefaultAvatar'
 
 class AvatarDropdown extends React.Component {
   componentDidUpdate() {
-    const { currentUser = {}, menu } = this.props
-    console.log(currentUser)
-
+    const {currentUser = {}, menu} = this.props
     // 未登录
     if (currentUser && !currentUser.authenticated) {
       router.push('/user/login')
@@ -21,25 +19,50 @@ class AvatarDropdown extends React.Component {
   }
 
   onMenuClick = event => {
-    const { key } = event
-
+    const {key} = event
     if (key === 'logout') {
-      const { dispatch } = this.props
-
+      const {dispatch} = this.props
       if (dispatch) {
         dispatch({
           type: 'login/logout',
         })
       }
-
       return
     }
-
     router.push(`/account/${key}`)
   }
 
   render() {
-    const { currentUser, menu } = this.props
+    const {currentUser, menu} = this.props
+
+    const menuHeaderDropdown2 = (
+      <Menu className={styles.menu} selectedKeys={[]} onClick={this.onMenuClick}>
+        <Menu.Item key="logout">
+          <Icon type="logout"/>
+          <FormattedMessage id="menu.account.logout" defaultMessage="logout"/>
+        </Menu.Item>
+      </Menu>
+    )
+
+    if (true) {
+      return currentUser && currentUser.authenticated ? (
+        <HeaderDropdown overlay={menuHeaderDropdown2}>
+          <span className={`${styles.action} ${styles.account}`}>
+            <Avatar size="small" className={styles.avatar}
+                    src={currentUser.avatar ? currentUser.avatar : idcon(currentUser.username)} alt="avatar"/>
+            <span className={styles.name}>{currentUser.nickname}</span>
+          </span>
+        </HeaderDropdown>
+      ) : (
+        <Spin
+          size="small"
+          style={{
+            marginLeft: 8,
+            marginRight: 8,
+          }}
+        />
+      )
+    }
 
     if (!menu) {
       return (
@@ -88,6 +111,7 @@ class AvatarDropdown extends React.Component {
   }
 }
 
-export default connect(({ user }) => ({
+export default connect(({user, login}) => ({
   currentUser: user.currentUser,
+  status: login.status,
 }))(AvatarDropdown)
