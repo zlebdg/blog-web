@@ -9,7 +9,7 @@ import { generateImgSrc as idcon } from '../Img/DefaultAvatar'
 
 class AvatarDropdown extends React.Component {
   componentDidUpdate() {
-    const {currentUser = {}, menu} = this.props
+    const { currentUser = {}, menu } = this.props
     // 未登录
     if (currentUser && !currentUser.authenticated) {
       router.push('/user/login')
@@ -19,9 +19,9 @@ class AvatarDropdown extends React.Component {
   }
 
   onMenuClick = event => {
-    const {key} = event
+    const { key } = event
     if (key === 'logout') {
-      const {dispatch} = this.props
+      const { dispatch } = this.props
       if (dispatch) {
         dispatch({
           type: 'login/logout',
@@ -33,7 +33,7 @@ class AvatarDropdown extends React.Component {
   }
 
   render() {
-    const {currentUser, menu} = this.props
+    const { currentUser, menu } = this.props
 
     const menuHeaderDropdown2 = (
       <Menu className={styles.menu} selectedKeys={[]} onClick={this.onMenuClick}>
@@ -49,7 +49,8 @@ class AvatarDropdown extends React.Component {
         <HeaderDropdown overlay={menuHeaderDropdown2}>
           <span className={`${styles.action} ${styles.account}`}>
             <Avatar size="small" className={styles.avatar}
-                    src={currentUser.avatar ? currentUser.avatar : idcon(currentUser.username)} alt="avatar"/>
+                    src={currentUser.avatar ? currentUser.avatar : idcon(currentUser.username)}
+                    alt="avatar"/>
             <span className={styles.name}>{currentUser.nickname}</span>
           </span>
         </HeaderDropdown>
@@ -111,7 +112,7 @@ class AvatarDropdown extends React.Component {
   }
 }
 
-export default connect(({user, login}) => ({
+export default connect(({ user, login }) => ({
   currentUser: user.currentUser,
   status: login.status,
 }))(AvatarDropdown)
