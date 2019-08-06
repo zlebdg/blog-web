@@ -1,0 +1,16 @@
+{
+  "/vendors.js": "/blog/vendors.6fe1bf89.async.js",
+  "/layouts__BlankLayout.css": "/blog/layouts__BlankLayout.d4836e90.chunk.css",
+  "/layouts__BlankLayout.js": "/blog/layouts__BlankLayout.a8968877.async.js",
+  "/p__404.css": "/blog/p__404.86e4dbc8.chunk.css",
+  "/p__404.js": "/blog/p__404.abe093d3.async.js",
+  "/p__aMenu.js": "/blog/p__aMenu.bc4ddff5.async.js",
+  "/p__oauth__CallbackPage.js": "/blog/p__oauth__CallbackPage.1658b8ff.async.js",
+  "/umi.css": "/blog/umi.8dd6ada4.css",
+  "/umi.js": "/blog/umi.96e3ffd7.js",
+  "/favicon.png": "/blog/favicon.png",
+  "/icons/icon-128x128.png": "/blog/icons/icon-128x128.png",
+  "/icons/icon-192x192.png": "/blog/icons/icon-192x192.png",
+  "/icons/icon-512x512.png": "/blog/icons/icon-512x512.png",
+  "/index.html": "/blog/index.html"
+}

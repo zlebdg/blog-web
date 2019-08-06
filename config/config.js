@@ -82,18 +82,16 @@ export default {
   // umi routes: https://umijs.org/zh/guide/router.html
   routes: [
     {
-      path: '/blank',
+      path: '/',
       component: '../layouts/BlankLayout',
       routes: [
         {
-          path: '/blank/user/register/waitingForEmail',
-          name: 'register waiting',
-          component: './user/RegisterWaitingForEmail',
+          path: '/',
+          redirect: '/home',
         },
         {
-          path: '/blank/user/reset/waitingForEmail',
-          name: 'reset waiting',
-          component: './user/ResetWaitingForEmail',
+          path: '/home',
+          component: './aMenu',
         },
       ],
     },
@@ -105,108 +103,6 @@ export default {
           path: '/oauth/callbackPage',
           name: 'oauth callbackPage',
           component: './oauth/CallbackPage',
-        },
-      ],
-    },
-    {
-      path: '/user',
-      component: '../layouts/UserLayout',
-      routes: [
-        {
-          path: '/user/login',
-          name: 'login',
-          component: './user/Login',
-        },
-        {
-          path: '/user/register',
-          name: 'register',
-          component: './user/Register',
-        },
-        {
-          path: '/user/register/verify',
-          name: 'register verify',
-          component: './user/RegisterVerify',
-        },
-        {
-          path: '/user/reset',
-          name: 'reset',
-          component: './user/Reset',
-        },
-        {
-          path: '/user/reset/verify',
-          name: 'reset verify',
-          component: './user/ResetVerify',
-        },
-      ],
-    },
-    {
-      path: '/',
-      component: '../layouts/BasicLayout',
-      Routes: ['src/pages/Authorized'],
-      routes: [
-        {
-          path: '/',
-          redirect: '/user/login',
-        },
-        {
-          path: '/welcome',
-          name: 'welcome',
-          icon: 'smile',
-          component: './Welcome',
-        },
-        {
-          path: '/aMenu',
-          name: 'aMenu',
-          icon: 'italic',
-          component: './aMenu',
-        },
-        {
-          path: '/aMenu2',
-          name: 'aMenu2',
-          icon: 'font-colors',
-          authority: ['ROLE_test'],
-          routes: [
-            {
-              path: '/aMenu2/sub0',
-              name: 'sub menu 0',
-              component: './aMenu2/sub0',
-              authority: ['ROLE_test'],
-            },
-            {
-              path: '/aMenu2/sub1',
-              name: 'sub menu 1',
-              component: './aMenu2/sub1',
-              icon: 'heat-map', // 也可以带icon
-              authority: ['ROLE_test'],
-            },
-            {
-              path: '/aMenu2/sub3',
-              name: 'sub menu 3',
-              authority: ['ROLE_test'],
-              routes: [
-                {
-                  path: '/aMenu2/sub3/xs0',
-                  name: 'xs menu 0',
-                  component: './aMenu2/sub3/xs0',
-                },
-                {
-                  path: '/aMenu2/sub3/xs1',
-                  name: 'xs menu 1',
-                  component: './aMenu2/sub3/xs1',
-                  authority: ['ROLE_test'],
-                },
-                {
-                  path: '/aMenu2/sub3/xs2',
-                  name: 'xs menu 2',
-                  component: './aMenu2/sub3/xs2',
-                  authority: ['ROLE_test'],
-                },
-              ],
-            },
-          ],
-        },
-        {
-          component: './404',
         },
       ],
     },
@@ -257,24 +153,8 @@ export default {
   },
   chainWebpack: webpackPlugin,
   proxy: {
-    '/captcha': {
-      target: 'http://dev.local:20010/',
-      changeOrigin: true,
-    },
     '/login': {
-      target: 'http://dev.local:20010/',
-      changeOrigin: true,
-    },
-    '/oauth/**': {
-      target: 'http://dev.local:20010/',
-      changeOrigin: true,
-    },
-    '/auth': {
-      target: 'http://dev.local:20010/',
-      changeOrigin: true,
-    },
-    '/test': {
-      target: 'http://dev.local:20010/',
+      target: 'http://dev.local:20000/',
       changeOrigin: true,
     },
   },
@@ -296,9 +176,9 @@ export default {
   //   proxy_pass http://dev.local:5000/antd/;
   // }
   // umi:
-  base: '/antd/',
-  publicPath: '/antd/',
-  outputPath: 'dist/antd/',
+  base: '/blog/',
+  publicPath: '/blog/',
+  outputPath: 'dist/blog/',
   // //
   history: 'hash',
 }
