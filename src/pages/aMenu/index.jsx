@@ -35,7 +35,7 @@ export default () => (
     <img style={{ width: '64px' }} src={avatar4} alt="alt"/>
     <img style={{ width: '64px' }} src={avatar5} alt="alt"/>
     <div>
-      <Button type="primary" href="/login">登录</Button>
+      <Button type="primary" href="/login">登录 - /login</Button>
     </div>
   </div>
 )

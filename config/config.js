@@ -157,6 +157,10 @@ export default {
       target: 'http://blog.local:20000/',
       changeOrigin: true,
     },
+    '/auth**': {
+      target: 'http://blog.local:20000/',
+      changeOrigin: true,
+    },
   },
   // 如果项目要发布到非根目录下
   // 以下 (base/publicPath/outputPath) 几个参数如何配置
