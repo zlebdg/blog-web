@@ -154,7 +154,7 @@ export default {
   chainWebpack: webpackPlugin,
   proxy: {
     '/login': {
-      target: 'http://dev.local:20000/',
+      target: 'http://blog.local:20000/',
       changeOrigin: true,
     },
   },
