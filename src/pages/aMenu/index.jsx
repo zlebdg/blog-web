@@ -5,12 +5,19 @@ import { FormattedMessage } from 'umi/locale'
 import { Button } from 'antd'
 
 /**
- * 菜单, 菜单的权限 都是umi根据路由实现自动化配置的
- * 菜单名 i18n 如何配置可以参考本次提交, 提交信息/commit message "aMemu, 第一个umi菜单"
- * @returns {*}
+ * currentUser
  */
-
-console.log(md5('0'))
+let currentUser = '-';
+fetch('/auth/currentUser', {
+  credentials: 'include',
+})
+  .then(resp => {
+    return resp.text()
+  })
+  .then(resp => {
+    console.log(resp)
+    currentUser = resp
+  })
 
 const avatar0 = 'data:image/png;base64,' + new Identicon(md5(10), 64).toString()
 const avatar1 = 'data:image/png;base64,' + new Identicon(md5(11), 64).toString()
@@ -37,5 +44,6 @@ export default () => (
     <div>
       <Button type="primary" href="/login">登录 - /login</Button>
     </div>
+    <div>currentUser: {currentUser}</div>
   </div>
 )

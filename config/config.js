@@ -82,6 +82,16 @@ export default {
   // umi routes: https://umijs.org/zh/guide/router.html
   routes: [
     {
+      path: '/oauth',
+      component: '../layouts/BlankLayout',
+      routes: [
+        {
+          path: '/oauth/callbackPage',
+          component: './oauth/CallbackPage',
+        },
+      ],
+    },
+    {
       path: '/',
       component: '../layouts/BlankLayout',
       routes: [
@@ -92,17 +102,6 @@ export default {
         {
           path: '/home',
           component: './aMenu',
-        },
-      ],
-    },
-    {
-      path: '/oauth',
-      component: '../layouts/BlankLayout',
-      routes: [
-        {
-          path: '/oauth/callbackPage',
-          name: 'oauth callbackPage',
-          component: './oauth/CallbackPage',
         },
       ],
     },
@@ -157,7 +156,7 @@ export default {
       target: 'http://blog.local:20000/',
       changeOrigin: true,
     },
-    '/auth**': {
+    '/auth/**': {
       target: 'http://blog.local:20000/',
       changeOrigin: true,
     },

@@ -1,30 +1,38 @@
 import React, { PureComponent } from 'react'
-import { currentUser } from '../../services/userLogin'
-import { reloadAuthorized } from '../../utils/Authorized'
-import router from 'umi/router'
+
+const currentUser = () => {
+  fetch('/auth/currentUser', {
+    credentials: 'include',
+  })
+    .then(resp2 => {
+      return resp2.text()
+    })
+    .then(resp2 => {
+      console.log(resp2)
+      window.alert(resp2)
+    })
+}
 
 export default class CallbackPage extends PureComponent {
   componentDidMount() {
     if (null == sessionStorage.getItem('oauthCallback')) {
-      currentUser()
+      fetch(`/login${this.props.location.search}`, {
+        credentials: 'include',
+      })
         .then(resp => {
-          if (null != resp && 200 == resp.code) {
-            const user = JSON.parse(resp.data)
-            if (user.authenticated && user.username !== 'anonymousUser') {
-              sessionStorage.setItem('currentUser', resp.data)
+          return resp.text()
+        })
+        .then(resp => {
+          console.log(resp)
 
-              // 设置umi菜单权限
-              sessionStorage.setItem('antd-pro-authority', JSON.stringify(user.authorities))
-              reloadAuthorized() // 重新读取授权信息
-              router.push('/welcome')
-              sessionStorage.setItem('oauthCallback', 1)
-            }
-          }
+          currentUser()
         })
         .catch(error => {
+          console.log(error)
+
+          currentUser()
         })
     }
-    router.push('/')
   }
 
   render() {
