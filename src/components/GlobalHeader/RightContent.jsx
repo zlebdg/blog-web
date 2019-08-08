@@ -40,20 +40,20 @@ const GlobalHeaderRight = props => {
           console.log('enter', value);
         }}
       />
-      <Tooltip
-        title={formatMessage({
-          id: 'component.globalHeader.help',
-        })}
-      >
-        <a
-          target="_blank"
-          href="https://pro.ant.design/docs/getting-started"
-          rel="noopener noreferrer"
-          className={styles.action}
-        >
-          <Icon type="question-circle-o" />
-        </a>
-      </Tooltip>
+      {/*<Tooltip*/}
+      {/*  title={formatMessage({*/}
+      {/*    id: 'component.globalHeader.help',*/}
+      {/*  })}*/}
+      {/*>*/}
+      {/*  <a*/}
+      {/*    target="_blank"*/}
+      {/*    href="https://pro.ant.design/docs/getting-started"*/}
+      {/*    rel="noopener noreferrer"*/}
+      {/*    className={styles.action}*/}
+      {/*  >*/}
+      {/*    <Icon type="question-circle-o" />*/}
+      {/*  </a>*/}
+      {/*</Tooltip>*/}
       <Avatar />
       <SelectLang className={styles.action} />
     </div>

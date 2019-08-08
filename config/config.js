@@ -109,6 +109,18 @@ export default {
         {
           path: '/:username',
           component: './first/$index',
+          routes: [
+            {
+              name: 'search-list',
+              path: '/:username/index',
+              routes: [
+                {
+                  path: '/:username/index',
+                  component: './block/search-list-articles',
+                },
+              ],
+            },
+          ],
         },
       ],
     },
