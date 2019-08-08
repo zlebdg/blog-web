@@ -92,16 +92,23 @@ export default {
       ],
     },
     {
-      path: '/',
+      path: '/home',
       component: '../layouts/BlankLayout',
       routes: [
         {
-          path: '/',
-          redirect: '/home',
-        },
-        {
           path: '/home',
           component: './aMenu',
+        },
+      ],
+    },
+    {
+      path: '/',
+      hideInMenu: true,
+      component: '../layouts/BasicLayout',
+      routes: [
+        {
+          path: '/:username',
+          component: './first/$index',
         },
       ],
     },
