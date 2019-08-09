@@ -20,8 +20,7 @@ const ArticleListContent: React.FC<ArticleListContentProps> = ({
     <div className={styles.description}>{content}</div>
     <div className={styles.extra}>
       <Avatar src={avatar} size="small" />
-      <a href={href}>{owner}</a> 发布在 <a href={href}>{href}</a>
-      <em>{moment(updatedAt).format('YYYY-MM-DD HH:mm')}</em>
+      <a href={href}>{owner}</a> 发布于 {moment(updatedAt).format('YYYY-MM-DD HH:mm')}
     </div>
   </div>
 );

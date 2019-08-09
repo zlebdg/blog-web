@@ -1,4 +1,4 @@
-import { Button, Card, Col, Form, Icon, List, Row, Select, Tag } from 'antd';
+import { Avatar, Button, Card, Col, Form, Icon, List, Row, Select, Tag } from 'antd'
 import React, { Component } from 'react';
 
 import { Dispatch } from 'redux';
@@ -10,6 +10,7 @@ import { ListItemDataType } from './data.d';
 import StandardFormRow from './components/StandardFormRow';
 import TagSelect from './components/TagSelect';
 import styles from './style.less';
+import moment from '@/pages/block/search-list-articles/components/ArticleListContent'
 
 const { Option } = Select;
 const FormItem = Form.Item;
@@ -130,10 +131,6 @@ class SearchListArticles extends Component<SearchListArticlesProps> {
                     <TagSelect.Option value="cat6">类目六</TagSelect.Option>
                     <TagSelect.Option value="cat7">类目七</TagSelect.Option>
                     <TagSelect.Option value="cat8">类目八</TagSelect.Option>
-                    <TagSelect.Option value="cat9">类目九</TagSelect.Option>
-                    <TagSelect.Option value="cat10">类目十</TagSelect.Option>
-                    <TagSelect.Option value="cat11">类目十一</TagSelect.Option>
-                    <TagSelect.Option value="cat12">类目十二</TagSelect.Option>
                   </TagSelect>,
                 )}
               </FormItem>
@@ -198,7 +195,7 @@ class SearchListArticles extends Component<SearchListArticlesProps> {
             loading={list.length === 0 ? loading : false}
             rowKey="id"
             itemLayout="vertical"
-            loadMore={loadMore}
+            // loadMore={loadMore}
             dataSource={list}
             renderItem={item => (
               <List.Item
