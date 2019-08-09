@@ -107,18 +107,28 @@ export default {
       component: '../layouts/BasicLayout',
       routes: [
         {
+          path: '/',
+          redirect: '/home',
+        },
+        {
           path: '/:username',
           component: './first/$index',
           routes: [
             {
-              name: 'search-list',
+              path: '/:username',
+              // redirect: '/:username/index',
+            },
+            {
               path: '/:username/index',
-              routes: [
-                {
-                  path: '/:username/index',
-                  component: './block/search-list-articles',
-                },
-              ],
+              component: './block/search-list-articles',
+            },
+            {
+              path: '/:username/editor',
+              component: './markdown/Editor',
+            },
+            {
+              path: '/:username/editor2',
+              component: './markdown/Editor2',
             },
           ],
         },
