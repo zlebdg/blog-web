@@ -1,6 +1,6 @@
 import React from 'react'
 import * as showdown from 'showdown'
-import './editor5.css'
+import 'github-markdown-css'
 
 const ReactMarkdown = require('react-markdown/with-html')
 
@@ -52,7 +52,7 @@ class Editor5 extends React.Component {
   render() {
     return (
       <ReactMarkdown
-        className="result"
+        className="markdown-body"
         source={ converter.makeHtml(content) }
         escapeHtml={ false }
       />
