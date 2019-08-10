@@ -1,25 +1,47 @@
 import React from 'react'
-import ReactMarkdown from 'react-markdown'
+import './editor.css'
 
-// import {Editor, EditorState} from 'draft-js';
+// 默认不解析html
+// const ReactMarkdown = require('react-markdown')
+// 这样可解析html
+const ReactMarkdown = require('react-markdown/with-html')
+const htmlParser = require('react-markdown/plugins/html-parser')
 
 const content = `
 # This is a header And this is a paragraph
 # This is a header And this is a paragraph
+
 \`\`\`js
 var a;
 function aa() {}
 \`\`\`
-`
 
-class Editor extends React.Component {
+\`\`\`
+var a;
+function aa() {}
+\`\`\`
+
+
+| Feature   | Support |
+| --------- | ------- |
+| tables    | ✔ |
+| alignment | ✔ |
+| wewt      | ✔ |
+
+<hr />
+hello
+<h3>h3</h3>
+`
+class AppReactMarkdown extends React.Component {
   render() {
     return (
-      <ReactMarkdown source={content} className="result"
-                     escapeHtml={false}
-      />
-    )
+    <ReactMarkdown
+      className="result"
+      source={ content }
+      escapeHtml={ false }
+    />
+  )
   }
 }
 
-export default Editor
+export default AppReactMarkdown

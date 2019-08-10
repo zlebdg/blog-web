@@ -130,6 +130,18 @@ export default {
               path: '/:username/editor2',
               component: './markdown/Editor2',
             },
+            {
+              path: '/:username/editor3',
+              component: './markdown/Editor3',
+            },
+            {
+              path: '/:username/editor4',
+              component: './markdown/Editor4',
+            },
+            {
+              path: '/:username/editor5',
+              component: './markdown/Editor5',
+            },
           ],
         },
       ],
