@@ -29,6 +29,9 @@ export async function postArticle(title, text) {
 
 export async function queryArticle(id) {
   return request(`/article?id=${ id }`, {
+    headers: {
+      accept: 'application/json',
+    },
     errorHandler: basicErrorHandler,
   })
 }

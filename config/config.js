@@ -180,8 +180,12 @@ export default {
                   component: '../layouts/BasicLayout',
                   routes: [
                     {
-                      path: '/:username/viewBlog',
+                      path: '/:username/viewBlog/blogId/:blogId',
                       component: './viewBlog/ViewBlog',
+                    },
+                    {
+                      path: '/:username/viewBlog/test',
+                      component: './viewBlog/ViewBlogTest',
                     },
                   ],
                 },

@@ -2,6 +2,7 @@ import 'braft-editor/dist/index.css'
 import 'braft-extensions/dist/code-highlighter.css'
 
 import React from 'react'
+import router from 'umi/router'
 import BraftEditor from 'braft-editor'
 import { Input, message } from 'antd'
 import { postArticle } from '../../services/newBlog'
@@ -13,6 +14,10 @@ class NewBlog extends React.Component {
   state = {
     title: null,
     editorState: BraftEditor.createEditorState(null),
+  }
+
+  onTab = (e) => {
+    e.preventDefault()
   }
 
   titleInput = (e) => {
@@ -110,6 +115,12 @@ class NewBlog extends React.Component {
       return
     }
     postArticle(this.state.title, this.state.editorState.toHTML())
+      .then(resp => {
+        if (resp && 200 === resp.code && resp.data) {
+          message.success('发布成功')
+          router.push(`/${ this.props.match.params.username }/viewBlog/blogId/${ resp.data }`)
+        }
+      })
   }
 
   render() {
