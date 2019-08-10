@@ -175,6 +175,16 @@ export default {
                     },
                   ],
                 },
+                {
+                  path: '/:username/viewBlog',
+                  component: '../layouts/BasicLayout',
+                  routes: [
+                    {
+                      path: '/:username/viewBlog',
+                      component: './viewBlog/ViewBlog',
+                    },
+                  ],
+                },
               ],
             },
           ],

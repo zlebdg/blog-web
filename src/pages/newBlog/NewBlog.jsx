@@ -1,9 +1,13 @@
+import 'braft-editor/dist/index.css'
+import 'braft-extensions/dist/code-highlighter.css'
+
 import React from 'react'
 import BraftEditor from 'braft-editor'
-import { ContentUtils } from 'braft-utils'
-import 'braft-editor/dist/index.css'
 import { Input, message } from 'antd'
 import { postArticle } from '../../services/newBlog'
+import CodeHighlighter from 'braft-extensions/dist/code-highlighter'
+
+BraftEditor.use(CodeHighlighter())
 
 class NewBlog extends React.Component {
   state = {
@@ -38,7 +42,7 @@ class NewBlog extends React.Component {
       <!Doctype html>
       <html>
         <head>
-          <title>Preview Content</title>
+          <title>预览</title>
           <style>
             html,body{
               height: 100%;
@@ -109,12 +113,12 @@ class NewBlog extends React.Component {
   }
 
   render() {
+    const { editorState } = this.state
     return (
       <div style={ {
         backgroundColor: 'white',
         padding: '8px',
       } }>
-        路由参数: { this.props.match.params.username }
         <Input.Search
           onInput={ this.titleInput }
           placeholder="请输入文章标题.."
@@ -123,8 +127,8 @@ class NewBlog extends React.Component {
           onSearch={ this.publish }
         />
         <BraftEditor
-          ref={ instance => this.editorInstance = instance }
-          value={ this.state.editorState }
+          id="editor-id"
+          value={ editorState }
           placeholder="输入内容.."
           onChange={ this.onChange }
           onSave={ this.onSave }
