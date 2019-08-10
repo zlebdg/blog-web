@@ -104,43 +104,78 @@ export default {
     {
       path: '/',
       hideInMenu: true,
-      component: '../layouts/BasicLayout',
       routes: [
         {
           path: '/',
           redirect: '/home',
         },
         {
+          path: '/home',
+          component: '../layouts/BasicLayout',
+          routes: [
+            {
+              path: '/home',
+              component: './aMenu',
+            },
+          ],
+        },
+        {
           path: '/:username',
-          component: './first/$index',
           routes: [
             {
               path: '/:username',
-              // redirect: '/:username/index',
-            },
-            {
-              path: '/:username/index',
-              component: './block/search-list-articles',
-            },
-            {
-              path: '/:username/editor',
-              component: './markdown/Editor',
-            },
-            {
-              path: '/:username/editor2',
-              component: './markdown/Editor2',
-            },
-            {
-              path: '/:username/editor3',
-              component: './markdown/Editor3',
-            },
-            {
-              path: '/:username/editor4',
-              component: './markdown/Editor4',
-            },
-            {
-              path: '/:username/editor5',
-              component: './markdown/Editor5',
+              routes: [
+                {
+                  path: '/:username',
+                  redirect: '/:username/index',
+                },
+                {
+                  path: '/:username/index',
+                  component: '../layouts/BasicLayout',
+                  routes: [
+                    {
+                      path: '/:username/index',
+                      component: './first/index',
+                      routes: [
+                        {
+                          path: '/:usernaem/index',
+                          component: './block/search-list-articles',
+                        },
+                      ],
+                    },
+                  ],
+                },
+                {
+                  path: '/:username/editor',
+                  component: './markdown/Editor',
+                },
+                {
+                  path: '/:username/editor2',
+                  component: './markdown/Editor2',
+                },
+                {
+                  path: '/:username/editor3',
+                  component: './markdown/Editor3',
+                },
+                {
+                  path: '/:username/editor4',
+                  component: './markdown/Editor4',
+                },
+                {
+                  path: '/:username/editor5',
+                  component: './markdown/Editor5',
+                },
+                {
+                  path: '/:username/newBlog',
+                  component: '../layouts/BasicLayout',
+                  routes: [
+                    {
+                      path: '/:username/newBlog',
+                      component: './newBlog/NewBlog',
+                    },
+                  ],
+                },
+              ],
             },
           ],
         },
@@ -182,7 +217,7 @@ export default {
           .split('/')
           .map(a => a.replace(/([A-Z])/g, '-$1'))
           .map(a => a.toLowerCase())
-        return `antd-pro${arr.join('-')}-${localName}`.replace(/--/g, '-')
+        return `antd-pro${ arr.join('-') }-${ localName }`.replace(/--/g, '-')
       }
 
       return localName
