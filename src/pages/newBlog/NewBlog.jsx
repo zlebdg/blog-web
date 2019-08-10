@@ -1,12 +1,14 @@
 import React from 'react'
 import BraftEditor from 'braft-editor'
+import { ContentUtils } from 'braft-utils'
 import 'braft-editor/dist/index.css'
-import { Input } from 'antd'
+import { Input, message } from 'antd'
+import { postArticle } from '../../services/newBlog'
 
 class NewBlog extends React.Component {
   state = {
     title: null,
-    editorState: BraftEditor.createEditorState(),
+    editorState: BraftEditor.createEditorState(null),
   }
 
   titleInput = (e) => {
@@ -17,6 +19,8 @@ class NewBlog extends React.Component {
 
   onChange = (editorState) => {
     // console.log(editorState.toText())
+    // console.log(editorState.toRAW())
+    // console.log(editorState.toHTML())
     this.setState({ editorState })
   }
 
@@ -80,7 +84,7 @@ class NewBlog extends React.Component {
         </head>
         <body>
           <div class="container">
-              ${ this.state.editorState.toText() }
+              ${ this.state.editorState.toHTML() }
           </div>
         </body>
       </html>
@@ -88,8 +92,20 @@ class NewBlog extends React.Component {
   }
 
   publish = () => {
-    console.log(this.state.title)
-    console.log(this.state.editorState.toText())
+    const tile = this.state.title
+    const text = this.state.editorState.toHTML()
+    // console.log(tile)
+    // console.log(text)
+
+    if (null === tile || '' === tile) {
+      message.error('请输入标题')
+      return
+    }
+    if (null === text || '' === text) {
+      message.error('请输入内容')
+      return
+    }
+    postArticle(this.state.title, this.state.editorState.toHTML())
   }
 
   render() {
@@ -100,7 +116,6 @@ class NewBlog extends React.Component {
       } }>
         路由参数: { this.props.match.params.username }
         <Input.Search
-          // value={ this.state.title }
           onInput={ this.titleInput }
           placeholder="请输入文章标题.."
           enterButton="发布文章"
@@ -108,8 +123,11 @@ class NewBlog extends React.Component {
           onSearch={ this.publish }
         />
         <BraftEditor
+          ref={ instance => this.editorInstance = instance }
+          value={ this.state.editorState }
           placeholder="输入内容.."
           onChange={ this.onChange }
+          onSave={ this.onSave }
           onTab={ this.onTab }
           excludeControls={ [
             'line-height', 'letter-spacing', 'list-ul', 'list-ol', 'text-indent', 'clear',
@@ -119,7 +137,7 @@ class NewBlog extends React.Component {
             {
               key: 'preview',
               type: 'button',
-              text: '预览',
+              text: '预览文章',
               onClick: this.preview,
             },
           ] }
