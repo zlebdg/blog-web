@@ -51,6 +51,7 @@
     "antd": "^3.20.0",
     "blueimp-md5": "^2.11.0",
     "braft-editor": "^2.3.7",
+    "braft-extensions": "^0.0.18",
     "classnames": "^2.2.6",
     "css-animation": "1.5.0",
     "draft-js": "^0.11.0",
