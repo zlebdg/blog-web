@@ -81,6 +81,7 @@ export default {
   devtool: isAntDesignProPreview ? 'source-map' : false,
   // umi routes: https://umijs.org/zh/guide/router.html
   routes: [
+    // oauth 登录
     {
       path: '/oauth',
       component: '../layouts/BlankLayout',
@@ -91,6 +92,7 @@ export default {
         },
       ],
     },
+    // 登录后首页
     {
       path: '/home',
       component: '../layouts/BlankLayout',
@@ -101,106 +103,109 @@ export default {
         },
       ],
     },
+    // 不需要登录的
     {
-      path: '/',
-      hideInMenu: true,
+      path: '/public',
       routes: [
         {
-          path: '/',
-          redirect: '/home',
-        },
-        {
-          path: '/home',
+          path: '/public/viewBlog',
           component: '../layouts/BasicLayout',
           routes: [
             {
-              path: '/home',
-              component: './aMenu',
-            },
-          ],
-        },
-        {
-          path: '/:username',
-          routes: [
-            {
-              path: '/:username',
-              routes: [
-                {
-                  path: '/:username',
-                  redirect: '/:username/index',
-                },
-                {
-                  path: '/:username/index',
-                  component: '../layouts/BasicLayout',
-                  routes: [
-                    {
-                      path: '/:username/index',
-                      component: './first/index',
-                      routes: [
-                        {
-                          path: '/:usernaem/index',
-                          component: './block/search-list-articles',
-                        },
-                      ],
-                    },
-                  ],
-                },
-                {
-                  path: '/:username/editor',
-                  component: './markdown/Editor',
-                },
-                {
-                  path: '/:username/editor2',
-                  component: './markdown/Editor2',
-                },
-                {
-                  path: '/:username/editor3',
-                  component: './markdown/Editor3',
-                },
-                {
-                  path: '/:username/editor4',
-                  component: './markdown/Editor4',
-                },
-                {
-                  path: '/:username/editor5',
-                  component: './markdown/Editor5',
-                },
-                {
-                  path: '/:username/newBlog',
-                  component: '../layouts/BasicLayout',
-                  routes: [
-                    {
-                      path: '/:username/newBlog',
-                      component: './newBlog/NewBlog',
-                    },
-                  ],
-                },
-                {
-                  path: '/:username/viewBlog',
-                  component: '../layouts/BasicLayout',
-                  routes: [
-                    {
-                      path: '/:username/viewBlog/blogId/:blogId',
-                      component: './viewBlog/ViewBlog',
-                    },
-                    {
-                      path: '/:username/viewBlog/test',
-                      component: './viewBlog/ViewBlogTest',
-                    },
-                    {
-                      path: '/:username/viewBlog/base64Test',
-                      component: './viewBlog/ViewBlogBase64Test',
-                    },
-                  ],
-                },
-              ],
+              path: '/public/viewBlog/blogId/:blogId',
+              component: './viewBlog/ViewBlog',
             },
           ],
         },
       ],
     },
     {
-      component: './404',
+      path: '/',
+      hideInMenu: true,
+      routes: [
+        // 根路由重定向
+        {
+          path: '/',
+          redirect: '/home',
+        },
+        {
+          path: '/:username',
+          routes: [
+            {
+              path: '/:username',
+              redirect: '/:username/index',
+            },
+            {
+              path: '/:username/index',
+              component: '../layouts/BasicLayout',
+              routes: [
+                {
+                  path: '/:username/index',
+                  component: './first/index',
+                  routes: [
+                    {
+                      path: '/:usernaem/index',
+                      component: './block/search-list-articles',
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              path: '/:username/editor',
+              component: './markdown/Editor',
+            },
+            {
+              path: '/:username/editor2',
+              component: './markdown/Editor2',
+            },
+            {
+              path: '/:username/editor3',
+              component: './markdown/Editor3',
+            },
+            {
+              path: '/:username/editor4',
+              component: './markdown/Editor4',
+            },
+            {
+              path: '/:username/editor5',
+              component: './markdown/Editor5',
+            },
+            {
+              path: '/:username/newBlog',
+              component: '../layouts/BasicLayout',
+              routes: [
+                {
+                  path: '/:username/newBlog',
+                  component: './newBlog/NewBlog',
+                },
+              ],
+            },
+            {
+              path: '/:username/viewBlog',
+              component: '../layouts/BasicLayout',
+              routes: [
+                // 查看文章, 带 :username
+                {
+                  path: '/:username/viewBlog/blogId/:blogId',
+                  component: './viewBlog/ViewBlog',
+                },
+                {
+                  path: '/:username/viewBlog/test',
+                  component: './viewBlog/ViewBlogTest',
+                },
+                {
+                  path: '/:username/viewBlog/base64Test',
+                  component: './viewBlog/ViewBlogBase64Test',
+                },
+              ],
+            },
+          ],
+        },
+        {
+          component: './404',
+        },
+      ],
     },
   ],
   // Theme for antd: https://ant.design/docs/react/customize-theme-cn
@@ -251,6 +256,10 @@ export default {
       changeOrigin: true,
     },
     '/auth/**': {
+      target: 'http://blog.local:20000/',
+      changeOrigin: true,
+    },
+    '/public**/**': {
       target: 'http://blog.local:20000/',
       changeOrigin: true,
     },
