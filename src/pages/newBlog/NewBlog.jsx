@@ -102,12 +102,12 @@ class NewBlog extends React.Component {
   }
 
   publish = () => {
-    const tile = this.state.title
+    const title = this.state.title
     const text = this.state.editorState.toHTML()
     // console.log(tile)
     // console.log(text)
 
-    if (null === tile || '' === tile) {
+    if (null === title || '' === title) {
       message.error('请输入标题')
       return
     }
@@ -115,8 +115,10 @@ class NewBlog extends React.Component {
       message.error('请输入内容')
       return
     }
+    // base64
+    const encodeText = Base64.encode(this.state.editorState.toHTML())
     // 补充一下base64, 否则某些符号不能保存到数据库
-    postArticle(this.state.title, Base64.encode(this.state.editorState.toHTML()))
+    postArticle(title, encodeText)
       .then(resp => {
         if (resp && 200 === resp.code && resp.data) {
           message.success('发布成功')
