@@ -3,6 +3,7 @@ import 'braft-extensions/dist/code-highlighter.css'
 
 import React from 'react'
 import router from 'umi/router'
+import { Base64 } from 'js-base64'
 import BraftEditor from 'braft-editor'
 import { Input, message } from 'antd'
 import { postArticle } from '../../services/newBlog'
@@ -114,7 +115,8 @@ class NewBlog extends React.Component {
       message.error('请输入内容')
       return
     }
-    postArticle(this.state.title, this.state.editorState.toHTML())
+    // 补充一下base64, 否则某些符号不能保存到数据库
+    postArticle(this.state.title, Base64.encode(this.state.editorState.toHTML()))
       .then(resp => {
         if (resp && 200 === resp.code && resp.data) {
           message.success('发布成功')

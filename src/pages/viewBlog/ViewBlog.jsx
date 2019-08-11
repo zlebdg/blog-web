@@ -2,6 +2,7 @@ import 'braft-editor/dist/index.css'
 import 'braft-extensions/dist/code-highlighter.css'
 
 import React from 'react'
+import { Base64 } from 'js-base64'
 import BraftEditor from 'braft-editor'
 import CodeHighlighter from 'braft-extensions/dist/code-highlighter'
 import { Col, message, Row } from 'antd'
@@ -35,7 +36,7 @@ class ViewBlog extends React.Component {
           const article = resp.data
           if (article.parseType && parseType === article.parseType) {
             this.setState({
-              editorState: BraftEditor.createEditorState(`<h1 style="text-align:center;"><span style="font-size:32px">${ article.title }</span></h1>${ article.text }`),
+              editorState: BraftEditor.createEditorState(`<h1 style="text-align:center;"><span style="font-size:32px">${ article.title }</span></h1>${ decodeURIComponent(Base64.decode(article.text)) }`),
             })
           } else {
             message.error(`不能够渲染的文章类型 ${ article.parseType }`)
@@ -55,7 +56,7 @@ class ViewBlog extends React.Component {
             const article = resp.data
             if (article.parseType && parseType === article.parseType) {
               this.setState({
-                editorState: BraftEditor.createEditorState(`<h1 style="text-align:center;"><span style="font-size:32px">${ article.title }</span></h1>${ article.text }`),
+                editorState: BraftEditor.createEditorState(`<h1 style="text-align:center;"><span style="font-size:32px">${ article.title }</span></h1>${ decodeURIComponent(Base64.decode(article.text)) }`),
               })
             } else {
               message.error(`不能够渲染的文章类型 ${ article.parseType }`)

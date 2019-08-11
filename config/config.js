@@ -187,6 +187,10 @@ export default {
                       path: '/:username/viewBlog/test',
                       component: './viewBlog/ViewBlogTest',
                     },
+                    {
+                      path: '/:username/viewBlog/base64Test',
+                      component: './viewBlog/ViewBlogBase64Test',
+                    },
                   ],
                 },
               ],
