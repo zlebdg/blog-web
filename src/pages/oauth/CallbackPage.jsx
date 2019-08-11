@@ -1,36 +1,32 @@
 import React, { PureComponent } from 'react'
+import { access } from '../../services/oauth'
+import { currentUser } from '../../services/userLogin'
+import { reloadAuthorized } from '../../utils/Authorized'
+import router from 'umi/router'
 
-const currentUser = () => {
-  fetch('/auth/currentUser', {
-    credentials: 'include',
-  })
-    .then(resp2 => {
-      return resp2.text()
-    })
-    .then(resp2 => {
-      console.log(resp2)
-      window.alert(resp2)
-    })
-}
+// 登录后路由到 发博客 界面
+const afterLoginRouter = ''
 
 export default class CallbackPage extends PureComponent {
   componentDidMount() {
     if (null == sessionStorage.getItem('oauthCallback')) {
-      fetch(`/login${this.props.location.search}`, {
-        credentials: 'include',
-      })
-        .then(resp => {
-          return resp.text()
-        })
-        .then(resp => {
-          console.log(resp)
+      access(this.props.location.search)
+        .then(() => {
 
+          // 查询当前用户
           currentUser()
-        })
-        .catch(error => {
-          console.log(error)
+            .then(resp => {
+              console.log(resp)
+              if (resp && 200 === resp.code) {
+                const user = resp.data
+                if (user.authenticated && user.username !== 'anonymousUser') {
+                  sessionStorage.setItem('currentUser', JSON.stringify(user))
 
-          currentUser()
+                  reloadAuthorized() // 重新读取授权信息
+                  router.push(`/${ user.appId }@${ user.username }/newBlog`)
+                }
+              }
+            })
         })
     }
   }
