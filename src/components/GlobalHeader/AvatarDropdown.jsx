@@ -27,13 +27,24 @@ class AvatarDropdown extends React.Component {
           type: 'login/logout',
         })
       }
+      fetch('http://auth.local:20010/auth/logout', {
+        mode: 'cors',
+        method: 'post',
+        credentials: 'include',
+      })
+        .then(resp => {
+          return resp.text()
+        })
+        .then(resp => {
+          console.log(resp)
+        })
       return
     }
     router.push(`/account/${ key }`)
   }
 
   goLogin = () => {
-    sessionStorage.setItem('callbackUrl', window.location.href)
+    sessionStorage.setItem('hrefSavedBeforeLogin', window.location.href)
     window.location = '/login'
   }
 

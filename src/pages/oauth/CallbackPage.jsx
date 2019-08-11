@@ -22,13 +22,13 @@ export default class CallbackPage extends PureComponent {
                 if (user.authenticated && user.username !== 'anonymousUser') {
                   sessionStorage.setItem('currentUser', JSON.stringify(user))
 
-                  reloadAuthorized() // 重新读取授权信息
-                  if (null != sessionStorage.getItem('callbackUrl')) {
-                    window.location = sessionStorage.getItem('callbackUrl')
-                    sessionStorage.removeItem('callbackUrl')
+                  if (null != sessionStorage.getItem('hrefSavedBeforeLogin')) {
+                    window.location = sessionStorage.getItem('hrefSavedBeforeLogin')
+                    sessionStorage.removeItem('hrefSavedBeforeLogin')
                   } else {
                     router.push(`/${ user.username }@${ user.appId }/newBlog`)
                   }
+                  reloadAuthorized() // 重新读取授权信息
                 }
               }
             })
