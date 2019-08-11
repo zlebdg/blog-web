@@ -23,7 +23,12 @@ export default class CallbackPage extends PureComponent {
                   sessionStorage.setItem('currentUser', JSON.stringify(user))
 
                   reloadAuthorized() // 重新读取授权信息
-                  router.push(`/${ user.appId }@${ user.username }/newBlog`)
+                  if (null != sessionStorage.getItem('callbackUrl')) {
+                    window.location = sessionStorage.getItem('callbackUrl')
+                    sessionStorage.removeItem('callbackUrl')
+                  } else {
+                    router.push(`/${ user.username }@${ user.appId }/newBlog`)
+                  }
                 }
               }
             })

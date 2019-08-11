@@ -29,14 +29,19 @@ class AvatarDropdown extends React.Component {
       }
       return
     }
-    router.push(`/account/${key}`)
+    router.push(`/account/${ key }`)
+  }
+
+  goLogin = () => {
+    sessionStorage.setItem('callbackUrl', window.location.href)
+    window.location = '/login'
   }
 
   render() {
     const { currentUser, menu } = this.props
 
     const menuHeaderDropdown2 = (
-      <Menu className={styles.menu} selectedKeys={[]} onClick={this.onMenuClick}>
+      <Menu className={ styles.menu } selectedKeys={ [] } onClick={ this.onMenuClick }>
         <Menu.Item key="logout">
           <Icon type="logout"/>
           <FormattedMessage id="menu.account.logout" defaultMessage="logout"/>
@@ -46,18 +51,18 @@ class AvatarDropdown extends React.Component {
 
     if (true) {
       return currentUser && currentUser.authenticated ? (
-        <HeaderDropdown overlay={menuHeaderDropdown2}>
-          <span className={`${styles.action} ${styles.account}`}>
-            <Avatar size="small" className={styles.avatar}
-                    src={currentUser.avatar ? currentUser.avatar : idcon(currentUser.username)}
+        <HeaderDropdown overlay={ menuHeaderDropdown2 }>
+          <span className={ `${ styles.action } ${ styles.account }` }>
+            <Avatar size="small" className={ styles.avatar }
+                    src={ currentUser.avatar ? currentUser.avatar : idcon(currentUser.username) }
                     alt="avatar"/>
-            <span className={styles.name}>{currentUser.nickname}</span>
+            <span className={ styles.name }>{ currentUser.nickname }</span>
           </span>
         </HeaderDropdown>
       ) : (
-        <span className={`${styles.action} ${styles.account}`}>
-          <Avatar size="small" className={styles.avatar}>Login</Avatar>
-          <span className={styles.name}>登录</span>
+        <span className={ `${ styles.action } ${ styles.account }` } onClick={ this.goLogin }>
+          <Avatar size="small" className={ styles.avatar }>Login</Avatar>
+          <span className={ styles.name }>登录</span>
         </span>
       )
     }

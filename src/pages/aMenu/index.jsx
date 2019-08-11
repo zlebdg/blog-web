@@ -4,21 +4,6 @@ import md5 from 'blueimp-md5/js/md5'
 import { FormattedMessage } from 'umi/locale'
 import { Button } from 'antd'
 
-/**
- * currentUser
- */
-let currentUser = '-';
-fetch('/auth/currentUser', {
-  credentials: 'include',
-})
-  .then(resp => {
-    return resp.text()
-  })
-  .then(resp => {
-    console.log(resp)
-    currentUser = resp
-  })
-
 const avatar0 = 'data:image/png;base64,' + new Identicon(md5(10), 64).toString()
 const avatar1 = 'data:image/png;base64,' + new Identicon(md5(11), 64).toString()
 const avatar2 = 'data:image/png;base64,' + new Identicon(md5(12), 64).toString()
@@ -28,22 +13,21 @@ const avatar5 = 'data:image/png;base64,' + new Identicon(md5(15), 64).toString()
 
 export default () => (
   <div
-    style={{
+    style={ {
       textAlign: 'center',
-    }}
+    } }
   >
     <h3>
-      {<FormattedMessage id={'menu.welcome'}></FormattedMessage>}
+      { <FormattedMessage id={ 'menu.welcome' }></FormattedMessage> }
     </h3>
-    <img style={{ width: '64px' }} src={avatar0} alt="alt"/>
-    <img style={{ width: '64px' }} src={avatar1} alt="alt"/>
-    <img style={{ width: '64px' }} src={avatar2} alt="alt"/>
-    <img style={{ width: '64px' }} src={avatar3} alt="alt"/>
-    <img style={{ width: '64px' }} src={avatar4} alt="alt"/>
-    <img style={{ width: '64px' }} src={avatar5} alt="alt"/>
+    <img style={ { width: '64px' } } src={ avatar0 } alt="alt"/>
+    <img style={ { width: '64px' } } src={ avatar1 } alt="alt"/>
+    <img style={ { width: '64px' } } src={ avatar2 } alt="alt"/>
+    <img style={ { width: '64px' } } src={ avatar3 } alt="alt"/>
+    <img style={ { width: '64px' } } src={ avatar4 } alt="alt"/>
+    <img style={ { width: '64px' } } src={ avatar5 } alt="alt"/>
     <div>
       <Button type="primary" href="/login">登录 - /login</Button>
     </div>
-    <div>currentUser: {currentUser}</div>
   </div>
 )
