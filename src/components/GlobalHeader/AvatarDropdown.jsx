@@ -5,6 +5,7 @@ import { connect } from 'dva'
 import router from 'umi/router'
 import HeaderDropdown from '../HeaderDropdown'
 import styles from './index.less'
+import { logout, uriLogout } from '../../services/home'
 import { generateImgSrc as idcon } from '../Img/DefaultAvatar'
 
 class AvatarDropdown extends React.Component {
@@ -21,23 +22,31 @@ class AvatarDropdown extends React.Component {
   onMenuClick = event => {
     const { key } = event
     if (key === 'logout') {
-      const { dispatch } = this.props
-      if (dispatch) {
-        dispatch({
-          type: 'login/logout',
-        })
-      }
-      fetch('http://auth.local:20010/auth/logout', {
-        mode: 'cors',
-        method: 'post',
-        credentials: 'include',
-      })
-        .then(resp => {
-          return resp.text()
-        })
+      logout()
         .then(resp => {
           console.log(resp)
+          if (resp && 200 === resp.code && resp.data) {
+            const data = typeof resp === 'string' ? JSON.parse(resp.data) : resp.data
+            if (data.logoutUri) {
+              const logoutUri = data.logoutUri
+              const accessToken = data.accessToken ? data.accessToken : ''
+              const refreshToken = data.refreshToken ? data.refreshToken : ''
+              uriLogout(logoutUri, accessToken, refreshToken)
+                .then(r => {
+                  console.log(r)
+                  if (r && 200 === r.code) {
+                    router.push('/')
+                  }
+                })
+            }
+          }
         })
+      // const { dispatch } = this.props
+      // if (dispatch) {
+      //   dispatch({
+      //     type: 'login/logout',
+      //   })
+      // }
       return
     }
     router.push(`/account/${ key }`)
