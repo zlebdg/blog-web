@@ -104,14 +104,14 @@ class NewBlog extends React.Component {
   publish = () => {
     const title = this.state.title
     const text = this.state.editorState.toHTML()
-    // console.log(tile)
+    // console.log(title)
     // console.log(text)
 
     if (null === title || '' === title) {
       message.error('请输入标题')
       return
     }
-    if (null === text || '' === text) {
+    if (null === text || '' === text || '<p></p>' === text) {
       message.error('请输入内容')
       return
     }

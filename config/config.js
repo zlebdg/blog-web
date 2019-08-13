@@ -115,6 +115,18 @@ export default {
               path: '/public/viewBlog/blogId/:blogId',
               component: './viewBlog/ViewBlog',
             },
+            {
+              path: '/public/viewBlog/test',
+              component: './viewBlog/ViewBlogTest',
+            },
+            {
+              path: '/public/viewBlog/testInfo',
+              component: './viewBlog/ViewBlogArticleInfoTest',
+            },
+            {
+              path: '/public/viewBlog/testBase64',
+              component: './viewBlog/ViewBlogBase64Test',
+            },
           ],
         },
       ],
@@ -189,14 +201,6 @@ export default {
                 {
                   path: '/:username/viewBlog/blogId/:blogId',
                   component: './viewBlog/ViewBlog',
-                },
-                {
-                  path: '/:username/viewBlog/test',
-                  component: './viewBlog/ViewBlogTest',
-                },
-                {
-                  path: '/:username/viewBlog/base64Test',
-                  component: './viewBlog/ViewBlogBase64Test',
                 },
               ],
             },
