@@ -1,3 +1,4 @@
+import styles from './index.less'
 import 'braft-editor/dist/index.css'
 import 'braft-extensions/dist/code-highlighter.css'
 
@@ -5,8 +6,10 @@ import React from 'react'
 import { Base64 } from 'js-base64'
 import BraftEditor from 'braft-editor'
 import CodeHighlighter from 'braft-extensions/dist/code-highlighter'
-import { Col, message, Row } from 'antd'
+import { Avatar, Col, Icon, message, Row } from 'antd'
 import { queryArticle } from '../../services/newBlog'
+import moment from 'moment'
+import { generateImgSrc as idcon } from '../../components/Img/DefaultAvatar'
 
 // 代码高亮插件
 BraftEditor.use(CodeHighlighter())
@@ -35,6 +38,23 @@ class ViewBlog extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      author: {
+        id: null,
+        username: null,
+        nickname: null,
+        appId: null,
+        avatar: null,
+      },
+      articleInfo: {
+        id: null,
+        like: null,
+        dislike: null,
+        star: null,
+        comment: null,
+        read: null,
+      },
+      title: null,
+      createAt: null,
       blogId: this.props.match.params.blogId,
       editorState: BraftEditor.createEditorState(null),
     }
@@ -47,9 +67,13 @@ class ViewBlog extends React.Component {
         if (resp && resp.data) {
           const article = resp.data
           if (article.parseType && parseType === article.parseType) {
-            const encodeTitle = article.title.replace(/</g, '&lt;')
+            console.log(article)
             this.setState({
-              editorState: BraftEditor.createEditorState(`<h1 style="text-align:center;"><span style="font-size:32px">${ encodeTitle }</span></h1>${ decodeURIComponent(Base64.decode(article.text)) }`),
+              createAt: article.createAt,
+              title: article.title,
+              author: article.author,
+              articleInfo: article.articleInfo,
+              editorState: BraftEditor.createEditorState(`${ decodeURIComponent(Base64.decode(article.text)) }`),
             })
           } else {
             message.error(`不能够渲染的文章类型 ${ article.parseType }`)
@@ -68,9 +92,12 @@ class ViewBlog extends React.Component {
           if (resp && resp.data) {
             const article = resp.data
             if (article.parseType && parseType === article.parseType) {
-              const encodeTitle = article.title.replace(/</g, '&lt;')
               this.setState({
-                editorState: BraftEditor.createEditorState(`<h1 style="text-align:center;"><span style="font-size:32px">${ encodeTitle }</span></h1>${ decodeURIComponent(Base64.decode(article.text)) }`),
+                createAt: article.createAt,
+                title: article.title,
+                author: article.author,
+                articleInfo: article.articleInfo,
+                editorState: BraftEditor.createEditorState(`${ decodeURIComponent(Base64.decode(article.text)) }`),
               })
             } else {
               message.error(`不能够渲染的文章类型 ${ article.parseType }`)
@@ -97,6 +124,42 @@ class ViewBlog extends React.Component {
             backgroundColor: 'white',
             padding: '8px',
           } }>
+
+            <div>
+              <h1 style={ { textAlign: 'center' } }>
+                <span style={ { fontSize: '32px' } }>{ this.state.title }</span></h1>
+            </div>
+
+            <div style={ { textAlign: 'center' } }>
+              <div className={ styles.extra }>
+                <Avatar
+                  src={ this.state.author.avatar ? this.state.author.avatar : idcon(this.state.author.username) }
+                  alt="alt" size="small"/>
+                <a> { this.state.author.username } </a>
+                发布于
+                {
+                  moment(this.state.createAt)
+                    .format('YYYY-MM-DD HH:mm:ss')
+                }
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <span style={ { margin: '0 0.5em' } }>
+                  <Icon type="like-o"/> { this.state.articleInfo.like }
+                </span> |
+                <span style={ { margin: '0 0.5em' } }>
+                  <Icon type="dislike-o"/> { this.state.articleInfo.dislike }
+                </span> |
+                <span style={ { margin: '0 0.5em' } }>
+                  <Icon type="star-o"/> { this.state.articleInfo.star }
+                </span> |
+                <span style={ { margin: '0 0.5em' } }>
+                  <Icon type="message"/> { this.state.articleInfo.comment }
+                </span>|
+                <span style={ { margin: '0 0.5em' } }>
+                  <Icon type="read"/> { this.state.articleInfo.read }
+                </span>
+              </div>
+            </div>
+
             <BraftEditor
               value={ editorState }
               controls={ [] }
