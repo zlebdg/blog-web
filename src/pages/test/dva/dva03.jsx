@@ -2,11 +2,11 @@ import React, { Component } from 'react'
 import { Button, Col, Row } from 'antd'
 import { connect } from 'dva'
 
-@connect(
-  (state) => {
-    console.log(state)
-    return state.dva03
-  },
+@connect(({ dva03, loading }) =>
+  ({
+    ...dva03,
+    loading,
+  }),
 )
 export default class Index extends Component {
   handleClick = () => {
@@ -29,7 +29,7 @@ export default class Index extends Component {
           count: { this.props.count }
           <hr/>
           <Col>
-            <Button type="primary"
+            <Button type="primary" loading={ this.props.loading.effects['dva03/_query'] }
                     onClick={ this.handleClick }>按钮0</Button>
           </Col>
         </Row>
