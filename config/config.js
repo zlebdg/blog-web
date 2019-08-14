@@ -151,6 +151,10 @@ export default {
               path: '/test/dva/dva02',
               component: './test/dva/dva02',
             },
+            {
+              path: '/test/dva/dva03',
+              component: './test/dva/dva03',
+            },
           ],
         },
       ],
@@ -284,6 +288,10 @@ export default {
       changeOrigin: true,
     },
     '/auth/**': {
+      target: 'http://blog.local:20000/',
+      changeOrigin: true,
+    },
+    '/test**/**': {
       target: 'http://blog.local:20000/',
       changeOrigin: true,
     },
