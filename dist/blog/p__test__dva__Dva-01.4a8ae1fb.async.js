@@ -1,0 +1,1 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([[12],{CxVw:function(e,t,n){"use strict";var a=n("g09b");Object.defineProperty(t,"__esModule",{value:!0}),t.default=void 0;var d=a(n("q1tI")),u=function(){return d.default.createElement("div",{style:{textAlign:"center"}},"dva-01 \u6d4b\u8bd5")};t.default=u}}]);

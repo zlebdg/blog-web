@@ -131,6 +131,22 @@ export default {
         },
       ],
     },
+    // 测试
+    {
+      path: '/test',
+      routes: [
+        {
+          path: '/test/dva',
+          component: '../layouts/BasicLayout',
+          routes: [
+            {
+              path: '/test/dva/dva-01',
+              component: './test/dva/Dva-01',
+            },
+          ],
+        },
+      ],
+    },
     {
       path: '/',
       hideInMenu: true,
