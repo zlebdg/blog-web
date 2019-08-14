@@ -136,6 +136,10 @@ export default {
       path: '/test',
       routes: [
         {
+          path: '/test',
+          redirect: '/test/dva/dva01',
+        },
+        {
           path: '/test/dva',
           component: '../layouts/BasicLayout',
           routes: [
