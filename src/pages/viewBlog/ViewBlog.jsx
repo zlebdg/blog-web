@@ -6,7 +6,7 @@ import React from 'react'
 import { Base64 } from 'js-base64'
 import BraftEditor from 'braft-editor'
 import CodeHighlighter from 'braft-extensions/dist/code-highlighter'
-import { Avatar, Col, Icon, message, Row } from 'antd'
+import { Avatar, BackTop, Button, Col, Comment, Form, Icon, Input, message, Row } from 'antd'
 import { queryArticle } from '../../services/newBlog'
 import moment from 'moment'
 import { generateImgSrc as idcon } from '../../components/Img/DefaultAvatar'
@@ -33,6 +33,41 @@ const fixBraftBug = () => {
     }
   }
 }
+
+// comment 评论
+const Editor = ({ onChange, onSubmit, submitting, value }) => (
+  <div>
+    <Form.Item>
+      <Input.TextArea rows={ 4 } onChange={ onChange } value={ value }/>
+    </Form.Item>
+    <Form.Item>
+      <Button htmlType="submit" loading={ submitting } onClick={ onSubmit } type="primary">
+        Add Comment
+      </Button>
+    </Form.Item>
+  </div>
+)
+
+const ExampleComment = ({ children }) => (
+  <Comment
+    actions={ [<span key="comment-nested-reply-to">Reply to</span>] }
+    author={ <a>Han Solo</a> }
+    avatar={
+      <Avatar
+        src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+        alt="Han Solo"
+      />
+    }
+    content={
+      <p>
+        We supply a series of design principles, practical patterns and high quality design
+        resources (Sketch and Axure).
+      </p>
+    }
+  >
+    { children }
+  </Comment>
+)
 
 class ViewBlog extends React.Component {
   constructor(props) {
@@ -133,7 +168,8 @@ class ViewBlog extends React.Component {
             <div style={ { textAlign: 'center' } }>
               <div className={ styles.extra }>
                 <Avatar
-                  src={ this.state.author.avatar ? this.state.author.avatar : idcon(this.state.author.username) }
+                  src={ this.state.author.avatar
+                    ? this.state.author.avatar : idcon(this.state.author.username) }
                   alt="alt" size="small"/>
                 <a> { this.state.author.username } </a>
                 发布于
@@ -166,7 +202,31 @@ class ViewBlog extends React.Component {
               readOnly="true"
             />
           </div>
+          <hr/>
+          <div style={ {
+            backgroundColor: 'white',
+            padding: '20px',
+          } }>
+            <Comment
+              avatar={
+                <Avatar
+                  src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+                  alt="Han Solo"
+                />
+              }
+              content={
+                <Editor/>
+              }
+            />
+            <ExampleComment>
+              <ExampleComment>
+                <ExampleComment/>
+                <ExampleComment/>
+              </ExampleComment>
+            </ExampleComment>
+          </div>
         </Col>
+        <BackTop/>
       </Row>
     )
   }
