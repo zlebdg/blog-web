@@ -140,8 +140,12 @@ export default {
           component: '../layouts/BasicLayout',
           routes: [
             {
-              path: '/test/dva/dva-01',
-              component: './test/dva/Dva-01',
+              path: '/test/dva/dva01',
+              component: './test/dva/dva01',
+            },
+            {
+              path: '/test/dva/dva02',
+              component: './test/dva/dva02',
             },
           ],
         },
