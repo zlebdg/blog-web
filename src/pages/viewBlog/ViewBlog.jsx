@@ -38,10 +38,11 @@ const fixBraftBug = () => {
 const Editor = ({ onChange, onSubmit, submitting, value }) => (
   <div>
     <Form.Item>
-      <Input.TextArea rows={ 4 } onChange={ onChange } value={ value }/>
+      <Input.TextArea rows={ 4 } onChange={ onChange }/>
     </Form.Item>
     <Form.Item>
-      <Button htmlType="submit" loading={ submitting } onClick={ onSubmit } type="primary">
+      <Button htmlType="submit" loading={ true } onClick={ onSubmit } type="primary"
+              className="pull-right">
         Add Comment
       </Button>
     </Form.Item>
@@ -60,6 +61,10 @@ const ExampleComment = ({ children }) => (
     }
     content={
       <p>
+        We supply a series of design principles, practical patterns and high quality design
+        resources (Sketch and Axure).
+        We supply a series of design principles, practical patterns and high quality design
+        resources (Sketch and Axure).
         We supply a series of design principles, practical patterns and high quality design
         resources (Sketch and Axure).
       </p>
@@ -205,7 +210,7 @@ class ViewBlog extends React.Component {
           <hr/>
           <div style={ {
             backgroundColor: 'white',
-            padding: '20px',
+            padding: '10px 40px',
           } }>
             <Comment
               avatar={
@@ -215,7 +220,7 @@ class ViewBlog extends React.Component {
                 />
               }
               content={
-                <Editor/>
+                <Editor value=""/>
               }
             />
             <ExampleComment>
