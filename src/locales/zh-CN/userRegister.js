@@ -9,7 +9,7 @@ export default {
   'user.register.Captcha': '图形验证码',
   'user.register.username.errorMessage': '请输入你的用户名',
   'user.register.email.errorMessage': '请输入你的邮箱',
-  'user.register.captcha.errorMessage': '请输入图片验证码',
+  'user.register.captcha.errorMessage': '请输入图形验证码',
   'user.register.captcha.tips': '看不清?点击刷新',
   'user.register.captcha.alt': '刷新验证码',
   'user.register.toLogin': '去登录',
