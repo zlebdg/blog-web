@@ -7,10 +7,11 @@ import { Base64 } from 'js-base64'
 import ArticleComment from './ArticleComment'
 import BraftEditor from 'braft-editor'
 import CodeHighlighter from 'braft-extensions/dist/code-highlighter'
-import { Avatar, BackTop, Button, Col, Comment, Form, Icon, Input, List, message, Row } from 'antd'
+import { Avatar, BackTop, Button, Col, Comment, Form, Icon, Input, message, Row } from 'antd'
 import { queryArticle } from '../../services/newBlog'
 import moment from 'moment'
 import { generateImgSrc as idcon } from '../../components/Img/DefaultAvatar'
+import { connect } from 'dva'
 
 // 代码高亮插件
 BraftEditor.use(CodeHighlighter())
@@ -18,7 +19,7 @@ BraftEditor.use(CodeHighlighter())
 // 本页可解析的文章 parseType 标记
 const parseType = 'draft-0.0.1'
 
-// braft-editor 编写提交的文本在展示时有小bug, 需要修改相应 class
+// 用 braft-editor 编写提交的文本在展示时有小bug, 需要修改相应 class
 const fixBraftBug = () => {
   // 清除高度, 默认是500px
   if (document.querySelector('.bf-content')) {
@@ -51,127 +52,6 @@ const Editor = ({ onChange, onSubmit, submitting, value }) => (
   </div>
 )
 
-
-const ExampleComment = ({ children }) => (
-  <Comment
-    actions={ [<span key="comment-nested-reply-to">Reply to</span>] }
-    author={ <a>Han Solo</a> }
-    avatar={
-      <Avatar
-        src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-        alt="Han Solo"
-      />
-    }
-    content={ `
-      resources (Sketch and Axure).
-      `
-    }
-  >
-    { children }
-  </Comment>
-)
-
-const commentList = [{
-  author: '作者',
-  avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-  avatarAlt: '作者',
-  content: '沙发沙发,',
-  replyList: [{
-    author: '作者',
-    avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-    avatarAlt: '作者',
-    content: '回复回复,',
-    replyList: [{
-      author: '作者',
-      avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-      avatarAlt: '作者',
-      content: '呃呃呃,',
-      replyList: null,
-    },
-    ],
-  }, {
-    author: '游客',
-    avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-    avatarAlt: '作者',
-    content: '二楼,',
-    replyList: null,
-  },
-  ],
-}, {
-  author: '另一个游客',
-  avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-  avatarAlt: '作者',
-  content: '三楼,',
-  replyList: [{
-    author: '作者',
-    avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-    avatarAlt: '作者',
-    content: '1111,',
-    replyList: [{
-      author: '作者',
-      avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-      avatarAlt: '作者',
-      content: '内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容,',
-      replyList: null,
-    },
-    ],
-  }, {
-    author: '大可',
-    avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-    avatarAlt: '作者',
-    content: '..............1111,',
-    replyList: null,
-  },
-  ],
-}]
-
-const CommentList = (dataSource) => (
-  <List
-    dataSource={ dataSource }
-    renderItem={ item => (
-      <List.Item>
-        <Comment
-          actions={ [<span key="comment-nested-reply-to">Reply to</span>] }
-          author={ item.author }
-          avatar={
-            <Avatar
-              src={ item.avatar }
-              alt={ item.avatarAlt }
-            />
-          }
-          content={ item.content }
-        >
-          { item.children && item.children.map(subItem => (
-            <CommentList dataSource={ subItem.dataSource }/>
-          )) }
-        </Comment>
-      </List.Item>
-    ) }
-  />
-)
-
-const NestCommentList = ({ children }) => (
-  <List
-    dataSource={ commentList }
-    renderItem={ item => (
-      <List.Item>
-        <Comment
-          actions={ [<span key="comment-nested-reply-to">Reply to</span>] }
-          author={ item.author }
-          avatar={
-            <Avatar
-              src={ item.avatar }
-              alt={ item.avatarAlt }
-            />
-          }
-          content={ item.content }
-        >
-        </Comment>
-      </List.Item>
-    ) }
-  />
-)
-
 class ViewBlog extends React.Component {
   constructor(props) {
     super(props)
@@ -195,7 +75,7 @@ class ViewBlog extends React.Component {
       createAt: null,
       blogId: this.props.match.params.blogId,
       editorState: BraftEditor.createEditorState(null),
-      commentList: commentList,
+      commentList: null,
     }
   }
 
@@ -219,6 +99,10 @@ class ViewBlog extends React.Component {
           }
         }
       })
+
+    console.log(`this.props.dispatch({ type: 'articleComment/list' })`)
+    this.props.dispatch({ type: 'articleComment/list_' })
+    console.log(`this.props.dispatch({ type: 'articleComment/list' })`)
   }
 
   // 路由切换/手动改uri, 需要重新加载文章
@@ -248,10 +132,6 @@ class ViewBlog extends React.Component {
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     fixBraftBug()
-  }
-
-  handleEditorChange = (editorState) => {
-    this.setState({ editorState })
   }
 
   render() {
@@ -323,17 +203,7 @@ class ViewBlog extends React.Component {
               }
             />
 
-
-            <ArticleComment commentList={ commentList }/>
-
-            {/*<CommentList dataSource={ commentList }/>*/ }
-
-            <ExampleComment>
-              <ExampleComment>
-                <ExampleComment/>
-                <ExampleComment/>
-              </ExampleComment>
-            </ExampleComment>
+            <ArticleComment commentList={ this.props.commentList }/>
           </div>
         </Col>
         <BackTop/>
@@ -342,4 +212,7 @@ class ViewBlog extends React.Component {
   }
 }
 
-export default ViewBlog
+export default connect(state => {
+  console.log(state)
+  return state.articleComment
+})(ViewBlog)

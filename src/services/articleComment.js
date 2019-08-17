@@ -27,8 +27,8 @@ export async function post(title, text) {
   })
 }
 
-export async function queryArticle(id) {
-  return request(`/public/article?id=${ id }`, {
+export async function list(id) {
+  return request(`/test/articleComment/list?id=${ id }`, {
     headers: {
       accept: 'application/json',
     },
