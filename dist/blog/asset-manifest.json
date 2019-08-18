@@ -1,6 +1,6 @@
 {
   "/vendors.css": "/blog/vendors.2937d5de.chunk.css",
-  "/vendors.js": "/blog/vendors.008e5974.async.js",
+  "/vendors.js": "/blog/vendors.daab44e3.async.js",
   "/layouts__BasicLayout.css": "/blog/layouts__BasicLayout.14f3ed73.chunk.css",
   "/layouts__BasicLayout.js": "/blog/layouts__BasicLayout.0832a194.async.js",
   "/layouts__BlankLayout.css": "/blog/layouts__BlankLayout.d12f45de.chunk.css",
@@ -25,8 +25,9 @@
   "/p__viewBlog__ViewBlogArticleInfoTest.js": "/blog/p__viewBlog__ViewBlogArticleInfoTest.28bbf07a.async.js",
   "/p__viewBlog__ViewBlogBase64Test.js": "/blog/p__viewBlog__ViewBlogBase64Test.208d1390.async.js",
   "/p__viewBlog__ViewBlogTest.js": "/blog/p__viewBlog__ViewBlogTest.ceac5ee6.async.js",
+  "/p__viewBlog__ViewBlogTestMockArticleComments.js": "/blog/p__viewBlog__ViewBlogTestMockArticleComments.a365a81e.async.js",
   "/umi.css": "/blog/umi.8dd6ada4.css",
-  "/umi.js": "/blog/umi.b98782e8.js",
+  "/umi.js": "/blog/umi.fd964cc8.js",
   "/favicon.png": "/blog/favicon.png",
   "/icons/icon-128x128.png": "/blog/icons/icon-128x128.png",
   "/icons/icon-192x192.png": "/blog/icons/icon-192x192.png",

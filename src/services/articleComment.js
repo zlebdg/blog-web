@@ -35,3 +35,12 @@ export async function list(id) {
     errorHandler: basicErrorHandler,
   })
 }
+
+export async function comments(id, page, size) {
+  return request(`/test/articleComment/comments?id=${ id }&page=${ page }&size=${ size }`, {
+    headers: {
+      accept: 'application/json',
+    },
+    errorHandler: basicErrorHandler,
+  })
+}

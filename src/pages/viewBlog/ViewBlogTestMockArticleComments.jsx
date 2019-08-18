@@ -98,7 +98,7 @@ class ViewBlog extends React.Component {
         }
       })
 
-    this.props.dispatch({ type: 'articleComment/list_' })
+    this.props.dispatch({ type: 'testMockArticleComment/list_' })
   }
 
   // 路由切换/手动改uri, 需要重新加载文章
@@ -203,7 +203,7 @@ class ViewBlog extends React.Component {
             <ArticleComment comments={ this.props.comments } pagination={ {
               onChange: (page, pageSize) => {
                 this.props.dispatch({
-                  type: 'articleComment/comments',
+                  type: 'testMockArticleComment/list_',
                   payload: {
                     page,
                     pageSize,
@@ -223,5 +223,5 @@ class ViewBlog extends React.Component {
 
 export default connect(state => {
   console.log(state)
-  return state.articleComment
+  return state.testMockArticleComment
 })(ViewBlog)
