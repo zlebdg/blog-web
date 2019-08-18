@@ -2,26 +2,30 @@ import { list as _list, post as _post } from '../services/articleComment'
 
 export default {
   state: {
-    commentList: null,
+    comments: {
+      page: 1,
+      pageSize: 10,
+      list: null,
+    },
   },
   // 异步操作
   effects: {
     * post_({ payload }, { put, call }) {
       const response = yield call(_post)
-      console.log(response)
       yield put({
         type: 'post',
         payload: response,
       })
     },
-    * list_({ payload }, { put, call }) {
+    * list_({ payload, callback }, { put, call }) {
       const response = yield call(_list, [1])
-      console.log(response)
+      console.log(payload)
+      console.log(callback)
       if (200 === response.code) {
         yield put({
           type: 'list',
           payload: {
-            commentList: response.data,
+            comments: response.data,
           },
         })
       }
@@ -37,8 +41,6 @@ export default {
       }
     },
     list(state, action) {
-      console.log(state)
-      console.log(action)
       return {
         ...state, ...action.payload,
       }

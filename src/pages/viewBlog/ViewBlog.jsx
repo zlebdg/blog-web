@@ -75,18 +75,16 @@ class ViewBlog extends React.Component {
       createAt: null,
       blogId: this.props.match.params.blogId,
       editorState: BraftEditor.createEditorState(null),
-      commentList: null,
+      comments: this.props.comments,
     }
   }
 
   componentDidMount() {
     queryArticle(this.state.blogId)
       .then(resp => {
-        console.log(resp)
         if (resp && resp.data) {
           const article = resp.data
           if (article.parseType && parseType === article.parseType) {
-            console.log(article)
             this.setState({
               createAt: article.createAt,
               title: article.title,
@@ -100,9 +98,7 @@ class ViewBlog extends React.Component {
         }
       })
 
-    console.log(`this.props.dispatch({ type: 'articleComment/list' })`)
     this.props.dispatch({ type: 'articleComment/list_' })
-    console.log(`this.props.dispatch({ type: 'articleComment/list' })`)
   }
 
   // 路由切换/手动改uri, 需要重新加载文章
@@ -111,7 +107,6 @@ class ViewBlog extends React.Component {
     if (blogIdNew !== this.props.match.params.blogId) {
       queryArticle(blogIdNew)
         .then(resp => {
-          console.log(resp)
           if (resp && resp.data) {
             const article = resp.data
             if (article.parseType && parseType === article.parseType) {
@@ -136,6 +131,8 @@ class ViewBlog extends React.Component {
 
   render() {
     const { editorState } = this.state
+    console.log(this.props)
+
     return (
       <Row justify="space-around" type="flex">
         <Col xxl={ 16 } xl={ 18 } lg={ 18 } span={ 24 }>
@@ -203,7 +200,19 @@ class ViewBlog extends React.Component {
               }
             />
 
-            <ArticleComment commentList={ this.props.commentList }/>
+            <ArticleComment comments={ this.props.comments } pagination={ {
+              onChange: (page, pageSize) => {
+                this.props.dispatch({
+                  type: 'articleComment/list_',
+                  payload: {
+                    page,
+                    pageSize,
+                  },
+                })
+              },
+              pageSize: this.props.comments.pageSize,
+              total: this.props.comments.total,
+            } }/>
           </div>
         </Col>
         <BackTop/>

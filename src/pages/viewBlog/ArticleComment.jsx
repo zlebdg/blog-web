@@ -6,7 +6,7 @@ import { Avatar, Comment, List } from 'antd'
 
 export default class ArticleComment extends React.PureComponent {
   render() {
-    if (!this.props.commentList || this.props.commentList.length <= 0) {
+    if (!this.props.comments || !this.props.comments.list || this.props.comments.list.length <= 0) {
       return (<></>)
     }
 
@@ -14,7 +14,8 @@ export default class ArticleComment extends React.PureComponent {
       <div>
         <List
           bordered
-          dataSource={ this.props.commentList }
+          pagination={ this.props.pagination }
+          dataSource={ this.props.comments.list }
           renderItem={ comment => (
             <List.Item>
               <Comment
@@ -26,9 +27,9 @@ export default class ArticleComment extends React.PureComponent {
                     alt="alt"
                   />
                 }
-                content={ comment.content }
+                content={ comment.text }
               >
-                { <ArticleComment commentList={ comment.replyList }/> }
+                { <ArticleComment comments={ comment.replys }/> }
               </Comment>
             </List.Item>
           ) }
