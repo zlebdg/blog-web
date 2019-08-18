@@ -4,7 +4,7 @@ import 'braft-extensions/dist/code-highlighter.css'
 
 import React from 'react'
 import { Base64 } from 'js-base64'
-import ArticleComment from './ArticleComment'
+import ArticleComment from './ArticleComment2'
 import BraftEditor from 'braft-editor'
 import CodeHighlighter from 'braft-extensions/dist/code-highlighter'
 import { Avatar, BackTop, Button, Col, Comment, Form, Icon, Input, message, Row } from 'antd'
@@ -55,6 +55,9 @@ const Editor = ({ onChange, onSubmit, submitting, value }) => (
 class ViewBlog extends React.Component {
   constructor(props) {
     super(props)
+
+    console.log('constructor构造函数会多次执行吗?')
+
     this.state = {
       author: {
         id: null,
@@ -75,7 +78,6 @@ class ViewBlog extends React.Component {
       createAt: null,
       blogId: this.props.match.params.blogId,
       editorState: BraftEditor.createEditorState(null),
-      comments: this.props.comments,
     }
   }
 
@@ -98,7 +100,15 @@ class ViewBlog extends React.Component {
         }
       })
 
-    this.props.dispatch({ type: 'articleComment/list_' })
+    // 加载最近10条评论
+    this.props.dispatch({
+      type: 'articleComment/commentsQuery',
+      payload: {
+        id: this.props.match.params.blogId,
+        page: 1,
+        size: 10,
+      },
+    })
   }
 
   // 路由切换/手动改uri, 需要重新加载文章
@@ -130,6 +140,8 @@ class ViewBlog extends React.Component {
   }
 
   render() {
+    console.log('render函数会多次执行吗?')
+
     const { editorState } = this.state
     console.log(this.props)
 
@@ -203,15 +215,16 @@ class ViewBlog extends React.Component {
             <ArticleComment comments={ this.props.comments } pagination={ {
               onChange: (page, pageSize) => {
                 this.props.dispatch({
-                  type: 'articleComment/comments',
+                  type: 'articleComment/commentsQuery',
                   payload: {
+                    id: this.props.match.params.blogId,
                     page,
-                    pageSize,
+                    size: pageSize,
                   },
                 })
               },
-              pageSize: this.props.comments.pageSize,
-              total: this.props.comments.total,
+              pageSize: this.props.comments.size,
+              total: this.props.comments.totalElements,
             } }/>
           </div>
         </Col>

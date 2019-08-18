@@ -6,13 +6,13 @@ export default {
     count: null,
   },
   subscriptions: {
-    setup({ dispatch, history }) {
-      history.listen((pathname, query) => {
-          console.log(pathname)
-          console.log(query)
-        },
-      )
-    },
+    // setup({ dispatch, history }) {
+    //   history.listen((pathname, query) => {
+    //       console.log(pathname)
+    //       console.log(query)
+    //     },
+    //   )
+    // },
   },
   // 异步操作
   effects: {

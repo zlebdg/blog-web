@@ -2,15 +2,6 @@ export default {
   state: {
     aa: 'hehe',
   },
-  subscriptions: {
-    setup({ dispatch, history }) {
-      history.listen((pathname, query) => {
-          console.log(pathname)
-          console.log(query)
-        },
-      )
-    },
-  },
   // 异步请求
   effects: {
     * query({ payload }, { put, call }) {

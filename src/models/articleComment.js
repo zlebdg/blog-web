@@ -1,42 +1,24 @@
-import { list as _list, post as _post } from '../services/articleComment'
+import { comments as _comments } from '../services/articleComment'
 
 export default {
   state: {
     comments: {
-      page: 1,
-      pageSize: 10,
-      list: null,
+      totalElements: 0,
+      size: 10,
     },
   },
   // 异步操作
   effects: {
-    * post_({ payload }, { put, call }) {
-      const response = yield call(_post)
-      yield put({
-        type: 'post',
-        payload: response,
-      })
-    },
-    * list_({ payload, callback }, { put, call }) {
-      const response = yield call(_list, [1])
+    * commentsQuery({ payload }, { put, call }) {
       console.log(payload)
-      console.log(callback)
-      if (200 === response.code) {
-        yield put({
-          type: 'list',
-          payload: {
-            comments: response.data,
-          },
-        })
+      if (!payload) {
+        return
       }
-    },
-    * comments({ payload, callback }, { put, call }) {
-      const response = yield call(_list, [1])
-      console.log(payload)
-      console.log(callback)
+
+      const response = yield call(_comments, payload.id, payload.page - 1, payload.size)
       if (200 === response.code) {
         yield put({
-          type: 'list',
+          type: 'commentsSave',
           payload: {
             comments: response.data,
           },
@@ -46,14 +28,8 @@ export default {
   },
   // 同步操作
   reducers: {
-    post(state, action) {
-      console.log(state)
+    commentsSave(state, action) {
       console.log(action)
-      return {
-        ...state,
-      }
-    },
-    list(state, action) {
       return {
         ...state, ...action.payload,
       }
