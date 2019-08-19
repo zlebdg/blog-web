@@ -160,31 +160,48 @@ class ViewBlog extends React.Component {
 
             <div style={ { textAlign: 'center' } }>
               <div className={ styles.extra }>
-                <Avatar
-                  src={ this.state.author.avatar
-                    ? this.state.author.avatar : idcon(this.state.author.username) }
-                  alt="alt" size="small"/>
-                <a> { this.state.author.username } </a>
-                发布于
-                {
-                  moment(this.state.createAt)
-                    .format('YYYY-MM-DD HH:mm:ss')
-                }
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <span style={ { margin: '0 0.5em' } }>
-                  <Icon type="like-o"/> { this.state.articleInfo.like }
-                </span> |
-                <span style={ { margin: '0 0.5em' } }>
-                  <Icon type="dislike-o"/> { this.state.articleInfo.dislike }
-                </span> |
-                <span style={ { margin: '0 0.5em' } }>
-                  <Icon type="star-o"/> { this.state.articleInfo.star }
-                </span> |
-                <span style={ { margin: '0 0.5em' } }>
-                  <Icon type="message"/> { this.state.articleInfo.comment }
-                </span>|
-                <span style={ { margin: '0 0.5em' } }>
-                  <Icon type="read"/> { this.state.articleInfo.read }
+                <span style={ { margin: '0 15px' } }>
+                  <Avatar
+                    src={ this.state.author.avatar
+                      ? this.state.author.avatar : idcon(this.state.author.username) }
+                    alt="alt" size="small"/>
+                  <a> { this.state.author.username } </a>发布于
+                  {
+                    moment(this.state.createAt)
+                      .format('YYYY-MM-DD HH:mm:ss')
+                  }
+                </span>
+                <span style={ { margin: '0 15px' } }>
+                  <span style={ {
+                    margin: '0 0.5em',
+                    display: 'inline-block',
+                  } }>
+                    <Icon type="like-o"/> { this.state.articleInfo.like }
+                  </span> |
+                  <span style={ {
+                    margin: '0 0.5em',
+                    display: 'inline-block',
+                  } }>
+                    <Icon type="dislike-o"/> { this.state.articleInfo.dislike }
+                  </span> |
+                  <span style={ {
+                    margin: '0 0.5em',
+                    display: 'inline-block',
+                  } }>
+                    <Icon type="star-o"/> { this.state.articleInfo.star }
+                  </span> |
+                  <span style={ {
+                    margin: '0 0.5em',
+                    display: 'inline-block',
+                  } }>
+                    <Icon type="message"/> { this.state.articleInfo.comment }
+                  </span>|
+                  <span style={ {
+                    margin: '0 0.5em',
+                    display: 'inline-block',
+                  } }>
+                    <Icon type="read"/> { this.state.articleInfo.read }
+                  </span>
                 </span>
               </div>
             </div>
@@ -196,37 +213,39 @@ class ViewBlog extends React.Component {
             />
           </div>
           <hr/>
-          <div style={ {
+          <Row style={ {
             backgroundColor: 'white',
-            padding: '10px 40px',
-          } }>
-            <Comment
-              avatar={
-                <Avatar
-                  src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-                  alt="Han Solo"
-                />
-              }
-              content={
-                <Editor value=""/>
-              }
-            />
+            paddingBottom: '20px',
+          } } justify="space-around" type="flex">
+            <Col xxl={ 16 } xl={ 18 } lg={ 18 } span={ 22 }>
+              <Comment
+                avatar={
+                  <Avatar
+                    src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+                    alt="Han Solo"
+                  />
+                }
+                content={
+                  <Editor value=""/>
+                }
+              />
 
-            <ArticleComment comments={ this.props.comments } pagination={ {
-              onChange: (page, pageSize) => {
-                this.props.dispatch({
-                  type: 'articleComment/commentsQuery',
-                  payload: {
-                    id: this.props.match.params.blogId,
-                    page,
-                    size: pageSize,
-                  },
-                })
-              },
-              pageSize: this.props.comments.size,
-              total: this.props.comments.totalElements,
-            } }/>
-          </div>
+              <ArticleComment comments={ this.props.comments } pagination={ {
+                onChange: (page, pageSize) => {
+                  this.props.dispatch({
+                    type: 'articleComment/commentsQuery',
+                    payload: {
+                      id: this.props.match.params.blogId,
+                      page,
+                      size: pageSize,
+                    },
+                  })
+                },
+                pageSize: this.props.comments.size,
+                total: this.props.comments.totalElements,
+              } }/>
+            </Col>
+          </Row>
         </Col>
         <BackTop/>
       </Row>
