@@ -44,7 +44,7 @@ const Editor = ({ onChange, onSubmit, submitting, value }) => (
       <Input.TextArea rows={ 4 } onChange={ onChange }/>
     </Form.Item>
     <Form.Item>
-      <Button htmlType="submit" loading={ false } onClick={ onSubmit } type="primary"
+      <Button htmlType="submit" loading={ submitting } onClick={ onSubmit } type="primary"
               className="pull-right">
         Add Comment
       </Button>
@@ -78,6 +78,14 @@ class ViewBlog extends React.Component {
       createAt: null,
       blogId: this.props.match.params.blogId,
       editorState: BraftEditor.createEditorState(null),
+      comment: {
+        submitting: false,
+        text: '',
+      },
+      comments: {
+        totalElements: 0,
+        content: null,
+      },
     }
   }
 
@@ -139,11 +147,66 @@ class ViewBlog extends React.Component {
     fixBraftBug()
   }
 
+  handleComment = () => {
+    this.setState({
+      comment: {
+        submitting: true,
+      },
+    })
+
+    // 评论即时显示
+    setTimeout(() => {
+      if (this.state.comments && this.state.comments.content) {
+        if (this.state.comments.content.length >= this.state.comments.size) {
+          // 弹出最后一个
+          this.state.comments.content.pop()
+        }
+        // 开头插入
+        this.state.comments.content.unshift({
+          authorId: '06771b32-24d6-4110-8e0d-6ef2f45f431c',
+          authorUsername: '另一位不愿多吃饭的网友',
+          hash: 'hash',
+          id: 0,
+          parseType: '0.0.1',
+          text: '信你个鬼...',
+        })
+      }
+
+      this.setState(({ comments }) => {
+          return {
+            comments: {
+              totalElements: comments.totalElements + 1,
+            },
+          }
+        },
+      )
+
+      // 只要调用到了 setState 也会同时更新 content
+      this.setState({
+        comment: {
+          submitting: false,
+        },
+      })
+    }, 200)
+  }
+
+  // 输入绑定到 state
+  handleCommentText = (e) => {
+    this.setState({
+      comment: {
+        text: e.target.value,
+      },
+    })
+  }
+
   render() {
-    console.log('render函数会多次执行吗?')
+    // console.log(this.props)
 
     const { editorState } = this.state
-    console.log(this.props)
+    this.state.comments.content = this.props.comments.content || this.state.comments.content
+
+    this.state.comments.totalElements =
+      Math.max(this.props.comments.totalElements, this.state.comments.totalElements)
 
     return (
       <Row justify="space-around" type="flex">
@@ -226,11 +289,13 @@ class ViewBlog extends React.Component {
                   />
                 }
                 content={
-                  <Editor value=""/>
+                  <Editor value={ this.state.comment.text } onChange={ this.handleCommentText }
+                          onSubmit={ this.handleComment }
+                          submitting={ this.state.comment.submitting }/>
                 }
               />
 
-              <ArticleComment comments={ this.props.comments } pagination={ {
+              <ArticleComment comments={ this.state.comments } pagination={ {
                 onChange: (page, pageSize) => {
                   this.props.dispatch({
                     type: 'articleComment/commentsQuery',
@@ -242,7 +307,7 @@ class ViewBlog extends React.Component {
                   })
                 },
                 pageSize: this.props.comments.size,
-                total: this.props.comments.totalElements,
+                total: this.state.comments.totalElements,
               } }/>
             </Col>
           </Row>
