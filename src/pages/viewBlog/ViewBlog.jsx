@@ -8,7 +8,6 @@ import ArticleComment from './ArticleComment2'
 import BraftEditor from 'braft-editor'
 import CodeHighlighter from 'braft-extensions/dist/code-highlighter'
 import { Avatar, BackTop, Button, Col, Comment, Form, Icon, Input, message, Row } from 'antd'
-import { queryArticle } from '../../services/newBlog'
 import moment from 'moment'
 import { generateImgSrc as idcon } from '../../components/Img/DefaultAvatar'
 import { connect } from 'dva'
@@ -35,6 +34,13 @@ const fixBraftBug = () => {
       document.querySelector('.bf-hr').innerHTML = ''
     }
   }
+  // 代码块高度, 超过400px出现滚动条
+  if (document.querySelectorAll('.braft-code-block')) {
+    document.querySelectorAll('.braft-code-block')
+      .forEach(ele => {
+        ele.style.minHeight = `${ ele.scrollHeight }px`
+      })
+  }
 }
 
 // comment 评论
@@ -57,25 +63,26 @@ class ViewBlog extends React.Component {
     super(props)
 
     this.state = {
-      author: {
-        id: null,
-        username: null,
-        nickname: null,
-        appId: null,
-        avatar: null,
+      article: {
+        title: null,
+        createAt: null,
+        text: null,
+        articleInfo: {
+          id: null,
+          like: null,
+          dislike: null,
+          star: null,
+          comment: null,
+          read: null,
+        },
+        author: {
+          id: null,
+          username: null,
+          nickname: null,
+          appId: null,
+          avatar: null,
+        },
       },
-      articleInfo: {
-        id: null,
-        like: null,
-        dislike: null,
-        star: null,
-        comment: null,
-        read: null,
-      },
-      title: null,
-      createAt: null,
-      blogId: this.props.match.params.blogId,
-      editorState: BraftEditor.createEditorState(null),
       comment: {
         submitting: false,
         text: '',
@@ -89,62 +96,54 @@ class ViewBlog extends React.Component {
     }
   }
 
-  componentDidMount() {
-    queryArticle(this.state.blogId)
-      .then(resp => {
-        if (resp && resp.data) {
-          const article = resp.data
-          if (article.parseType && parseType === article.parseType) {
-            this.setState({
-              createAt: article.createAt,
-              title: article.title,
-              author: article.author,
-              articleInfo: article.articleInfo,
-              editorState: BraftEditor.createEditorState(`${ decodeURIComponent(Base64.decode(article.text)) }`),
-            })
-          } else {
-            message.error(`不能够渲染的文章类型 ${ article.parseType }`)
-          }
-        }
-      })
-
-    // 加载最近10条评论
+  reloadArticle = () => {
     this.props.dispatch({
-      type: 'articleComment/commentsQuery',
-      payload: {
-        id: this.props.match.params.blogId,
-        page: 1,
-        size: 10,
+      type: 'viewBlog/articleQuery',
+      payload: { id: this.props.match.params.blogId },
+      callback: (article) => {
+        if (article.parseType && parseType === article.parseType) {
+          const text = {
+            text: BraftEditor.createEditorState(`${ decodeURIComponent(Base64.decode(article.text)) }`),
+          }
+          this.setState({
+            article, ...text,
+          }, () => {
+            fixBraftBug()
+          })
+        } else {
+          message.error(`不能够渲染的文章类型 ${ article.parseType }`)
+        }
       },
     })
   }
 
-  // 路由切换/手动改uri, 需要重新加载文章
-  componentWillReceiveProps(nextProps, nextContext) {
-    const blogIdNew = nextProps.match.params.blogId
-    if (blogIdNew !== this.props.match.params.blogId) {
-      queryArticle(blogIdNew)
-        .then(resp => {
-          if (resp && resp.data) {
-            const article = resp.data
-            if (article.parseType && parseType === article.parseType) {
-              this.setState({
-                createAt: article.createAt,
-                title: article.title,
-                author: article.author,
-                articleInfo: article.articleInfo,
-                editorState: BraftEditor.createEditorState(`${ decodeURIComponent(Base64.decode(article.text)) }`),
-              })
-            } else {
-              message.error(`不能够渲染的文章类型 ${ article.parseType }`)
-            }
-          }
+  reloadComments = () => {
+    this.props.dispatch({
+      type: 'articleComment/commentsQuery',
+      payload: {
+        id: this.props.match.params.blogId,
+        page: this.state.comments.page - 1,
+        size: this.state.comments.size,
+      },
+      callback: (comments) => {
+        this.setState(state => ({
+          ...state,
+          comments: {
+            totalElements: comments.totalElements,
+            content: comments.content,
+            page: state.comments.page,
+            size: state.comments.size,
+          },
+        }), () => {
+          console.log(this.state)
         })
-    }
+      },
+    })
   }
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    fixBraftBug()
+  componentDidMount() {
+    this.reloadArticle()
+    this.reloadComments()
   }
 
   handleComment = () => {
@@ -190,15 +189,6 @@ class ViewBlog extends React.Component {
     }, 200)
   }
 
-  // 输入绑定到 state
-  handleCommentText = (e) => {
-    this.setState({
-      comment: {
-        text: e.target.value,
-      },
-    })
-  }
-
   render() {
     return (
       <Row justify="space-around" type="flex">
@@ -210,19 +200,20 @@ class ViewBlog extends React.Component {
 
             <div>
               <h1 style={ { textAlign: 'center' } }>
-                <span style={ { fontSize: '32px' } }>{ this.state.title }</span></h1>
+                <span style={ { fontSize: '32px' } }>{ this.state.article.title }</span></h1>
             </div>
 
             <div style={ { textAlign: 'center' } }>
               <div className={ styles.extra }>
                 <span style={ { margin: '0 15px' } }>
                   <Avatar
-                    src={ this.state.author.avatar
-                      ? this.state.author.avatar : idcon(this.state.author.username) }
+                    src={ this.state.article.author.avatar
+                      ? this.state.article.author.avatar
+                      : idcon(this.state.article.author.username) }
                     alt="alt" size="small"/>
-                  <a> { this.state.author.username } </a>发布于
+                  <a> { this.state.article.author.username } </a>发布于
                   {
-                    moment(this.state.createAt)
+                    moment(this.state.article.createAt)
                       .format('YYYY-MM-DD HH:mm:ss')
                   }
                 </span>
@@ -231,38 +222,38 @@ class ViewBlog extends React.Component {
                     margin: '0 0.5em',
                     display: 'inline-block',
                   } }>
-                    <Icon type="like-o"/> { this.state.articleInfo.like }
+                    <Icon type="like-o"/> { this.state.article.articleInfo.like }
                   </span> |
                   <span style={ {
                     margin: '0 0.5em',
                     display: 'inline-block',
                   } }>
-                    <Icon type="dislike-o"/> { this.state.articleInfo.dislike }
+                    <Icon type="dislike-o"/> { this.state.article.articleInfo.dislike }
                   </span> |
                   <span style={ {
                     margin: '0 0.5em',
                     display: 'inline-block',
                   } }>
-                    <Icon type="star-o"/> { this.state.articleInfo.star }
+                    <Icon type="star-o"/> { this.state.article.articleInfo.star }
                   </span> |
                   <span style={ {
                     margin: '0 0.5em',
                     display: 'inline-block',
                   } }>
-                    <Icon type="message"/> { this.state.articleInfo.comment }
+                    <Icon type="message"/> { this.state.article.articleInfo.comment }
                   </span>|
                   <span style={ {
                     margin: '0 0.5em',
                     display: 'inline-block',
                   } }>
-                    <Icon type="read"/> { this.state.articleInfo.read }
+                    <Icon type="read"/> { this.state.article.articleInfo.read }
                   </span>
                 </span>
               </div>
             </div>
 
             <BraftEditor
-              value={ this.state.editorState }
+              value={ this.state.text }
               controls={ [] }
               readOnly="true"
             />
@@ -280,25 +271,22 @@ class ViewBlog extends React.Component {
                     alt="Han Solo"
                   />
                 }
-                content={
-                  <Editor value={ this.state.comment.text } onChange={ this.handleCommentText }
-                          onSubmit={ this.handleComment }
-                          submitting={ this.state.comment.submitting }/>
-                }
-              />
+                content={ <Editor value={ this.state.comment.text } onChange={ (e) => {
+                  this.setState({
+                    comment: {
+                      text: e.target.value,
+                    },
+                  })
+                } } onSubmit={ this.handleComment } submitting={ this.state.comment.submitting }/>
+                }/>
 
               <ArticleComment comments={ this.state.comments } pagination={ {
                 onChange: (page, pageSize) => {
-                  this.props.dispatch({
-                    type: 'articleComment/commentsQuery',
-                    payload: {
-                      id: this.props.match.params.blogId,
-                      page,
-                      size: pageSize,
-                    },
-                  })
+                  this.state.comments.page = page
+                  this.state.comments.size = pageSize
+                  this.reloadComments()
                 },
-                current: this.state.page,
+                current: this.state.comments.page,
                 pageSize: this.state.comments.size,
                 total: this.state.comments.totalElements,
               } }/>

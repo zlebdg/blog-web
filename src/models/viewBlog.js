@@ -1,4 +1,4 @@
-import { comments as _comments } from '../services/articleComment'
+import { articleQuery as _articleQuery } from '../services/viewBlog'
 
 export default {
   state: {
@@ -9,8 +9,8 @@ export default {
   },
   // 异步操作
   effects: {
-    * commentsQuery({ payload, callback }, { put, call }) {
-      const response = yield call(_comments, payload.id, payload.page, payload.size)
+    * articleQuery({ payload, callback }, { put, call }) {
+      const response = yield call(_articleQuery, payload)
       if (200 === response.code) {
         callback(response.data)
       }
