@@ -4,7 +4,6 @@ import { connect } from 'dva'
 
 @connect(
   (state) => {
-    console.log(state)
     return {
       state: {
         settings: state.settings,
@@ -142,7 +141,6 @@ export default class Index extends Component {
 
   render() {
     const { aa } = this.props
-    console.log(this.props)
     return (
       <div>
         切换主题 测试

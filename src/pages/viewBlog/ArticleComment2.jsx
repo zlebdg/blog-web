@@ -7,7 +7,6 @@ import { generateImgSrc as idcon } from '../../components/Img/DefaultAvatar'
 
 export default class ArticleComment extends React.PureComponent {
   render() {
-    console.log(this.props)
     if (!this.props.comments || !this.props.comments.content || this.props.comments.content.length <= 0) {
       return (<></>)
     }

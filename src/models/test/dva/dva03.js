@@ -17,9 +17,7 @@ export default {
   // 异步操作
   effects: {
     * _query({ payload }, { put, call }) {
-      console.log('调用了异步方法 _query')
       const resp = yield call(reqQuery)
-      console.log(resp)
       if (resp && 200 === resp.code) {
         yield  put({
           type: 'query',
@@ -30,14 +28,11 @@ export default {
       }
     },
     * post_(_, { put, call }) {
-      yield console.log('调用了异步方法 post_')
     },
   },
   // 同步操作
   reducers: {
     query(state, action) {
-      console.log(state)
-      console.log(action)
       let count = 1
       if (state.count) {
         count = state.count + 1
@@ -51,7 +46,6 @@ export default {
       }
     },
     post(state, action) {
-      console.log(state)
       state = {
         aa: 'haha',
         count: -1,

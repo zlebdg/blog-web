@@ -15,12 +15,9 @@ class Index extends PureComponent {
           this.props.form.validateFields(['passwordRepeat'], { force: true })
 
           // 校验通过
-          console.log('Received values of form: ', values)
-
           const { verifyCode } = this.props.location.query
           resetVerify(verifyCode, values.password)
             .then(resp => {
-              console.log(resp)
               if (null != resp && 200 === resp.code) {
                 message.success(formatMessage({ id: '密码重置成功' }))
                 router.push('/user/login')

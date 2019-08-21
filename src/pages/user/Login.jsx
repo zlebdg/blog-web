@@ -13,7 +13,6 @@ class Login extends PureComponent {
     if (null == sessionStorage.getItem('autoLogin')) {
       currentUser()
         .then(resp => {
-          console.log(resp)
           if (null != resp && 200 == resp.code) {
             const user = JSON.parse(resp.data)
             if (user.authenticated && user.username !== 'anonymousUser') {
@@ -23,7 +22,6 @@ class Login extends PureComponent {
                 sessionStorage.setItem('autoLogin', 1)
 
                 // 设置umi菜单权限
-                console.log(JSON.stringify(user.authorities))
                 sessionStorage.setItem('antd-pro-authority', JSON.stringify(user.authorities))
                 reloadAuthorized() // 重新读取授权信息
                 router.push('/welcome')
@@ -41,7 +39,6 @@ class Login extends PureComponent {
     e.preventDefault()
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values)
 
         // spring security 后台实现只会返回重定向响应头, 这里暂时兼容一下
         // 后台已修改, 针对 Accept: application/json 的 form表单登录请求返回json

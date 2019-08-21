@@ -29,7 +29,6 @@ class Index extends PureComponent {
     e.preventDefault()
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values)
 
         //
         sessionStorage.setItem('register.username', values.username)
@@ -38,7 +37,6 @@ class Index extends PureComponent {
         //
         register(values.username, values.email, values.captcha)
           .then(resp => {
-            console.log(resp)
             if (null != resp && 200 === resp.code) {
               router.push('/blank/user/register/waitingForEmail')
             } else {

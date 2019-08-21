@@ -16,7 +16,6 @@ export default class CallbackPage extends PureComponent {
           // 查询当前用户
           currentUser()
             .then(resp => {
-              console.log(resp)
               if (resp && 200 === resp.code) {
                 const user = resp.data
                 if (user.authenticated && user.username !== 'anonymousUser') {

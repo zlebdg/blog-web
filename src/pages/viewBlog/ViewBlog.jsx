@@ -56,8 +56,6 @@ class ViewBlog extends React.Component {
   constructor(props) {
     super(props)
 
-    console.log('constructor构造函数会多次执行吗?')
-
     this.state = {
       author: {
         id: null,
@@ -84,7 +82,9 @@ class ViewBlog extends React.Component {
       },
       comments: {
         totalElements: 0,
-        content: null,
+        page: 1,
+        size: 10,
+        content: [],
       },
     }
   }
@@ -200,14 +200,6 @@ class ViewBlog extends React.Component {
   }
 
   render() {
-    // console.log(this.props)
-
-    const { editorState } = this.state
-    this.state.comments.content = this.props.comments.content || this.state.comments.content
-
-    this.state.comments.totalElements =
-      Math.max(this.props.comments.totalElements, this.state.comments.totalElements)
-
     return (
       <Row justify="space-around" type="flex">
         <Col xxl={ 16 } xl={ 18 } lg={ 18 } span={ 24 }>
@@ -270,7 +262,7 @@ class ViewBlog extends React.Component {
             </div>
 
             <BraftEditor
-              value={ editorState }
+              value={ this.state.editorState }
               controls={ [] }
               readOnly="true"
             />
@@ -306,7 +298,8 @@ class ViewBlog extends React.Component {
                     },
                   })
                 },
-                pageSize: this.props.comments.size,
+                current: this.state.page,
+                pageSize: this.state.comments.size,
                 total: this.state.comments.totalElements,
               } }/>
             </Col>
@@ -318,7 +311,9 @@ class ViewBlog extends React.Component {
   }
 }
 
-export default connect(state => {
-  console.log(state)
-  return state.articleComment
+export default connect((state, { articleComment, loading }) => {
+  return {
+    articleComment,
+    loading,
+  }
 })(ViewBlog)

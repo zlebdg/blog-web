@@ -18,7 +18,6 @@ const UserLoginModel = {
   },
   reducers: {
     userLoginR(state, resp) {
-      console.log(resp)
       if (resp.payload.username) {
         return {
           username: resp.payload.username,

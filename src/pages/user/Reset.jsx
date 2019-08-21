@@ -17,12 +17,10 @@ class Index extends PureComponent {
     e.preventDefault()
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values)
         const username = values.usernameOrEmail.indexOf('@') >= 0 ? null : values.usernameOrEmail
         const email = values.usernameOrEmail.indexOf('@') >= 0 ? values.usernameOrEmail : null
         reset(username, email, values.captcha)
           .then(resp => {
-            console.log(resp)
             if (null != resp && 200 === resp.code) {
               router.push('/blank/user/reset/waitingForEmail')
             } else {

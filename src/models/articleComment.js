@@ -10,7 +10,6 @@ export default {
   // 异步操作
   effects: {
     * commentsQuery({ payload }, { put, call }) {
-      console.log(payload)
       if (!payload) {
         return
       }
@@ -29,7 +28,6 @@ export default {
   // 同步操作
   reducers: {
     commentsSave(state, action) {
-      console.log(action)
       return {
         ...state, ...action.payload,
       }

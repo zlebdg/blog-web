@@ -19,8 +19,6 @@ export default {
     },
     * list_({ payload, callback }, { put, call }) {
       const response = yield call(_list, [1])
-      console.log(payload)
-      console.log(callback)
       if (200 === response.code) {
         yield put({
           type: 'list',
@@ -32,8 +30,6 @@ export default {
     },
     * comments({ payload, callback }, { put, call }) {
       const response = yield call(_list, [1])
-      console.log(payload)
-      console.log(callback)
       if (200 === response.code) {
         yield put({
           type: 'list',
@@ -47,8 +43,6 @@ export default {
   // 同步操作
   reducers: {
     post(state, action) {
-      console.log(state)
-      console.log(action)
       return {
         ...state,
       }

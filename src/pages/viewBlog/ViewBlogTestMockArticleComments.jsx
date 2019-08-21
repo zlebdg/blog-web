@@ -131,7 +131,6 @@ class ViewBlog extends React.Component {
 
   render() {
     const { editorState } = this.state
-    console.log(this.props)
 
     return (
       <Row justify="space-around" type="flex">
@@ -222,6 +221,5 @@ class ViewBlog extends React.Component {
 }
 
 export default connect(state => {
-  console.log(state)
   return state.testMockArticleComment
 })(ViewBlog)

@@ -6,9 +6,6 @@ import 'braft-editor/dist/index.css'
 
 class Editor extends React.Component {
   onChange = (value) => {
-    console.log(value.toHTML())
-    // console.log(value.toRAW(true))
-    console.log(value.toText())
   }
 
   onTab = (e) => {

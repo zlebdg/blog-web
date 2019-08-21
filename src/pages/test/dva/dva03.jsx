@@ -15,7 +15,6 @@ export default class Index extends Component {
 
   render() {
     const { aa } = this.props
-    console.log(this.props)
     return (
       <div
         style={ {

@@ -5,8 +5,6 @@ import { connect } from 'dva'
 class Index extends Component {
   render() {
     const { aa } = this.props
-    console.log(this.props)
-    console.log(aa)
     return (
       <div
         style={{
@@ -25,6 +23,5 @@ class Index extends Component {
 }
 
 export default connect(state => {
-  console.log(state)
   return state.dva02
 })(Index)
