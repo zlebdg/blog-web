@@ -43,27 +43,13 @@ const fixBraftBug = () => {
   }
 }
 
-// comment 评论
-const Editor = ({ onChange, onSubmit, submitting, value }) => (
-  <div>
-    <Form.Item>
-      <Input.TextArea rows={ 4 } onChange={ onChange }/>
-    </Form.Item>
-    <Form.Item>
-      <Button htmlType="submit" loading={ submitting } onClick={ onSubmit } type="primary"
-              className="pull-right">
-        Add Comment
-      </Button>
-    </Form.Item>
-  </div>
-)
-
 class ViewBlog extends React.Component {
   constructor(props) {
     super(props)
 
     this.state = {
       article: {
+        id: null,
         title: null,
         createAt: null,
         text: null,
@@ -96,10 +82,16 @@ class ViewBlog extends React.Component {
     }
   }
 
+  componentDidMount() {
+    this.state.article.id = this.props.match.params.blogId
+    this.reloadArticle()
+    this.reloadComments()
+  }
+
   reloadArticle = () => {
     this.props.dispatch({
       type: 'viewBlog/articleQuery',
-      payload: { id: this.props.match.params.blogId },
+      payload: { id: this.state.article.id },
       callback: (article) => {
         if (article.parseType && parseType === article.parseType) {
           const text = {
@@ -141,17 +133,21 @@ class ViewBlog extends React.Component {
     })
   }
 
-  componentDidMount() {
-    this.reloadArticle()
-    this.reloadComments()
+  componentWillReceiveProps(nextProps, nextContext) {
+    // 动态路由切换, todo, 优化
+    if (nextProps.match.params.blogId !== this.state.article.id) {
+      window.location.reload()
+    }
   }
 
   handleComment = () => {
-    this.setState({
+    this.setState(state => ({
+      ...state,
       comment: {
+        text: state.comment.text,
         submitting: true,
       },
-    })
+    }))
 
     // 评论即时显示
     setTimeout(() => {
@@ -167,25 +163,26 @@ class ViewBlog extends React.Component {
           hash: 'hash',
           id: 0,
           parseType: '0.0.1',
-          text: '信你个鬼...',
+          text: this.state.comment.text || '信你个鬼...',
         })
       }
 
-      this.setState(({ comments }) => {
+      this.setState((state) => {
+          console.log(state)
           return {
+            ...state,
             comments: {
-              totalElements: comments.totalElements + 1,
+              page: state.comments.page,
+              size: state.comments.size,
+              content: state.comments.content,
+              totalElements: state.comments.totalElements + 1,
+            },
+            comment: {
+              submitting: false,
             },
           }
         },
       )
-
-      // 只要调用到了 setState 也会同时更新 content
-      this.setState({
-        comment: {
-          submitting: false,
-        },
-      })
     }, 200)
   }
 
@@ -268,16 +265,34 @@ class ViewBlog extends React.Component {
                 avatar={
                   <Avatar
                     src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-                    alt="Han Solo"
+                    alt="alt"
                   />
                 }
-                content={ <Editor value={ this.state.comment.text } onChange={ (e) => {
-                  this.setState({
-                    comment: {
-                      text: e.target.value,
-                    },
-                  })
-                } } onSubmit={ this.handleComment } submitting={ this.state.comment.submitting }/>
+                content={
+                  <div>
+                    <Form.Item>
+                      <Input.TextArea
+                        rows={ 4 }
+                        value={ this.state.comment.text }
+                        onChange={ (e) => {
+                          // todo, to be known
+                          const text = e.target.value
+                          this.setState(state => ({
+                            ...state,
+                            comment: {
+                              text: text,
+                            },
+                          }))
+                        } }/>
+                    </Form.Item>
+                    <Form.Item>
+                      <Button htmlType="submit" loading={ this.state.comment.submitting }
+                              onClick={ this.handleComment } type="primary"
+                              className="pull-right">
+                        Add Comment
+                      </Button>
+                    </Form.Item>
+                  </div>
                 }/>
 
               <ArticleComment comments={ this.state.comments } pagination={ {
@@ -299,9 +314,7 @@ class ViewBlog extends React.Component {
   }
 }
 
-export default connect((state, { articleComment, loading }) => {
-  return {
-    articleComment,
-    loading,
-  }
-})(ViewBlog)
+export default connect((state, { articleComment, loading }) => ({
+  articleComment,
+  loading,
+}))(ViewBlog)
