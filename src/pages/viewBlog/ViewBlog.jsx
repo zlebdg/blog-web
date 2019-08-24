@@ -9,7 +9,7 @@ import BraftEditor from 'braft-editor'
 import CodeHighlighter from 'braft-extensions/dist/code-highlighter'
 import { Avatar, BackTop, Button, Col, Comment, Form, Icon, Input, message, Row } from 'antd'
 import moment from 'moment'
-import { generateImgSrc as idcon } from '../../components/Img/DefaultAvatar'
+import DefaultAvatar, { generateImgSrc as idcon } from '../../components/Img/DefaultAvatar'
 import { connect } from 'dva'
 
 // 代码高亮插件
@@ -133,13 +133,6 @@ class ViewBlog extends React.Component {
     })
   }
 
-  componentWillReceiveProps(nextProps, nextContext) {
-    // 动态路由切换, todo, 优化
-    if (nextProps.match.params.blogId !== this.state.article.id) {
-      window.location.reload()
-    }
-  }
-
   handleComment = () => {
     this.setState(state => ({
       ...state,
@@ -156,6 +149,8 @@ class ViewBlog extends React.Component {
           // 弹出最后一个
           this.state.comments.content.pop()
         }
+        console.log(this.state.comment)
+        console.log(this.user.currentUser)
         // 开头插入
         this.state.comments.content.unshift({
           authorId: '06771b32-24d6-4110-8e0d-6ef2f45f431c',
@@ -168,7 +163,6 @@ class ViewBlog extends React.Component {
       }
 
       this.setState((state) => {
-          console.log(state)
           return {
             ...state,
             comments: {
@@ -263,10 +257,7 @@ class ViewBlog extends React.Component {
             <Col xxl={ 16 } xl={ 18 } lg={ 18 } span={ 22 }>
               <Comment
                 avatar={
-                  <Avatar
-                    src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-                    alt="alt"
-                  />
+                  <DefaultAvatar />
                 }
                 content={
                   <div>
@@ -314,7 +305,8 @@ class ViewBlog extends React.Component {
   }
 }
 
-export default connect((state, { articleComment, loading }) => ({
+export default connect(({ articleComment, loading, user }) => ({
   articleComment,
   loading,
+  user,
 }))(ViewBlog)
