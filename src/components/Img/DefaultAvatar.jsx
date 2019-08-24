@@ -12,7 +12,6 @@ export const generateImgSrc = (id) => {
 @connect(({ user }) => ({ user }))
 export default class Index extends PureComponent {
   render() {
-    console.log(this.props)
     if (this.props.user
       && this.props.user.currentUser
       && this.props.user.currentUser.authenticated) {

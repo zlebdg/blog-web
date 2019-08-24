@@ -294,23 +294,23 @@ export default {
   proxy: {
     '/login': {
       target: 'http://blog.local:20000/',
-      changeOrigin: true,
+      changeOrigin: false,
     },
     '/auth/**': {
       target: 'http://blog.local:20000/',
-      changeOrigin: true,
+      changeOrigin: false,
     },
     '/test**/**': {
       target: 'http://blog.local:20000/',
-      changeOrigin: true,
+      changeOrigin: false,
     },
     '/public**/**': {
       target: 'http://blog.local:20000/',
-      changeOrigin: true,
+      changeOrigin: false,
     },
     '/article': {
       target: 'http://blog.local:20000/',
-      changeOrigin: true,
+      changeOrigin: false,
     },
   },
   // 如果项目要发布到非根目录下

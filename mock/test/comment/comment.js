@@ -1,6 +1,6 @@
 export default {
   // 支持值为 Object 和 Array
-  'GET /test/articleComment/list': {
+  'GET /public/articleComment/list': {
     code: 200,
     message: 'OK',
     data: {

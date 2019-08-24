@@ -28,7 +28,7 @@ export async function post(title, text) {
 }
 
 export async function list(id) {
-  return request(`/test/articleComment?id=${ id }`, {
+  return request(`/public/articleComment?id=${ id }`, {
     headers: {
       accept: 'application/json',
     },
@@ -37,7 +37,7 @@ export async function list(id) {
 }
 
 export async function comments(id, page, size) {
-  return request(`/test/articleComment?id=${ id }&page=${ page }&size=${ size }`, {
+  return request(`/public/articleComment?id=${ id }&page=${ page }&size=${ size }`, {
     headers: {
       accept: 'application/json',
     },

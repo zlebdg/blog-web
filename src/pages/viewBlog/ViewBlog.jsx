@@ -70,7 +70,6 @@ class ViewBlog extends React.Component {
         },
       },
       comment: {
-        submitting: false,
         text: '',
       },
       comments: {
@@ -134,50 +133,59 @@ class ViewBlog extends React.Component {
   }
 
   handleComment = () => {
+    if (null === this.state.comment
+      || null === this.state.comment.text
+      || '' === this.state.comment.text
+    ) {
+      message.error('评论内容为空')
+      return
+    }
+
     this.setState(state => ({
       ...state,
       comment: {
         text: state.comment.text,
-        submitting: true,
       },
     }))
 
     // 评论即时显示
-    setTimeout(() => {
-      if (this.state.comments && this.state.comments.content) {
-        if (this.state.comments.content.length >= this.state.comments.size) {
-          // 弹出最后一个
-          this.state.comments.content.pop()
+    this.props.dispatch({
+      type: 'viewBlog/comment',
+      payload: {
+        articleId: 1,
+        text: this.state.comment.text,
+        parseType: '0.0.1',
+        hash: 'hash',
+      },
+      callback: (response) => {
+        console.log(response)
+        if (response) {
+          setTimeout(() => {
+            if (this.state.comments && this.state.comments.content) {
+              // 弹出最后一个
+              if (this.state.comments.content.length >= this.state.comments.size) {
+                this.state.comments.content.pop()
+              }
+              // 开头插入
+              this.state.comments.content.unshift(response)
+            }
+            this.setState((state) => {
+                return {
+                  ...state,
+                  comment: {},
+                  comments: {
+                    page: state.comments.page,
+                    size: state.comments.size,
+                    content: state.comments.content,
+                    totalElements: state.comments.totalElements + 1,
+                  },
+                }
+              },
+            )
+          }, 200)
         }
-        console.log(this.state.comment)
-        console.log(this.user.currentUser)
-        // 开头插入
-        this.state.comments.content.unshift({
-          authorId: '06771b32-24d6-4110-8e0d-6ef2f45f431c',
-          authorUsername: '另一位不愿多吃饭的网友',
-          hash: 'hash',
-          id: 0,
-          parseType: '0.0.1',
-          text: this.state.comment.text || '信你个鬼...',
-        })
-      }
-
-      this.setState((state) => {
-          return {
-            ...state,
-            comments: {
-              page: state.comments.page,
-              size: state.comments.size,
-              content: state.comments.content,
-              totalElements: state.comments.totalElements + 1,
-            },
-            comment: {
-              submitting: false,
-            },
-          }
-        },
-      )
-    }, 200)
+      },
+    })
   }
 
   render() {
@@ -257,7 +265,7 @@ class ViewBlog extends React.Component {
             <Col xxl={ 16 } xl={ 18 } lg={ 18 } span={ 22 }>
               <Comment
                 avatar={
-                  <DefaultAvatar />
+                  <DefaultAvatar/>
                 }
                 content={
                   <div>
@@ -277,7 +285,8 @@ class ViewBlog extends React.Component {
                         } }/>
                     </Form.Item>
                     <Form.Item>
-                      <Button htmlType="submit" loading={ this.state.comment.submitting }
+                      <Button htmlType="submit"
+                              loading={ this.props.loading.effects['viewBlog/comment'] }
                               onClick={ this.handleComment } type="primary"
                               className="pull-right">
                         Add Comment

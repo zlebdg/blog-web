@@ -12,3 +12,12 @@ export async function articleQuery(params) {
     errorHandler: basicErrorHandler,
   })
 }
+
+export async function comment(data) {
+  return request('/public/articleComment', {
+    method: 'post',
+    requestType: 'form',
+    data,
+    errorHandler: basicErrorHandler,
+  })
+}
