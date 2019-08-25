@@ -1,82 +1,70 @@
-import { AnyAction, Reducer } from 'redux';
-import { EffectsCommandMap } from 'dva';
-import { routerRedux } from 'dva/router';
-import { fakeAccountLogin, getFakeCaptcha } from './service';
-import { getPageQuery, setAuthority } from './utils/utils';
+import { BlogListItem }                    from './data'
+import { AnyAction, Reducer }              from 'redux'
+import { blogListQuery as _blogListQuery } from './service'
 
 export interface StateType {
-  status?: 'ok' | 'error';
-  type?: string;
-  currentAuthority?: 'user' | 'guest' | 'admin';
+  hasMoreItems: boolean
+  page: number
+  size: number
+  total: number
+  blogList: BlogListItem[]
+  loading: boolean
 }
 
 export type Effect = (
   action: AnyAction,
-  effects: EffectsCommandMap & { select: <T>(func: (state: StateType) => T) => T },
+  effects: AnyAction,
 ) => void;
 
 export interface ModelType {
-  namespace: string;
+  // namespace: string;
   state: StateType;
   effects: {
-    login: Effect;
-    getCaptcha: Effect;
+    blogListQuery: Effect;
   };
   reducers: {
-    changeLoginStatus: Reducer<StateType>;
+    blogListSave: Reducer<StateType>;
   };
 }
 
 const Model: ModelType = {
-  namespace: 'BLOCK_NAME_CAMEL_CASE',
-
   state: {
-    status: undefined,
+    hasMoreItems: false,
+    page: 0,
+    size: 2,
+    total: 0,
+    blogList: [],
+    loading: true,
   },
 
   effects: {
-    *login({ payload }, { call, put }) {
-      const response = yield call(fakeAccountLogin, payload);
-      yield put({
-        type: 'changeLoginStatus',
-        payload: response,
-      });
-      // Login successfully
-      if (response.status === 'ok') {
-        const urlParams = new URL(window.location.href);
-        const params = getPageQuery();
-        let { redirect } = params as { redirect: string };
-        if (redirect) {
-          const redirectUrlParams = new URL(redirect);
-          if (redirectUrlParams.origin === urlParams.origin) {
-            redirect = redirect.substr(urlParams.origin.length);
-            if (redirect.match(/^\/.*#/)) {
-              redirect = redirect.substr(redirect.indexOf('#') + 1);
-            }
-          } else {
-            window.location.href = redirect;
-            return;
-          }
-        }
-        yield put(routerRedux.replace(redirect || '/'));
+    * blogListQuery({ payload, callback }, { call, put }) {
+      yield console.log(payload)
+      const response = yield call(_blogListQuery, payload)
+      if (response.code === 200) {
+        yield put({
+          type: 'blogListSave',
+          payload: response.data,
+        })
       }
-    },
-
-    *getCaptcha({ payload }, { call }) {
-      yield call(getFakeCaptcha, payload);
     },
   },
 
   reducers: {
-    changeLoginStatus(state, { payload }) {
-      setAuthority(payload.currentAuthority);
+    blogListSave(state, { payload }) {
+      console.log(state)
+      console.log(payload)
+
       return {
         ...state,
-        status: payload.status,
-        type: payload.type,
-      };
+        page: payload.number,
+        size: payload.size,
+        total: payload.totalPages,
+        blogList: state.blogList.concat(payload.content),
+        hasMoreItems: !payload.last,
+      }
     },
   },
-};
+}
 
-export default Model;
+export default Model
