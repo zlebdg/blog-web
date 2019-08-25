@@ -104,8 +104,12 @@ class NewBlog extends React.Component {
   publish = () => {
     const title = this.state.title
     const text = this.state.editorState.toHTML()
+    // 文章预览内容, 微博长度呗
+    const preview = this.state.editorState.toText()
+      .substring(0, 144)
     // console.log(title)
     // console.log(text)
+    // console.log(preview)
 
     if (null === title || '' === title) {
       message.error('请输入标题')
@@ -118,7 +122,7 @@ class NewBlog extends React.Component {
     // base64
     const encodeText = Base64.encode(this.state.editorState.toHTML())
     // 补充一下base64, 否则某些符号不能保存到数据库
-    postArticle(title, encodeText)
+    postArticle(title, encodeText, preview)
       .then(resp => {
         if (resp && 200 === resp.code && resp.data) {
           message.success('发布成功')

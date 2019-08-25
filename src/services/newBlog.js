@@ -10,7 +10,7 @@ const request = extend({
   credentials: 'include',
 })
 
-export async function postArticle(title, text) {
+export async function postArticle(title, text, preview) {
   const parseType = 'draft-0.0.1' // 解析方式版本
   const hash = md5(title + text) // 用于防止重复提交
   return request('/article', {
@@ -18,10 +18,11 @@ export async function postArticle(title, text) {
     requestType: 'form',
     data: {
       id: null,
-      parseType: parseType,
-      title: title,
-      text: text,
-      hash: hash,
+      parseType,
+      title,
+      text,
+      preview,
+      hash,
     },
     errorHandler: basicErrorHandler,
   })
