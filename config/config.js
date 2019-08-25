@@ -133,6 +133,16 @@ export default {
             },
           ],
         },
+        {
+          path: '/public/blogList',
+          component: '../layouts/BasicLayout',
+          routes: [
+            {
+              path: '/public/blogList',
+              component: './blog-list',
+            },
+          ],
+        },
       ],
     },
     // 测试
