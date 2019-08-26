@@ -152,7 +152,7 @@ class ViewBlog extends React.Component {
     this.props.dispatch({
       type: 'viewBlog/comment',
       payload: {
-        articleId: 1,
+        articleId: this.props.match.params.blogId,
         text: this.state.comment.text,
         parseType: '0.0.1',
         hash: 'hash',

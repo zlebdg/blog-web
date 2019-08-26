@@ -1,7 +1,8 @@
-import React, { PureComponent } from 'react'
-import { Button, List }         from 'antd'
-import { connect }              from 'dva'
-import { StateType }            from '@/pages/blog-list/model'
+import React, { PureComponent }   from 'react'
+import { Button, Col, List, Row } from 'antd'
+import { connect }                from 'dva'
+import { StateType }              from '@/pages/blog-list/model'
+import BlogItem                   from './components/BlogItem'
 
 @connect(({ model, loading }) => {
   return ({ model, loading })
@@ -32,19 +33,27 @@ class Index extends PureComponent {
     const { model, loading } = this.props
     model as StateType
     return (
-      <div>
-        <List itemLayout="horizontal" bordered={ false } loading={ loading.effects['model/blogListQuery'] }
-              loadMore={ !loading.effects['model/blogListQuery'] && model.hasMoreItems ?
-                <div style={ { textAlign: 'center', marginTop: '12px' } }>
-                  <Button type="ghost" onClick={ this.loadMore }>加载更多..</Button>
-                </div> : null }
-              dataSource={ model.blogList }
-              renderItem={ item => (
-                <List.Item>
-                  { JSON.stringify(item) }
-                </List.Item>
-              ) }/>
-      </div>
+      <Row justify="space-around" type="flex">
+        <Col xxl={ 16 } xl={ 18 } lg={ 18 } span={ 24 }>
+          <div>
+            <List itemLayout="horizontal" bordered={ false } loading={ loading.effects['model/blogListQuery'] }
+                  loadMore={ !loading.effects['model/blogListQuery'] && model.hasMoreItems ?
+                    <div style={ { textAlign: 'center', marginTop: '12px' } }>
+                      <Button type="ghost" onClick={ this.loadMore }>加载更多..</Button>
+                    </div> : <div style={ { textAlign: 'center', marginTop: '12px' } }>
+                      无更多内容
+                    </div> }
+                  dataSource={ model.blogList }
+                  renderItem={ item => {
+                    return (
+                      <List.Item>
+                        <BlogItem data={ item }></BlogItem>
+                      </List.Item>
+                    )
+                  } }/>
+          </div>
+        </Col>
+      </Row>
     )
   }
 }
