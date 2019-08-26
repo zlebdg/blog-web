@@ -185,7 +185,7 @@ export default {
         // 根路由重定向
         {
           path: '/',
-          redirect: '/home',
+          redirect: '/public/blogList',
         },
         {
           path: '/:username',
