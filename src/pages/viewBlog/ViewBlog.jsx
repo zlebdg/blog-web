@@ -126,7 +126,6 @@ class ViewBlog extends React.Component {
             size: state.comments.size,
           },
         }), () => {
-          console.log(this.state)
         })
       },
     })
@@ -158,7 +157,6 @@ class ViewBlog extends React.Component {
         hash: 'hash',
       },
       callback: (response) => {
-        console.log(response)
         if (response) {
           setTimeout(() => {
             if (this.state.comments && this.state.comments.content) {

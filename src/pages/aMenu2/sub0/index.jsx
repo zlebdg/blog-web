@@ -8,7 +8,6 @@ const IconFont = Icon.createFromIconfontCN({
 })
 
 const handleMenuClick = (e) => {
-  console.log('click', e)
 }
 
 const popMenu = (<Menu>

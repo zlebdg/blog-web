@@ -83,7 +83,6 @@ const BasicLayout = props => {
         if (menuItemProps.isUrl) {
           return defaultDom;
         }
-
         return <Link to={menuItemProps.path}>{defaultDom}</Link>;
       }}
       breadcrumbRender={(routers = []) => [

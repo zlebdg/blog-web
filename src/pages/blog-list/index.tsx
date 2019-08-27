@@ -19,7 +19,6 @@ class Index extends PureComponent {
   }
 
   loadMore = () => {
-    console.log(this.props)
     this.props.dispatch({
       type: 'model/blogListQuery',
       payload: {

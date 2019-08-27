@@ -24,8 +24,14 @@ class AvatarDropdown extends React.Component {
     if (key === 'logout') {
       logout()
         .then(resp => {
-          console.log(resp)
           if (resp && 200 === resp.code && resp.data) {
+            const { dispatch } = this.props
+            if (dispatch) {
+              dispatch({
+                type: 'user/saveCurrentUser',
+                payload: {},
+              })
+            }
             const data = typeof resp === 'string' ? JSON.parse(resp.data) : resp.data
             if (data.logoutUri) {
               const logoutUri = data.logoutUri
@@ -33,20 +39,12 @@ class AvatarDropdown extends React.Component {
               const refreshToken = data.refreshToken ? data.refreshToken : ''
               uriLogout(logoutUri, accessToken, refreshToken)
                 .then(r => {
-                  console.log(r)
                   if (r && 200 === r.code) {
-                    router.push('/')
                   }
                 })
             }
           }
         })
-      // const { dispatch } = this.props
-      // if (dispatch) {
-      //   dispatch({
-      //     type: 'login/logout',
-      //   })
-      // }
       return
     }
     router.push(`/account/${ key }`)
@@ -59,7 +57,6 @@ class AvatarDropdown extends React.Component {
 
   render() {
     const { currentUser, menu } = this.props
-
     const menuHeaderDropdown2 = (
       <Menu className={ styles.menu } selectedKeys={ [] } onClick={ this.onMenuClick }>
         <Menu.Item key="logout">

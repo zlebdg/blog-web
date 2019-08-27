@@ -39,7 +39,6 @@ const Model: ModelType = {
 
   effects: {
     * blogListQuery({ payload, callback }, { call, put }) {
-      yield console.log(payload)
       const response = yield call(_blogListQuery, payload)
       if (response.code === 200) {
         yield put({
@@ -52,9 +51,6 @@ const Model: ModelType = {
 
   reducers: {
     blogListSave(state, { payload }) {
-      console.log(state)
-      console.log(payload)
-
       return {
         ...state,
         page: payload.number,

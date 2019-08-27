@@ -3,7 +3,7 @@ import 'braft-extensions/dist/code-highlighter.css'
 
 import React from 'react'
 import { Avatar, Comment, List } from 'antd'
-import { generateImgSrc as idcon } from '../../components/Img/DefaultAvatar'
+import { generateImgSrc } from '../../components/Img/DefaultAvatar'
 
 export default class ArticleComment extends React.PureComponent {
   render() {
@@ -23,13 +23,17 @@ export default class ArticleComment extends React.PureComponent {
             <List.Item>
               <Comment
                 style={ { width: '100%' } }
-                author={ comment.authorUsername }
+                author={ comment.authorNickname || comment.authorUsername }
                 avatar={
                   <Avatar
-                    src={ comment.avatar
-                      ? comment.avatar : idcon(comment.authorUsername) }
-                    alt="alt"
-                  />
+                    src={
+                      comment.authorAvatar
+                        ? comment.authorAvatar
+                        : comment.authorUsername !== '不愿透露姓名的网友'
+                        ? generateImgSrc(comment.authorUsername)
+                        : '' } alt="alt">
+                    { comment.authorUsername === '不愿透露姓名的网友' && '匿' }
+                  </Avatar>
                 }
                 content={ comment.text }
               >

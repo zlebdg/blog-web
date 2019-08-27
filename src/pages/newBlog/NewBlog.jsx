@@ -107,9 +107,6 @@ class NewBlog extends React.Component {
     // 文章预览内容, 微博长度呗
     const preview = this.state.editorState.toText()
       .substring(0, 144)
-    // console.log(title)
-    // console.log(text)
-    // console.log(preview)
 
     if (null === title || '' === title) {
       message.error('请输入标题')

@@ -16,7 +16,6 @@ class Login extends PureComponent {
           if (null != resp && 200 == resp.code) {
             const user = JSON.parse(resp.data)
             if (user.authenticated && user.username !== 'anonymousUser') {
-              sessionStorage.setItem('currentUser', resp.data)
               setTimeout(function () {
                 message.success(formatMessage({ id: 'user.login.welcome' }))
                 sessionStorage.setItem('autoLogin', 1)
@@ -24,7 +23,7 @@ class Login extends PureComponent {
                 // 设置umi菜单权限
                 sessionStorage.setItem('antd-pro-authority', JSON.stringify(user.authorities))
                 reloadAuthorized() // 重新读取授权信息
-                router.push('/welcome')
+                router.push('/')
               }, 200)
             }
           }
@@ -44,11 +43,9 @@ class Login extends PureComponent {
         // 后台已修改, 针对 Accept: application/json 的 form表单登录请求返回json
         userLogin(values.username, values.password)
           .then(resp => {
-            // console.log(resp)
             if (null != resp && 200 == resp.code) {
               const user = JSON.parse(resp.data)
               if (user.authenticated && user.username !== 'anonymousUser') {
-                sessionStorage.setItem('currentUser', resp.data)
                 message.success(formatMessage({ id: 'Login Success' }))
 
                 // 设置umi菜单权限
@@ -64,7 +61,7 @@ class Login extends PureComponent {
 
   oauth = (app) => {
     sessionStorage.removeItem('oauthCallback')
-    window.location = `/oauth/login/${app}`
+    window.location = `/oauth/login/${ app }`
   }
 
   render() {
@@ -72,11 +69,11 @@ class Login extends PureComponent {
     const { getFieldDecorator } = form
 
     return (
-      <Row justify="space-around" type="flex" className={styles.main}>
-        <Col xs={16} sm={12} md={8} lg={6} xl={4}>
+      <Row justify="space-around" type="flex" className={ styles.main }>
+        <Col xs={ 16 } sm={ 12 } md={ 8 } lg={ 6 } xl={ 4 }>
           <Form>
             <Form.Item>
-              {getFieldDecorator('username', {
+              { getFieldDecorator('username', {
                 rules: [
                   {
                     required: true,
@@ -86,21 +83,21 @@ class Login extends PureComponent {
               })(
                 <Input
                   name="username"
-                  suffix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }}/>}
-                  onPressEnter={this.handleOk}
-                  placeholder={formatMessage({ id: 'user.login.usernameOrEmail' })}
+                  suffix={ <Icon type="user" style={ { color: 'rgba(0,0,0,.25)' } }/> }
+                  onPressEnter={ this.handleOk }
+                  placeholder={ formatMessage({ id: 'user.login.usernameOrEmail' }) }
                 />,
-              )}
+              ) }
 
-              {/*邮箱后缀补全*/}
-              {/*<AutoComplete*/}
-              {/*  dataSource={this.state.emailSuffix}*/}
-              {/*  onChange={this.handleChange}*/}
-              {/*  placeholder={formatMessage({id: 'user.login.username'})}*/}
-              {/*/>*/}
+              {/*邮箱后缀补全*/ }
+              {/*<AutoComplete*/ }
+              {/*  dataSource={this.state.emailSuffix}*/ }
+              {/*  onChange={this.handleChange}*/ }
+              {/*  placeholder={formatMessage({id: 'user.login.username'})}*/ }
+              {/*/>*/ }
             </Form.Item>
             <Form.Item>
-              {getFieldDecorator('password', {
+              { getFieldDecorator('password', {
                 rules: [
                   {
                     required: true,
@@ -112,66 +109,67 @@ class Login extends PureComponent {
                   type="password"
                   autoComplete="false"
                   allowClear
-                  suffix={<Icon type="eye-invisible" style={{ opacity: 0.5 }}/>}
-                  onPressEnter={this.handleOk}
-                  placeholder={formatMessage({ id: 'user.login.password' })}
+                  suffix={ <Icon type="eye-invisible" style={ { opacity: 0.5 } }/> }
+                  onPressEnter={ this.handleOk }
+                  placeholder={ formatMessage({ id: 'user.login.password' }) }
                 />,
-              )}
+              ) }
             </Form.Item>
             <Row>
-              <Button type="primary" className={styles.button} onClick={this.handleOk}>
-                {<FormattedMessage id={'user.login.signIn'}></FormattedMessage>}
+              <Button type="primary" className={ styles.button } onClick={ this.handleOk }>
+                { <FormattedMessage id={ 'user.login.signIn' }></FormattedMessage> }
               </Button>
 
-              {/*/!*文字左对齐*!/*/}
-              {/*<Row justify="space-between">*/}
-              {/*  <Col span={12}>*/}
-              {/*    <Text>*/}
-              {/*      {<FormattedMessage id={'user.login.Username'}></FormattedMessage>}: guest*/}
-              {/*    </Text>*/}
-              {/*  </Col>*/}
-              {/*  <Col span={12}>*/}
-              {/*    <Text justify="end">*/}
-              {/*      {<FormattedMessage id={'user.login.Password'}></FormattedMessage>}: guest*/}
-              {/*    </Text>*/}
-              {/*  </Col>*/}
-              {/*</Row>*/}
+              {/*/!*文字左对齐*!/*/ }
+              {/*<Row justify="space-between">*/ }
+              {/*  <Col span={12}>*/ }
+              {/*    <Text>*/ }
+              {/*      {<FormattedMessage id={'user.login.Username'}></FormattedMessage>}: guest*/ }
+              {/*    </Text>*/ }
+              {/*  </Col>*/ }
+              {/*  <Col span={12}>*/ }
+              {/*    <Text justify="end">*/ }
+              {/*      {<FormattedMessage id={'user.login.Password'}></FormattedMessage>}: guest*/ }
+              {/*    </Text>*/ }
+              {/*  </Col>*/ }
+              {/*</Row>*/ }
 
             </Row>
             <Row>
-              <Col span={12} style={{
+              <Col span={ 12 } style={ {
                 textAlign: 'left',
-              }}>
+              } }>
                 <Link to="/user/reset">
-                  <Button type="link" style={{ padding: '0' }}>
-                    <FormattedMessage id={'user.register.forgetPassword'}/>
+                  <Button type="link" style={ { padding: '0' } }>
+                    <FormattedMessage id={ 'user.register.forgetPassword' }/>
                   </Button>
                 </Link>
               </Col>
-              <Col span={12} style={{ textAlign: 'right' }}>
+              <Col span={ 12 } style={ { textAlign: 'right' } }>
                 <Link to="/user/register">
-                  <Button type="link" style={{ padding: '0' }}>
-                    {/*&lt;&lt;<FormattedMessage id={'user.register.toLogin'}/>*/}
-                    <FormattedMessage id={'user.login.toRegister'}/>&gt;&gt;
+                  <Button type="link" style={ { padding: '0' } }>
+                    {/*&lt;&lt;<FormattedMessage id={'user.register.toLogin'}/>*/ }
+                    <FormattedMessage id={ 'user.login.toRegister' }/>&gt;&gt;
                   </Button>
                 </Link>
               </Col>
             </Row>
-            {/*文字两端对齐*/}
+            {/*文字两端对齐*/ }
             <Row justify="space-between" type="flex">
                   <span>
-                    {<FormattedMessage id={'user.login.username.forTest'}></FormattedMessage>}: test
+                    { <FormattedMessage id={ 'user.login.username.forTest' }></FormattedMessage> }: test
                   </span>
               <span>
-                    {<FormattedMessage id={'user.login.Password'}></FormattedMessage>}: 123456
+                    { <FormattedMessage id={ 'user.login.Password' }></FormattedMessage> }: 123456
                   </span>
             </Row>
-            <div className={styles.other}>
+            <div className={ styles.other }>
               <FormattedMessage id="user.login.oauth"/>
-              <Icon key="oauth.github" type="github" className={styles.icon} theme="outlined"
-                    onClick={this.oauth.bind(this, 'github')}/>
-              <Icon key="oauth.alipay" type="alipay-circle" className={styles.icon} theme="outlined"
-                    onClick={this.oauth.bind(this, 'alipay')}/>
+              <Icon key="oauth.github" type="github" className={ styles.icon } theme="outlined"
+                    onClick={ this.oauth.bind(this, 'github') }/>
+              <Icon key="oauth.alipay" type="alipay-circle" className={ styles.icon }
+                    theme="outlined"
+                    onClick={ this.oauth.bind(this, 'alipay') }/>
             </div>
           </Form>
         </Col>

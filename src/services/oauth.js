@@ -1,5 +1,4 @@
 import { extend } from 'umi-request'
-import basicErrorHandler from './errorHandler'
 
 const request = extend({
   maxCache: 10,
@@ -10,10 +9,5 @@ const request = extend({
 })
 
 export async function access(queryString) {
-  return request(`/login${ queryString }`, {
-    // headers: {
-    //   accept: 'application/json',
-    // },
-    // errorHandler: basicErrorHandler,
-  })
+  return request(`/login${ queryString }`)
 }

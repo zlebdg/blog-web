@@ -17,17 +17,16 @@ export default class Index extends PureComponent {
       && this.props.user.currentUser.authenticated) {
       return (
         <img src={
-          generateImgSrc(
-            this.props.user.currentUser.avatar
-              ? this.props.user.currentUser.avatar
-              : this.props.user.currentUser.username)
+          this.props.user.currentUser.avatar
+            ? this.props.user.currentUser.avatar
+            : generateImgSrc(this.props.user.currentUser.username)
         } alt="alt"/>
       )
     }
 
     return (
       <Avatar size="small" className={ styles.avatar } alt="avatar">
-        未登录
+        匿
       </Avatar>
     )
   }

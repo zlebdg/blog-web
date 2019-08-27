@@ -34,10 +34,8 @@ const GlobalHeaderRight = props => {
           }),
         ]}
         onSearch={value => {
-          console.log('input', value);
         }}
         onPressEnter={value => {
-          console.log('enter', value);
         }}
       />
       {/*<Tooltip*/}

@@ -8,10 +8,12 @@ const UserModel = {
   effects: {
     * fetchCurrent(_, { call, put }) {
       const response = yield call(queryCurrentUser)
-      yield put({
-        type: 'saveCurrentUser',
-        payload: response,
-      })
+      if (response.code === 200) {
+        yield put({
+          type: 'saveCurrentUser',
+          payload: response.data,
+        })
+      }
     },
   },
   reducers: {
