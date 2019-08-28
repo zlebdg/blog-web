@@ -79,7 +79,7 @@ class AvatarDropdown extends React.Component {
       ) : (
         <span className={ `${ styles.action } ${ styles.account }` } onClick={ this.goLogin }>
           <Avatar size="small" className={ styles.avatar }>Login</Avatar>
-          <span className={ styles.name }>登录</span>
+          <span>登录</span>
         </span>
       )
     }

@@ -8,9 +8,16 @@ import BraftEditor from 'braft-editor'
 import { Input, message } from 'antd'
 import { postArticle } from '../../services/newBlog'
 import CodeHighlighter from 'braft-extensions/dist/code-highlighter'
+import { connect } from 'dva'
 
 BraftEditor.use(CodeHighlighter())
 
+@connect(({ user, loading }) => {
+  return ({
+    user,
+    loading,
+  })
+})
 class NewBlog extends React.Component {
   state = {
     title: null,
@@ -130,6 +137,13 @@ class NewBlog extends React.Component {
 
   render() {
     const { editorState } = this.state
+    const { user } = this.props
+    const { currentUser } = user
+    if (!currentUser || !currentUser.authenticated) {
+        router.push('/')
+      return (<>404</>)
+    }
+
     return (
       <div style={ {
         backgroundColor: 'white',
