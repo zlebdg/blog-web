@@ -9,13 +9,16 @@ import BlogItem                   from './components/BlogItem'
 })
 class Index extends PureComponent {
   componentDidMount(): void {
-    this.props.dispatch({
-      type: 'model/blogListQuery',
-      payload: {
-        page: this.props.model.page,
-        size: this.props.model.size,
-      },
-    })
+    console.log(this.props.model.blogList.length)
+    if (!this.props.model.blogList || !(this.props.model.blogList.length * 1 > 0)) {
+      this.props.dispatch({
+        type: 'model/blogListQuery',
+        payload: {
+          page: this.props.model.page,
+          size: this.props.model.size,
+        },
+      })
+    }
   }
 
   loadMore = () => {
