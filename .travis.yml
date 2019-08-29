@@ -1,0 +1,32 @@
+language: nodejs
+env:
+  global:
+    - DEPLOY_CONTAINER_NAME=blog-web
+    - DEPLOY_CONTAINER_WORKNET=worknet
+    - DOCKER_ALI_REGISTRY_HANGZHOU=registry.cn-hangzhou.aliyuncs.com
+addons:
+  ssh_known_hosts:
+    - 106.12.80.76
+before_install:
+  - env
+  - npm install -g yarn
+script:
+  # yarn build
+  - yarn && yarn build
+  # docker build
+  - docker build -t $TRAVIS_REPO_SLUG:$TRAVIS_BUILD_NUMBER .
+  # push to docker hub
+  - docker login --username $DOCKER_HUB_USERNAME --password $DOCKER_HUB_PASSWORD
+  - docker push $TRAVIS_REPO_SLUG:$TRAVIS_BUILD_NUMBER
+  # push to aliyun
+  - docker login --username $DOCKER_ALI_USERNAME --password $DOCKER_ALI_PASSWORD $DOCKER_ALI_REGISTRY_HANGZHOU
+  - docker tag $TRAVIS_REPO_SLUG:$TRAVIS_BUILD_NUMBER $DOCKER_ALI_REGISTRY_HANGZHOU/$TRAVIS_REPO_SLUG:$TRAVIS_BUILD_NUMBER
+  - docker push $DOCKER_ALI_REGISTRY_HANGZHOU/$TRAVIS_REPO_SLUG:$TRAVIS_BUILD_NUMBER
+after_success:
+  - echo 456
+notifications:
+  email:
+    recipients:
+      - 445172495@qq.com
+    on_success: always
+    on_failure: always
