@@ -27,9 +27,7 @@
     "dist": "git commit -m dist && git push"
   },
   "husky": {
-    "hooks": {
-      "pre-commit": "yarn build && git add ."
-    }
+    "hooks": {}
   },
   "lint-staged": {
     "**/*.less": "stylelint --syntax less",
