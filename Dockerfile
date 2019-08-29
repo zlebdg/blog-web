@@ -1,5 +1,3 @@
-FROM xuqplus2/yarn-serve
+FROM zlebdg/alpine-yarn-serve:latest
 
 COPY ./dist/ /dist/
-
-CMD yarn serve ./dist/

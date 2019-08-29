@@ -11,10 +11,9 @@ addons:
     - 106.12.80.76
 before_install:
   - env
-  - npm install -g yarn
 script:
   # yarn build
-  - yarn && yarn build
+  - yarn build
   # docker build
   - docker build -t $TRAVIS_REPO_SLUG:$TRAVIS_BUILD_NUMBER .
   # push to docker hub
