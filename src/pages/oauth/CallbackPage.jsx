@@ -17,7 +17,7 @@ export default class CallbackPage extends PureComponent {
 
   render() {
     return (
-      <>loading..</>
+      <div style={ { textAlign: 'center' } }>loading..</div>
     )
   }
 }
