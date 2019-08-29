@@ -11,6 +11,7 @@ addons:
     - 106.12.80.76
 before_install:
   - env
+  - sudo apt-get install -y sshpass
 install:
   - yarn
 script:
