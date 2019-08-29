@@ -11,7 +11,7 @@ const request = extend({
 })
 
 export async function postArticle(title, text, preview) {
-  const parseType = 'draft-0.0.1' // 解析方式版本
+  const parseType = '0.0.2' // 解析方式版本
   const hash = md5(title + text) // 用于防止重复提交
   return request('/article', {
     method: 'post',

@@ -112,8 +112,8 @@ class NewBlog extends React.Component {
     const title = this.state.title
     const text = this.state.editorState.toHTML()
     // 文章预览内容, 微博长度呗
-    const preview = this.state.editorState.toText()
-      .substring(0, 144)
+    const preview = Base64.encode(this.state.editorState.toText()
+      .substring(0, 144))
 
     if (null === title || '' === title) {
       message.error('请输入标题')
@@ -140,7 +140,7 @@ class NewBlog extends React.Component {
     const { user } = this.props
     const { currentUser } = user
     if (!currentUser || !currentUser.authenticated) {
-        router.push('/')
+      router.push('/')
       return (<>404</>)
     }
 
