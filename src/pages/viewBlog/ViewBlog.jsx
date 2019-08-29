@@ -16,7 +16,7 @@ import { connect } from 'dva'
 BraftEditor.use(CodeHighlighter())
 
 // 本页可解析的文章 parseType 标记
-const parseType = 'draft-0.0.1'
+const parseTypes = ['draft-0.0.1', '0.0.2']
 
 // 用 braft-editor 编写提交的文本在展示时有小bug, 需要修改相应 class
 const fixBraftBug = () => {
@@ -92,7 +92,7 @@ class ViewBlog extends React.Component {
       type: 'viewBlog/articleQuery',
       payload: { id: this.state.article.id },
       callback: (article) => {
-        if (article.parseType && parseType === article.parseType) {
+        if (article.parseType && parseTypes.indexOf(article.parseType) >= 0) {
           const text = {
             text: BraftEditor.createEditorState(`${ decodeURIComponent(Base64.decode(article.text)) }`),
           }
@@ -197,7 +197,7 @@ class ViewBlog extends React.Component {
 
             <div>
               <h1 style={ { textAlign: 'center' } }>
-                <span style={ { fontSize: '32px' } }>{ this.state.article.title }</span></h1>
+                <span style={ { fontSize: '18px' } }>{ this.state.article.title }</span></h1>
             </div>
 
             <div style={ { textAlign: 'center' } }>
