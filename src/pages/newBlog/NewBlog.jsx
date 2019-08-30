@@ -9,23 +9,25 @@ import { Input, message } from 'antd'
 import { postArticle } from '../../services/newBlog'
 import CodeHighlighter from 'braft-extensions/dist/code-highlighter'
 import { connect } from 'dva'
-//
-// 引入表情包组件样式文件
-import 'braft-extensions/dist/emoticon.css'
-// 引入表情包组件和默认表情包列表
-import Emoticon, { defaultEmoticons } from 'braft-extensions/dist/emoticon'
-// 转换默认表情包列表，让webpack可以正确加载到默认表情包中的图片，请确保已对png格式的文件配置了loader
-const emoticons = defaultEmoticons.map(item => {
-  console.log(item)
-  return require(`braft-extensions/dist/assets/${ item }`)
-})
-// 也可以使用自己的表情包资源
-// const emoticons = [
-//   'https://github.githubassets.com/images/icons/emoji/unicode/1f622.png?v8',
-//   'https://github.githubassets.com/images/icons/emoji/unicode/1f622.png?v8',
-// ]
+// 官方表情包扩展, 文档 https://braft.margox.cn/demos/emoticon
+// // 引入表情包组件样式文件
+// import 'braft-extensions/dist/emoticon.css'
+// // 引入表情包组件和默认表情包列表
+// import Emoticon, { defaultEmoticons } from 'braft-extensions/dist/emoticon'
+// // 转换默认表情包列表，让webpack可以正确加载到默认表情包中的图片，请确保已对png格式的文件配置了loader
+// const emoticons = defaultEmoticons.map(item => {
+//   console.log(item)
+//   return require(`braft-extensions/dist/assets/${ item }`)
+// })
+// // 也可以使用自己的表情包资源
+// // const emoticons = [
+// //   'https://github.githubassets.com/images/icons/emoji/unicode/1f622.png?v8',
+// //   'https://github.githubassets.com/images/icons/emoji/unicode/1f622.png?v8',
+// // ]
+// BraftEditor.use(Emoticon({ emoticons }))
+// BraftEditor.use(Emoticon({ emoticons }), CodeHighlighter())
 
-BraftEditor.use(Emoticon({ emoticons }), CodeHighlighter())
+BraftEditor.use(CodeHighlighter())
 
 @connect(({ user, loading }) => {
   return ({
