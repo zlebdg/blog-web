@@ -2,6 +2,12 @@ import React, { PureComponent } from 'react'
 
 const TEMPLATE_URI = 'https://github.githubassets.com/images/icons/emoji/unicode/#.png?v8'
 
+export function createImg(codePoint: string | number): string {
+  const src = TEMPLATE_URI.replace('#', typeof codePoint === 'number'
+    ? codePoint.toString(16) : codePoint)
+  return `<img src=${ src } alt="alt"/>`
+}
+
 class Index extends PureComponent<{ codePoint: string | number }> {
   render(): any {
     return (

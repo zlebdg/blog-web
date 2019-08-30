@@ -2,16 +2,16 @@ import styles from './index.less'
 import 'braft-editor/dist/index.css'
 import 'braft-extensions/dist/code-highlighter.css'
 
-import React                                                                      from 'react'
-import { Base64 }                                                                 from 'js-base64'
-import ArticleComment                                                             from './ArticleComment2'
-import BraftEditor                                                                from 'braft-editor'
-import CodeHighlighter
-                                                                                  from 'braft-extensions/dist/code-highlighter'
+import React from 'react'
+import { Base64 } from 'js-base64'
+import ArticleComment from './ArticleComment2'
+import BraftEditor from 'braft-editor'
+import CodeHighlighter from 'braft-extensions/dist/code-highlighter'
 import { Avatar, BackTop, Button, Col, Comment, Form, Icon, Input, message, Row } from 'antd'
-import moment                                                                     from 'moment'
-import DefaultAvatar, { generateImgSrc as idcon }                                 from '../../components/Img/DefaultAvatar'
-import { connect }                                                                from 'dva'
+import moment from 'moment'
+import DefaultAvatar, { generateImgSrc as idcon } from '../../components/Img/DefaultAvatar'
+import { connect } from 'dva'
+import { createImg } from '../../components/GithubEmoji'
 
 // 代码高亮插件
 BraftEditor.use(CodeHighlighter())
@@ -94,8 +94,7 @@ class ViewBlog extends React.Component {
       payload: { id: this.state.article.id },
       callback: (article) => {
         if (article.parseType && parseTypes.indexOf(article.parseType) >= 0) {
-          const content = `${ decodeURIComponent(Base64.decode(article.text)) } <GithubEmoji codePoint="1f520">123</GithubEmoji>`
-          console.log(content)
+          const content = `${ decodeURIComponent(Base64.decode(article.text)) } ${ createImg('1f622') }`
           const text = {
             text: BraftEditor.createEditorState(content),
           }
