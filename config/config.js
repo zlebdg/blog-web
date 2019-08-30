@@ -151,12 +151,16 @@ export default {
       routes: [
         {
           path: '/test',
-          redirect: '/test/dva/dva01',
+          redirect: '/test/dva/emoji',
         },
         {
           path: '/test/dva',
           component: '../layouts/BasicLayout',
           routes: [
+            {
+              path: '/test/dva/emoji',
+              component: './test/dva/emoji',
+            },
             {
               path: '/test/dva/dva01',
               component: './test/dva/dva01',
