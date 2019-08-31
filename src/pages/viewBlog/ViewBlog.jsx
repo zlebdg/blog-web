@@ -47,11 +47,8 @@ const fixBraftBug = () => {
   if (document.querySelectorAll('.bf-hr')) {
     document.querySelectorAll('.bf-hr')
       .forEach(ele => {
-        ele.innerHTML = '<hr><br>'
+        ele.innerHTML = '<hr>'
       })
-    if (document.querySelector('.bf-hr')) {
-      document.querySelector('.bf-hr').innerHTML = ''
-    }
   }
   // 代码块高度, 超过400px出现滚动条
   if (document.querySelectorAll('.braft-code-block')) {
