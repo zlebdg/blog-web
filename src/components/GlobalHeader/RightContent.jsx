@@ -40,7 +40,6 @@ const GlobalHeaderRight = props => {
       {
         currentUser && currentUser.authenticated &&
         (<div className={ `${ styles.action }` } onClick={ () => {
-          console.log(currentUser)
           router.push(`/${ currentUser.userId }/newBlog`)
         } }>
           <Icon type="edit"/>

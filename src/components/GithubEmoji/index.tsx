@@ -6,7 +6,6 @@ const TEMPLATE_URI = 'https://github.githubassets.com/images/icons/emoji/unicode
 export function createImg(html: string): string {
   if (navigator && navigator.appVersion) {
     if (navigator.appVersion.indexOf('Windows NT 6.1') !== -1) {
-      console.log(navigator.appVersion)
       let r = ''
       for (let i = 0; i < html.length; i += 1) {
         const code = html.codePointAt(i)

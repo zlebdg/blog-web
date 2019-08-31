@@ -16,7 +16,6 @@ import { connect } from 'dva'
 // import Emoticon, { defaultEmoticons } from 'braft-extensions/dist/emoticon'
 // // 转换默认表情包列表，让webpack可以正确加载到默认表情包中的图片，请确保已对png格式的文件配置了loader
 // const emoticons = defaultEmoticons.map(item => {
-//   console.log(item)
 //   return require(`braft-extensions/dist/assets/${ item }`)
 // })
 // // 也可以使用自己的表情包资源
@@ -27,6 +26,16 @@ import { connect } from 'dva'
 // BraftEditor.use(Emoticon({ emoticons }))
 // BraftEditor.use([Emoticon({ emoticons }), CodeHighlighter()])
 BraftEditor.use(CodeHighlighter())
+
+// 编辑器里不需要的控制按钮
+// ['blockquote', 'bold', 'code', 'clear', 'emoji', 'font-family', 'font-size', 'fullscreen',
+// 'headings', 'hr', 'italic', 'letter-spacing', 'line-height', 'link', 'list-ol', 'list-ul',
+// 'media', 'redo', 'remove-styles', 'separator', 'strike-through', 'superscript', 'subscript',
+// 'text-align', 'text-color', 'text-indent', 'underline', 'undo', 'table']
+const excludeControls =
+  navigator && navigator.appVersion && navigator.appVersion.indexOf('iPhone') !== -1
+    ? ['clear', 'font-family', 'headings', 'italic', 'letter-spacing', 'line-height', 'link', 'list-ol', 'list-ul', 'remove-styles', 'separator', 'strike-through', 'superscript', 'subscript', 'text-align', 'text-indent', 'underline', 'table']
+    : ['line-height', 'letter-spacing', 'list-ul', 'list-ol', 'text-indent', 'clear']
 
 @connect(({ user, loading }) => {
   return ({
@@ -179,9 +188,7 @@ class NewBlog extends React.Component {
           onChange={ this.onChange }
           onSave={ this.onSave }
           onTab={ this.onTab }
-          excludeControls={ [
-            'line-height', 'letter-spacing', 'list-ul', 'list-ol', 'text-indent', 'clear',
-          ] }
+          excludeControls={ excludeControls }
           extendControls={ [
             'separator',
             {
