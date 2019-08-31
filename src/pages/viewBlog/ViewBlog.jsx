@@ -221,7 +221,10 @@ class ViewBlog extends React.Component {
           } }>
 
             <div>
-              <h1 style={ { textAlign: 'center' } }>
+              <h1 style={ {
+                textAlign: 'center',
+                wordWrap: 'break-word',
+              } }>
                 <span style={ { fontSize: '18px' } }>{ this.state.article.title }</span></h1>
             </div>
 
@@ -265,9 +268,7 @@ class ViewBlog extends React.Component {
                           const text = e.target.value
                           this.setState(state => ({
                             ...state,
-                            comment: {
-                              text: text,
-                            },
+                            comment: { text },
                           }))
                         } }/>
                     </Form.Item>
