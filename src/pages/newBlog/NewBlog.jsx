@@ -25,8 +25,7 @@ import { connect } from 'dva'
 // //   'https://github.githubassets.com/images/icons/emoji/unicode/1f622.png?v8',
 // // ]
 // BraftEditor.use(Emoticon({ emoticons }))
-// BraftEditor.use(Emoticon({ emoticons }), CodeHighlighter())
-
+// BraftEditor.use([Emoticon({ emoticons }), CodeHighlighter()])
 BraftEditor.use(CodeHighlighter())
 
 @connect(({ user, loading }) => {
@@ -174,7 +173,7 @@ class NewBlog extends React.Component {
           onSearch={ this.publish }
         />
         <BraftEditor
-          id="editor-id"
+          id="BraftEditor-NewBlog"
           value={ editorState }
           placeholder="输入内容.."
           onChange={ this.onChange }

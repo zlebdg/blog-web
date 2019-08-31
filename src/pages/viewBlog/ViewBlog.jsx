@@ -11,26 +11,26 @@ import { Avatar, BackTop, Button, Col, Comment, Form, Icon, Input, message, Row 
 import moment from 'moment'
 import DefaultAvatar, { generateImgSrc as idcon } from '../../components/Img/DefaultAvatar'
 import { connect } from 'dva'
-import { createImg } from '../../components/GithubEmoji'
 // 官方表情包扩展, 文档 https://braft.margox.cn/demos/emoticon
-// // 引入表情包组件样式文件
-// import 'braft-extensions/dist/emoticon.css'
-// // 引入表情包组件和默认表情包列表
-// import Emoticon, { defaultEmoticons } from 'braft-extensions/dist/emoticon'
-// // 转换默认表情包列表，让webpack可以正确加载到默认表情包中的图片，请确保已对png格式的文件配置了loader
-// const emoticons = defaultEmoticons.map(item => {
-//   console.log(item)
-//   return require(`braft-extensions/dist/assets/${ item }`)
-// })
-// // 也可以使用自己的表情包资源
-// // const emoticons = [
-// //   'https://github.githubassets.com/images/icons/emoji/unicode/1f622.png?v8',
-// //   'https://github.githubassets.com/images/icons/emoji/unicode/1f622.png?v8',
-// // ]
+// 引入表情包组件样式文件
+import 'braft-extensions/dist/emoticon.css'
+// 引入表情包组件和默认表情包列表
+import Emoticon, { defaultEmoticons } from 'braft-extensions/dist/emoticon'
+// 转换默认表情包列表，让webpack可以正确加载到默认表情包中的图片，请确保已对png格式的文件配置了loader
+const emoticons = defaultEmoticons.map(item => require(`braft-extensions/dist/assets/${ item }`))
+// 也可以使用自己的表情包资源
+// const emoticons = [
+//   'https://github.githubassets.com/images/icons/emoji/unicode/1f622.png?v8',
+//   'https://github.githubassets.com/images/icons/emoji/unicode/1f622.png?v8',
+// ]
 // BraftEditor.use(Emoticon({ emoticons }))
 
-// 代码高亮插件
-BraftEditor.use(CodeHighlighter())
+// 表情包扩展和代码高亮插件
+BraftEditor.use([Emoticon({
+  excludeEditors: ['BraftEditor-NewBlog'],
+  // includeEditors: ['BraftEditor-ViewBlog'],
+  emoticons,
+}), CodeHighlighter()])
 
 // 本页可解析的文章 parseType 标记
 const parseTypes = ['draft-0.0.1', '0.0.2']
@@ -57,6 +57,11 @@ const fixBraftBug = () => {
       .forEach(ele => {
         ele.style.minHeight = `${ ele.scrollHeight }px`
       })
+  }
+  // 加入 Emoticon 表情包扩展后引发的
+  if (document.querySelector('.bf-controlbar')) {
+    document.querySelector('.bf-controlbar')
+      .remove()
   }
 }
 
@@ -110,7 +115,7 @@ class ViewBlog extends React.Component {
       payload: { id: this.state.article.id },
       callback: (article) => {
         if (article.parseType && parseTypes.indexOf(article.parseType) >= 0) {
-          const content = `${ decodeURIComponent(Base64.decode(article.text)) } ${ createImg('1f622') }`
+          const content = `${ decodeURIComponent(Base64.decode(article.text)) }`
           const text = {
             text: BraftEditor.createEditorState(content),
           }
@@ -267,11 +272,14 @@ class ViewBlog extends React.Component {
               </div>
             </div>
 
-            <BraftEditor
-              value={ this.state.text }
-              controls={ [] }
-              readOnly="true"
-            />
+            <div className="editor-container">
+              <BraftEditor
+                id="BraftEditor-ViewBlog"
+                value={ this.state.text }
+                controls={ [] }
+                readOnly="true"
+              />
+            </div>
           </div>
           <hr/>
           <Row style={ {

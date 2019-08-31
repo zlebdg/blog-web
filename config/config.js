@@ -124,6 +124,10 @@ export default {
               component: './viewBlog/ViewBlogTest',
             },
             {
+              path: '/public/viewBlog/testEmoji',
+              component: './viewBlog/ViewBlogEmojiTest',
+            },
+            {
               path: '/public/viewBlog/testInfo',
               component: './viewBlog/ViewBlogArticleInfoTest',
             },
