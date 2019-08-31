@@ -1,8 +1,7 @@
 import React, { PureComponent } from 'react'
-import { BlogListItem }         from '@/pages/blog-list/data'
-import { Icon }                 from 'antd'
+import { Divider, Icon }        from 'antd'
 
-class Index extends PureComponent<{ data: BlogListItem }> {
+class Index extends PureComponent<{ articleInfo: any }> {
   render(): any {
     const { articleInfo } = this.props
     if (!articleInfo) {
@@ -11,34 +10,23 @@ class Index extends PureComponent<{ data: BlogListItem }> {
 
     return (
       <span style={ { margin: '0 15px' } }>
-        <span style={ {
-          margin: '0 0.5em',
-          display: 'inline-block',
-        } }>
+        <span style={ { display: 'inline-block' } }>
           <Icon type="like-o"/> { articleInfo.like }
-        </span> |
-        <span style={ {
-          margin: '0 0.5em',
-          display: 'inline-block',
-        } }>
+        </span>
+        <Divider type="vertical"/>
+        <span style={ { display: 'inline-block' } }>
           <Icon type="dislike-o"/> { articleInfo.dislike }
-        </span> |
-        <span style={ {
-          margin: '0 0.5em',
-          display: 'inline-block',
-        } }>
+        </span>
+        <Divider type="vertical"/>
+        <span style={ { display: 'inline-block' } }>
           <Icon type="star-o"/> { articleInfo.star }
-        </span> |
-        <span style={ {
-          margin: '0 0.5em',
-          display: 'inline-block',
-        } }>
+        </span>
+        <Divider type="vertical"/>
+        <span style={ { display: 'inline-block' } }>
           <Icon type="message"/> { articleInfo.comment }
-        </span>|
-        <span style={ {
-          margin: '0 0.5em',
-          display: 'inline-block',
-        } }>
+        </span>
+        <Divider type="vertical"/>
+        <span style={ { display: 'inline-block' } }>
           <Icon type="read"/> { articleInfo.read }
         </span>
       </span>

@@ -1,10 +1,9 @@
 import React, { PureComponent }    from 'react'
-import { BlogListItem }            from '@/pages/blog-list/data'
 import { Avatar }                  from 'antd'
 import { generateImgSrc as idcon } from '@/components/Img/DefaultAvatar'
 import moment                      from 'moment'
 
-class Index extends PureComponent<{ data: BlogListItem }> {
+class Index extends PureComponent<{ author: any, createAt: number }> {
   render(): any {
     const { author, createAt } = this.props
     if (!author) {
