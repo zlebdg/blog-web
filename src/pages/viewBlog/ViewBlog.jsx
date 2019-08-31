@@ -7,11 +7,12 @@ import { Base64 } from 'js-base64'
 import ArticleComment from './ArticleComment2'
 import BraftEditor from 'braft-editor'
 import CodeHighlighter from 'braft-extensions/dist/code-highlighter'
-import { Avatar, BackTop, Button, Col, Comment, Form, Icon, Input, message, Row } from 'antd'
-import moment from 'moment'
+import { BackTop, Button, Col, Comment, Form, Input, message, Row } from 'antd'
 import { createImg } from '../../components/GithubEmoji'
-import DefaultAvatar, { generateImgSrc as idcon } from '../../components/Img/DefaultAvatar'
+import DefaultAvatar from '../../components/Img/DefaultAvatar'
 import { connect } from 'dva'
+import ArticleAuthorInfo from './components/ArticleAuthorInfo'
+import ArticleCommentInfo from './components/ArticleCommentInfo'
 // 官方表情包扩展, 文档 https://braft.margox.cn/demos/emoticon
 // 引入表情包组件样式文件
 import 'braft-extensions/dist/emoticon.css'
@@ -226,50 +227,11 @@ class ViewBlog extends React.Component {
 
             <div style={ { textAlign: 'center' } }>
               <div className={ styles.extra }>
-                <span style={ { margin: '0 15px' } }>
-                  <Avatar
-                    src={ this.state.article.author.avatar
-                      ? this.state.article.author.avatar
-                      : idcon(this.state.article.author.username) }
-                    alt="alt" size="small"/>
-                  <a> { this.state.article.author.username } </a>发布于
-                  {
-                    moment(this.state.article.createAt)
-                      .format('YYYY-MM-DD HH:mm:ss')
-                  }
-                </span>
-                <span style={ { margin: '0 15px' } }>
-                  <span style={ {
-                    margin: '0 0.5em',
-                    display: 'inline-block',
-                  } }>
-                    <Icon type="like-o"/> { this.state.article.articleInfo.like }
-                  </span> |
-                  <span style={ {
-                    margin: '0 0.5em',
-                    display: 'inline-block',
-                  } }>
-                    <Icon type="dislike-o"/> { this.state.article.articleInfo.dislike }
-                  </span> |
-                  <span style={ {
-                    margin: '0 0.5em',
-                    display: 'inline-block',
-                  } }>
-                    <Icon type="star-o"/> { this.state.article.articleInfo.star }
-                  </span> |
-                  <span style={ {
-                    margin: '0 0.5em',
-                    display: 'inline-block',
-                  } }>
-                    <Icon type="message"/> { this.state.article.articleInfo.comment }
-                  </span>|
-                  <span style={ {
-                    margin: '0 0.5em',
-                    display: 'inline-block',
-                  } }>
-                    <Icon type="read"/> { this.state.article.articleInfo.read }
-                  </span>
-                </span>
+                <ArticleAuthorInfo
+                  author={ this.state.article.author }
+                  createAt={ this.state.article.createAt }/>
+                <ArticleCommentInfo
+                  articleInfo={ this.state.article.articleInfo }/>
               </div>
             </div>
 
