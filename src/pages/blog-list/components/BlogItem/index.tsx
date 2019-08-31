@@ -12,6 +12,7 @@ class Index extends PureComponent<{ data: BlogListItem }> {
     return (
       <div style={ { width: '100%' } } key={ data.id }>
         <Card title={ data.title } hoverable
+              style={ { wordWrap: 'break-word' } }
               onClick={ () => {
                 router.push(`/public/viewBlog/blogId/${ data.id }`)
               } }
