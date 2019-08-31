@@ -9,6 +9,7 @@ import BraftEditor from 'braft-editor'
 import CodeHighlighter from 'braft-extensions/dist/code-highlighter'
 import { Avatar, BackTop, Button, Col, Comment, Form, Icon, Input, message, Row } from 'antd'
 import moment from 'moment'
+import { createImg } from '../../components/GithubEmoji'
 import DefaultAvatar, { generateImgSrc as idcon } from '../../components/Img/DefaultAvatar'
 import { connect } from 'dva'
 // 官方表情包扩展, 文档 https://braft.margox.cn/demos/emoticon
@@ -115,7 +116,7 @@ class ViewBlog extends React.Component {
       payload: { id: this.state.article.id },
       callback: (article) => {
         if (article.parseType && parseTypes.indexOf(article.parseType) >= 0) {
-          const content = `${ decodeURIComponent(Base64.decode(article.text)) }`
+          const content = createImg(`${ decodeURIComponent(Base64.decode(article.text)) }`)
           const text = {
             text: BraftEditor.createEditorState(content),
           }

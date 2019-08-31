@@ -9,7 +9,6 @@ import { router }               from 'umi'
 class Index extends PureComponent<{ data: BlogListItem }> {
   render(): any {
     const { data } = this.props
-    console.log(data)
     return (
       <div style={ { width: '100%' } } key={ data.id }>
         <Card title={ data.title } hoverable

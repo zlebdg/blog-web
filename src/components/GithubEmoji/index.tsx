@@ -1,11 +1,20 @@
 import React, { PureComponent } from 'react'
 
+const TEMPLATE_IMG = '<span class="braft-emoticon-wrap"><img src="https://github.githubassets.com/images/icons/emoji/unicode/#.png?v8" alt="alt"/></span>'
 const TEMPLATE_URI = 'https://github.githubassets.com/images/icons/emoji/unicode/#.png?v8'
 
-export function createImg(codePoint: string | number): string {
-  const src = TEMPLATE_URI.replace('#', typeof codePoint === 'number'
-    ? codePoint.toString(16) : codePoint)
-  return `<img src=${ src } alt="alt"/>`
+export function createImg(html: string): string {
+  let r = ''
+  for (let i = 0; i < html.length; i += 1) {
+    const code = html.codePointAt(i)
+    if (code > 0xffff) {
+      r += `<span class="braft-emoticon-wrap"><img src="https://github.githubassets.com/images/icons/emoji/unicode/${ code.toString(16) }.png?v8" alt="alt"/> </span>`
+      i += 1
+    } else {
+      r += html.charAt(i)
+    }
+  }
+  return r
 }
 
 class Index extends PureComponent<{ codePoint: string | number }> {
