@@ -7,7 +7,7 @@ import { Base64 } from 'js-base64'
 import ArticleComment from './ArticleComment2'
 import BraftEditor from 'braft-editor'
 import CodeHighlighter from 'braft-extensions/dist/code-highlighter'
-import { BackTop, Button, Col, Comment, Form, Input, message, Row } from 'antd'
+import { BackTop, Button, Col, Comment, Form, Input, message, Row, Spin } from 'antd'
 import { createImg } from '../../components/GithubEmoji'
 import DefaultAvatar from '../../components/Img/DefaultAvatar'
 import { connect } from 'dva'
@@ -39,29 +39,31 @@ const parseTypes = ['draft-0.0.1', '0.0.2']
 
 // 用 braft-editor 编写提交的文本在展示时有小bug, 需要修改相应 class
 const fixBraftBug = () => {
-  // 清除高度, 默认是500px
-  if (document.querySelector('.bf-content')) {
-    document.querySelector('.bf-content').classList = ''
-  }
-  // 清除 .bf-hr .bf-media-toolbar, 当出现 <hr> 标签时, 显示异常
-  if (document.querySelectorAll('.bf-hr')) {
-    document.querySelectorAll('.bf-hr')
-      .forEach(ele => {
-        ele.innerHTML = '<hr>'
-      })
-  }
-  // 代码块高度, 超过400px出现滚动条
-  if (document.querySelectorAll('.braft-code-block')) {
-    document.querySelectorAll('.braft-code-block')
-      .forEach(ele => {
-        ele.style.minHeight = `${ ele.scrollHeight }px`
-      })
-  }
-  // 加入 Emoticon 表情包扩展后引发的
-  if (document.querySelector('.bf-controlbar')) {
-    document.querySelector('.bf-controlbar')
-      .remove()
-  }
+  setTimeout(() => {
+    // 清除高度, 默认是500px
+    if (document.querySelector('.bf-content')) {
+      document.querySelector('.bf-content').classList = ''
+    }
+    // 清除 .bf-hr .bf-media-toolbar, 当出现 <hr> 标签时, 显示异常
+    if (document.querySelectorAll('.bf-hr')) {
+      document.querySelectorAll('.bf-hr')
+        .forEach(ele => {
+          ele.innerHTML = '<hr>'
+        })
+    }
+    // 代码块高度, 超过400px出现滚动条
+    if (document.querySelectorAll('.braft-code-block')) {
+      document.querySelectorAll('.braft-code-block')
+        .forEach(ele => {
+          ele.style.minHeight = `${ ele.scrollHeight }px`
+        })
+    }
+    // 加入 Emoticon 表情包扩展后引发的
+    if (document.querySelector('.bf-controlbar')) {
+      document.querySelector('.bf-controlbar')
+        .remove()
+    }
+  }, 1)
 }
 
 class ViewBlog extends React.Component {
@@ -235,14 +237,22 @@ class ViewBlog extends React.Component {
               </div>
             </div>
 
-            <div className="editor-container">
-              <BraftEditor
-                id="BraftEditor-ViewBlog"
-                value={ this.state.text }
-                controls={ [] }
-                readOnly="true"
-              />
-            </div>
+            {
+              this.props.loading.effects['viewBlog/articleQuery']
+              && (
+                <div style={ { textAlign: 'center' } }>
+                  <Spin/>
+                </div>)
+              || (
+                <div className="editor-container">
+                  <BraftEditor
+                    id="BraftEditor-ViewBlog"
+                    value={ this.state.text }
+                    controls={ [] }
+                    readOnly="true"
+                  />
+                </div>)
+            }
           </div>
           <hr/>
           <Row style={ {
