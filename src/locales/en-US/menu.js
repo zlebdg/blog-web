@@ -59,4 +59,5 @@ export default {
   'menu.register verify': 'Set Password',
   'menu.reset': 'Reset Password',
   'menu.reset verify': 'Set New Password',
+  'menu.Blog List': 'Blog List',
 };

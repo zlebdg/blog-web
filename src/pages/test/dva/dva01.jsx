@@ -14,6 +14,15 @@ export default class Index extends Component {
     this.props.dispatch({ type: 'dva01/query' })
   }
 
+  handleClick2 = () => {
+    this.props.dispatch({
+      type: 'settings/changeSetting',
+      payload: {
+        collapse: false,
+      },
+    })
+  }
+
   render() {
     const { aa } = this.props
     return (
@@ -29,8 +38,8 @@ export default class Index extends Component {
           count: { this.props.count }
           <hr/>
           <Col>
-            <Button type="primary"
-                    onClick={ this.handleClick }>按钮0</Button>
+            <Button type="primary" onClick={ this.handleClick }>按钮0</Button>
+            <Button type="primary" onClick={ this.handleClick2 }>关掉菜单</Button>
           </Col>
         </Row>
       </div>

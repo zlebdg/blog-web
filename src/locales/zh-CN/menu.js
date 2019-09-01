@@ -59,4 +59,5 @@ export default {
   'menu.register verify': '设置登录密码',
   'menu.reset': '找回密码',
   'menu.reset verify': '设置新登录密码',
+  'menu.Blog List': '文章列表',
 }

@@ -112,6 +112,10 @@ export default {
           component: '../layouts/BasicLayout',
           routes: [
             {
+              name: 'Blog List',
+              path: '/public/blogList',
+            },
+            {
               path: '/public/viewBlog/blogId/:blogId',
               component: './viewBlog/ViewBlog',
             },
