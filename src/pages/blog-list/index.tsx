@@ -3,10 +3,9 @@ import { Button, Col, List, Row, Spin } from 'antd'
 import { connect }                      from 'dva'
 import { StateType }                    from '@/pages/blog-list/model'
 import BlogItem                         from './components/BlogItem'
+import ScrollToWhere                    from '../../components/ScrollToWhere'
 
-@connect(({ model, loading }) => {
-  return ({ model, loading })
-})
+@connect(({ model, loading }) => ({ model, loading }))
 class Index extends PureComponent {
   componentDidMount(): void {
     if (!this.props.model.blogList || !(this.props.model.blogList.length * 1 > 0)) {
@@ -63,6 +62,12 @@ class Index extends PureComponent {
                       </List.Item>
                     )
                   } }/>
+            {
+              // 加载完毕再滚动
+              !loading.effects['model/blogListQuery'] && (
+                <ScrollToWhere/>
+              )
+            }
           </div>
         </Col>
       </Row>
