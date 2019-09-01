@@ -113,6 +113,7 @@ export default {
           routes: [
             {
               name: 'Blog List',
+              icon: 'unordered-list',
               path: '/public/blogList',
             },
             {

@@ -1,4 +1,4 @@
-import { Avatar, Icon, Menu } from 'antd'
+import { Avatar, Icon, Menu, message } from 'antd'
 import { FormattedMessage } from 'umi-plugin-react/locale'
 import React from 'react'
 import { connect } from 'dva'
@@ -34,6 +34,7 @@ class AvatarDropdown extends React.Component {
             }
             const data = typeof resp === 'string' ? JSON.parse(resp.data) : resp.data
             if (data.logoutUri) {
+              message.warn('logged out')
               const logoutUri = data.logoutUri
               const accessToken = data.accessToken ? data.accessToken : ''
               const refreshToken = data.refreshToken ? data.refreshToken : ''
