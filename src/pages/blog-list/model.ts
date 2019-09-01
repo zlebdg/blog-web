@@ -31,7 +31,7 @@ const Model: ModelType = {
   state: {
     hasMoreItems: false,
     page: 0,
-    size: 5,
+    size: 9,
     total: 0,
     blogList: [],
     loading: true,
