@@ -25,9 +25,11 @@ export default class Index extends PureComponent {
     }
 
     return (
-      <Avatar size="small" className={ styles.avatar } alt="avatar">
-        匿
-      </Avatar>
+      <span className={ `${ styles.account }` }>
+        <Avatar size="small" className={ styles.avatar } alt="avatar">
+          匿
+        </Avatar>
+      </span>
     )
   }
 }

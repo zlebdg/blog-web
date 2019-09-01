@@ -160,6 +160,10 @@ class NewBlog extends React.Component {
       })
   }
 
+  componentDidMount() {
+    window.scrollTo({ top: 0 })
+  }
+
   render() {
     const { editorState } = this.state
     const { user } = this.props
