@@ -13,7 +13,7 @@ import DefaultAvatar from '../../components/Img/DefaultAvatar'
 import { connect } from 'dva'
 import ArticleAuthorInfo from './components/ArticleAuthorInfo'
 import ArticleCommentInfo from './components/ArticleCommentInfo'
-import ScrollToWhere from './components/ScrollToWhere'
+import ScrollToWhere from '../../components/ScrollToWhere'
 // 官方表情包扩展, 文档 https://braft.margox.cn/demos/emoticon
 // 引入表情包组件样式文件
 import 'braft-extensions/dist/emoticon.css'
