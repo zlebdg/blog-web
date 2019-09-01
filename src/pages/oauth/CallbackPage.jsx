@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react'
 import { access } from '../../services/oauth'
 import router from 'umi/router'
+import { Spin } from 'antd'
 
 export default class CallbackPage extends PureComponent {
   componentDidMount() {
@@ -17,7 +18,7 @@ export default class CallbackPage extends PureComponent {
 
   render() {
     return (
-      <div style={ { textAlign: 'center' } }>loading..</div>
+      <div style={ { textAlign: 'center' } }><Spin/></div>
     )
   }
 }
