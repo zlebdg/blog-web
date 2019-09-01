@@ -7,12 +7,13 @@ import { Base64 } from 'js-base64'
 import ArticleComment from './ArticleComment2'
 import BraftEditor from 'braft-editor'
 import CodeHighlighter from 'braft-extensions/dist/code-highlighter'
-import { BackTop, Button, Col, Comment, Form, Input, message, Row, Spin } from 'antd'
+import { Button, Col, Comment, Form, Input, message, Row, Spin } from 'antd'
 import { createImg } from '../../components/GithubEmoji'
 import DefaultAvatar from '../../components/Img/DefaultAvatar'
 import { connect } from 'dva'
 import ArticleAuthorInfo from './components/ArticleAuthorInfo'
 import ArticleCommentInfo from './components/ArticleCommentInfo'
+import ScrollToWhere from './components/ScrollToWhere'
 // 官方表情包扩展, 文档 https://braft.margox.cn/demos/emoticon
 // 引入表情包组件样式文件
 import 'braft-extensions/dist/emoticon.css'
@@ -251,6 +252,7 @@ class ViewBlog extends React.Component {
                     controls={ [] }
                     readOnly="true"
                   />
+                  <ScrollToWhere/>
                 </div>)
             }
           </div>
@@ -303,7 +305,6 @@ class ViewBlog extends React.Component {
             </Col>
           </Row>
         </Col>
-        <BackTop/>
       </Row>
     )
   }
