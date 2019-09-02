@@ -65,7 +65,7 @@ class Index extends PureComponent {
             } }/>
             {
               // 加载完毕再滚动
-              !loading.effects['model/blogListQuery'] && (
+              !model.empty && (
                 <ScrollToWhere/>
               )
             }

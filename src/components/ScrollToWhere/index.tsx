@@ -7,7 +7,6 @@ const SCROLL_PREFIX = 'SCROLL_PREFIX'
 @connect(({ loading, routing }) => ({ loading, routing }))
 // @connect((state) => (state))
 class Index extends PureComponent {
-
   componentDidMount(): void {
     const key = `${ SCROLL_PREFIX }${ this.props.routing.location.pathname }`
     const scrollTo = sessionStorage.getItem(key)
@@ -25,7 +24,9 @@ class Index extends PureComponent {
 
   scrollListener = () => {
     const key = `${ SCROLL_PREFIX }${ this.props.routing.location.pathname }`
+    // 获取滚动距离的方法有兼容性问题
     const scrollTo = document.documentElement.scrollTop
+      || window.pageYOffset || document.body.scrollTop
     sessionStorage.setItem(key, scrollTo)
   }
 
