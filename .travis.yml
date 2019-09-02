@@ -32,5 +32,6 @@ notifications:
   email:
     recipients:
       - 445172495@qq.com
+      - 1479269124@qq.com
     on_success: always
     on_failure: always
