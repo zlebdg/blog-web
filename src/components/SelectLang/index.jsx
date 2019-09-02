@@ -1,8 +1,8 @@
-import { Dropdown, Icon, Menu } from 'antd'
+import { Dropdown, Icon, Menu }                from 'antd'
 import { formatMessage, getLocale, setLocale } from 'umi-plugin-react/locale'
-import React from 'react'
-import classNames from 'classnames'
-import styles from './index.less'
+import React                                   from 'react'
+import classNames                              from 'classnames'
+import styles                                  from './index.less'
 
 export default class Index extends React.PureComponent {
   state = {}
@@ -29,7 +29,7 @@ export default class Index extends React.PureComponent {
       'pt-BR': '🇧🇷',
     }
     const langMenu = (
-      <Menu className={ styles.menu } selectedKeys={ [selectedLang] } onClick={ changeLang }
+      <Menu className={ styles.menu } selectedKeys={ [] } onClick={ changeLang }
             style={ { zIndex: 2000 } }>
         { locales.map(locale => (
           <Menu.Item key={ locale } onClick={ () => {

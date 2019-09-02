@@ -1,12 +1,12 @@
 import { Avatar, Dropdown, Icon, Menu, message } from 'antd'
-import React from 'react'
-import { connect } from 'dva'
-import { FormattedMessage } from 'umi/locale'
-import router from 'umi/router'
-import SelectLang from '../SelectLang'
-import styles from './index.less'
-import { generateImgSrc as idcon } from '../Img/DefaultAvatar'
-import { logout, uriLogout } from '../../services/home'
+import React                                     from 'react'
+import { connect }                               from 'dva'
+import { FormattedMessage }                      from 'umi/locale'
+import router                                    from 'umi/router'
+import SelectLang                                from '../SelectLang'
+import styles                                    from './index.less'
+import { generateImgSrc as idcon }               from '../Img/DefaultAvatar'
+import { logout, uriLogout }                     from '../../services/home'
 
 @connect(({ settings, user }) => ({
   theme: settings.navTheme,
@@ -70,7 +70,8 @@ export default class Index extends React.PureComponent {
         {
           (!user || !user.currentUser || !user.currentUser.authenticated) && (
             <span className={ `${ styles.action } ${ styles.account }` } onClick={ this.goLogin }>
-              <Avatar size="small" className={ styles.avatar }>匿</Avatar>
+              <Avatar size="small" className={ styles.avatar } src="" alt="匿"
+                      style={ { backgroundColor: '#ccc', color: '#fff' } }>匿</Avatar>
               <span>
                 <FormattedMessage id={ 'menu.login' }/>
               </span>
