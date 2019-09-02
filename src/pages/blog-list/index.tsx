@@ -36,32 +36,33 @@ class Index extends PureComponent {
       <Row justify="space-around" type="flex">
         <Col xxl={ 16 } xl={ 18 } lg={ 18 } span={ 24 }>
           <div>
-            <List itemLayout="horizontal" bordered={ false } loading={ loading.effects['model/blogListQuery'] }
-                  loadMore={
-                    loading.effects['model/blogListQuery'] && (
-                      <div style={ { textAlign: 'center' } }>
-                        <Spin/>
-                      </div>
-                    )
-                    || model.hasMoreItems && (
-                      <div style={ { textAlign: 'center', marginTop: '12px' } }>
-                        <Button type="ghost" onClick={ this.loadMore }>加载更多..</Button>
-                      </div>
-                    )
-                    || (
-                      <div style={ { textAlign: 'center', marginTop: '12px' } }>
-                        无更多内容
-                      </div>
-                    )
-                  }
-                  dataSource={ model.blogList }
-                  renderItem={ item => {
-                    return (
-                      <List.Item>
-                        <BlogItem data={ item }></BlogItem>
-                      </List.Item>
-                    )
-                  } }/>
+            <List itemLayout="horizontal" bordered={ false } loading={
+              model.blogList.length === 0 && loading.effects['model/blogListQuery']
+            } loadMore={
+              model.blogList.length > 0 && (
+                (
+                  loading.effects['model/blogListQuery'] &&
+                  <div style={ { textAlign: 'center' } }>
+                    { <Spin/> }
+                  </div>
+                ) || (
+                  model.hasMoreItems &&
+                  <div style={ { textAlign: 'center', marginTop: '12px' } }>
+                    <Button type="ghost" onClick={ this.loadMore }>加载更多..</Button>
+                  </div>
+                ) || (
+                  <div style={ { textAlign: 'center', marginTop: '12px' } }>
+                    无更多内容
+                  </div>
+                )
+              )
+            } dataSource={ model.blogList } renderItem={ item => {
+              return (
+                <List.Item>
+                  <BlogItem data={ item }></BlogItem>
+                </List.Item>
+              )
+            } }/>
             {
               // 加载完毕再滚动
               !loading.effects['model/blogListQuery'] && (
