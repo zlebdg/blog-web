@@ -1,6 +1,6 @@
 import defaultSettings from './defaultSettings' // https://umijs.org/config/
-import slash from 'slash2'
-import webpackPlugin from './plugin.config'
+import slash           from 'slash2'
+import webpackPlugin   from './plugin.config'
 
 const { pwa, primaryColor } = defaultSettings // preview.pro.ant.design only do not use in your production ;
 // preview.pro.ant.design 专用环境变量，请不要在你的项目中使用它。
@@ -356,7 +356,7 @@ export default {
   // umi:
   base: '/blog/',
   // cdn 用的
-  publicPath: 'http://px6vfmups.bkt.clouddn.com/blog/',
+  publicPath: 'http://px7bethft.bkt.clouddn.com/blog/',
   outputPath: 'dist/blog/',
   // //
   history: 'hash',
