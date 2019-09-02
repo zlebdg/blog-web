@@ -3,5 +3,5 @@ export default {
     username: 'mock user',
     message: '请求成功 - message',
   },
-  'GET /auth/currentUser': { 'code': 200, 'message': 'OK', 'data': 'anonymousUser' },
+  // 'GET /auth/currentUser': { 'code': 200, 'message': 'OK', 'data': 'anonymousUser' },
 }

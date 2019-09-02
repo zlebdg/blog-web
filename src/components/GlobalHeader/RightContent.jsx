@@ -71,7 +71,11 @@ export default class Index extends React.PureComponent {
           (!user || !user.currentUser || !user.currentUser.authenticated) && (
             <span className={ `${ styles.action } ${ styles.account }` } onClick={ this.goLogin }>
               <Avatar size="small" className={ styles.avatar } src="" alt="匿"
-                      style={ { backgroundColor: '#ccc', color: '#fff' } }>匿</Avatar>
+                      style={ {
+                        backgroundColor: '#ccc',
+                        color: '#fff',
+                        marginRight: '8px',
+                      } }>匿</Avatar>
               <span>
                 <FormattedMessage id={ 'menu.login' }/>
               </span>
