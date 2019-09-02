@@ -42,7 +42,7 @@ class Index extends PureComponent {
               model.blogList.length > 0 && (
                 (
                   loading.effects['model/blogListQuery'] &&
-                  <div style={ { textAlign: 'center' } }>
+                  <div style={ { textAlign: 'center', marginTop: '12px', minHeight: '32px' } }>
                     { <Spin/> }
                   </div>
                 ) || (
