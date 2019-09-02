@@ -29,9 +29,16 @@ export default class Index extends React.PureComponent {
       'pt-BR': '🇧🇷',
     }
     const langMenu = (
-      <Menu className={ styles.menu } selectedKeys={ [selectedLang] } onClick={ changeLang }>
+      <Menu className={ styles.menu } selectedKeys={ [selectedLang] } onClick={ changeLang }
+            style={ { zIndex: 2000 } }>
         { locales.map(locale => (
-          <Menu.Item key={ locale }>
+          <Menu.Item key={ locale } onClick={ () => {
+            setTimeout(() => {
+              this.setState({
+                display: null,
+              })
+            }, 200)
+          } }>
           <span role="img" aria-label={ languageLabels[locale] }>
             { languageIcons[locale] }
           </span>{ ' ' }
@@ -73,6 +80,7 @@ export default class Index extends React.PureComponent {
           height: '100%',
           backgroundColor: 'black',
           opacity: 0.2,
+          zIndex: 1999,
           display: this.state.display || 'none',
         } }>
         </div>

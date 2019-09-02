@@ -43,6 +43,11 @@ export default class Index extends React.PureComponent {
             }
           }
         })
+      setTimeout(() => {
+        this.setState({
+          display: null,
+        })
+      }, 200)
       return
     }
     router.push(`/account/${ key }`)
@@ -86,7 +91,7 @@ export default class Index extends React.PureComponent {
               <Dropdown overlay={
                 <Menu className={ styles.menu } onClick={ (e) => {
                   this.onMenuClick(e)
-                } }>
+                } } style={ { zIndex: 2000 } }>
                   <Menu.Item key="logout">
                     <Icon type="logout"/>
                     <FormattedMessage id="menu.account.logout"/>
@@ -123,6 +128,7 @@ export default class Index extends React.PureComponent {
                 height: '100%',
                 backgroundColor: 'black',
                 opacity: 0.2,
+                zIndex: 1999,
                 display: this.state.display || 'none',
               } }>
               </div>
