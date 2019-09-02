@@ -24,6 +24,7 @@
     "test": "umi test",
     "test:all": "node ./tests/run-tests.js",
     "test:component": "umi test ./src/components",
+    "test:qiniu": "node ./tests/qiniu.ts",
     "dist": "git commit -m dist && git push"
   },
   "husky": {
@@ -67,6 +68,7 @@
     "path-to-regexp": "^3.0.0",
     "prismjs": "^1.17.1",
     "prop-types": "^15.7.2",
+    "qiniu": "^7.2.2",
     "qs": "^6.7.0",
     "react": "^16.8.6",
     "react-container-query": "^0.11.0",
