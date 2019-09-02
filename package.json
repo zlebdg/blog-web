@@ -25,6 +25,7 @@
     "test:all": "node ./tests/run-tests.js",
     "test:component": "umi test ./src/components",
     "test:qiniu": "node ./tests/qiniu.ts",
+    "test:env": "node ./tests/env.ts",
     "dist": "git commit -m dist && git push"
   },
   "husky": {
