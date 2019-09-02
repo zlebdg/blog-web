@@ -18,7 +18,6 @@ config.zone = qiniu.zone.Zone_z2 // 华南
 // config.zone = qiniu.zone.Zone_na0 // 北美
 
 const formUploader = new qiniu.form_up.FormUploader(config)
-const putExtra = new qiniu.form_up.PutExtra()
 // const localFile = 'dist/blog/favicon.png'
 // const key = 'favicon.png'
 // 文件上传
@@ -53,7 +52,7 @@ const allFiles = ((dir, callback) => {
 allFiles('./dist', (filename) => {
   const localFile = filename
   const key = filename.replace(/\\/g, '/').replace(/^dist\//g, '')
-  formUploader.putFile(uploadToken, key, localFile, putExtra, (respErr, respBody, respInfo) => {
+  formUploader.putFile(uploadToken, key, localFile, null, (respErr, respBody, respInfo) => {
     if (respErr) {
       throw respErr
     }
