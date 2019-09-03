@@ -47,15 +47,15 @@ class Index extends PureComponent<{ articleInfo: any }> {
     return (
       <span style={ { margin: '0 15px' } }>
         <span className={ styles.dontBreak } onClick={ this.handleLike }>
-          <Icon type="like-o"/> { articleInfo.like }
+          <Icon type="like-o" theme="twoTone" spin/> { articleInfo.like }
         </span>
         <Divider type="vertical"/>
         <span className={ styles.dontBreak } onClick={ this.handleDislike }>
-          <Icon type="dislike-o"/> { articleInfo.dislike }
+          <Icon type="dislike-o" theme="twoTone" spin/> { articleInfo.dislike }
         </span>
         <Divider type="vertical"/>
         <span className={ styles.dontBreak } onClick={ this.handleStar }>
-          <Icon type="star-o"/> { articleInfo.star }
+          <Icon type="star-o" theme="twoTone" spin/> { articleInfo.star }
         </span>
         <Divider type="vertical"/>
         <span className={ styles.dontBreak } onClick={ this.handleComment }>
