@@ -14,7 +14,6 @@ class Index extends PureComponent<{ articleInfo: any }> {
 
   render(): any {
     const { articleInfo } = this.props
-    console.log(this.props)
     if (!articleInfo) {
       return (<></>)
     }
