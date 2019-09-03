@@ -21,3 +21,11 @@ export async function comment(data) {
     errorHandler: basicErrorHandler,
   })
 }
+
+export async function readPlus(params) {
+  return request('/public/articleInfo/readPlus', {
+    method: 'post',
+    params,
+    errorHandler: basicErrorHandler,
+  })
+}

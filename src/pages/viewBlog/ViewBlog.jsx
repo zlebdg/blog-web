@@ -2,23 +2,23 @@ import styles from './index.less'
 import 'braft-editor/dist/index.css'
 import 'braft-extensions/dist/code-highlighter.css'
 
-import React                                                     from 'react'
-import { Base64 }                                                from 'js-base64'
-import ArticleComment                                            from './ArticleComment2'
-import BraftEditor                                               from 'braft-editor'
-import CodeHighlighter                                           from 'braft-extensions/dist/code-highlighter'
+import React from 'react'
+import { Base64 } from 'js-base64'
+import ArticleComment from './ArticleComment2'
+import BraftEditor from 'braft-editor'
+import CodeHighlighter from 'braft-extensions/dist/code-highlighter'
 import { Button, Col, Comment, Form, Input, message, Row, Spin } from 'antd'
-import { createImg }                                             from '../../components/GithubEmoji'
-import DefaultAvatar                                             from '../../components/Img/DefaultAvatar'
-import { connect }                                               from 'dva'
-import ArticleAuthorInfo                                         from './components/ArticleAuthorInfo'
-import ArticleCommentInfo                                        from './components/ArticleCommentInfo'
-import ScrollToWhere                                             from '../../components/ScrollToWhere'
+import { createImg } from '../../components/GithubEmoji'
+import DefaultAvatar from '../../components/Img/DefaultAvatar'
+import { connect } from 'dva'
+import ArticleAuthorInfo from './components/ArticleAuthorInfo'
+import ArticleCommentInfo from './components/ArticleCommentInfo'
+import ScrollToWhere from '../../components/ScrollToWhere'
 // 官方表情包扩展, 文档 https://braft.margox.cn/demos/emoticon
 // 引入表情包组件样式文件
 import 'braft-extensions/dist/emoticon.css'
 // 引入表情包组件和默认表情包列表
-import Emoticon, { defaultEmoticons }                            from 'braft-extensions/dist/emoticon'
+import Emoticon, { defaultEmoticons } from 'braft-extensions/dist/emoticon'
 // 转换默认表情包列表，让webpack可以正确加载到默认表情包中的图片，请确保已对png格式的文件配置了loader
 const emoticons = defaultEmoticons.map(item => require(`braft-extensions/dist/assets/${ item }`))
 // 也可以使用自己的表情包资源
@@ -109,6 +109,32 @@ class ViewBlog extends React.Component {
     this.state.article.id = this.props.match.params.blogId
     this.reloadArticle()
     this.reloadComments()
+    this.readPlus()
+  }
+
+  readPlus = () => {
+    const prefix = 'ARTICLE-READ-'
+    const id = this.state.article.id
+    const key = `${ prefix }${ this.state.article.id }`
+    if (sessionStorage.getItem(key) === null) {
+      this.props.dispatch({
+        type: 'viewBlog/readPlus',
+        payload: { id },
+        callback: (data) => {
+          sessionStorage.setItem(key, 1)
+          this.setState(state => ({
+            ...state,
+            article: {
+              ...state.article,
+              articleInfo: {
+                ...state.article.articleInfo,
+                read: data,
+              },
+            },
+          }))
+        },
+      })
+    }
   }
 
   reloadArticle = () => {
@@ -310,8 +336,19 @@ class ViewBlog extends React.Component {
   }
 }
 
-export default connect(({ articleComment, loading, user }) => ({
-  articleComment,
-  loading,
-  user,
-}))(ViewBlog)
+export default connect(
+  ({
+     articleComment
+     ,
+     loading
+     ,
+     user,
+   },
+  ) =>
+    ({
+      articleComment,
+      loading,
+      user,
+    }),
+)
+(ViewBlog)

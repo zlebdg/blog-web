@@ -1,4 +1,8 @@
-import { articleQuery as _articleQuery, comment as _comment } from '../services/viewBlog'
+import {
+  articleQuery as _articleQuery,
+  comment as _comment,
+  readPlus as _readPlus,
+} from '../services/viewBlog'
 
 export default {
   state: {
@@ -17,6 +21,12 @@ export default {
     },
     * comment({ payload, callback }, { put, call }) {
       const response = yield call(_comment, payload)
+      if (200 === response.code) {
+        callback(response.data)
+      }
+    },
+    * readPlus({ payload, callback }, { put, call }) {
+      const response = yield call(_readPlus, payload)
       if (200 === response.code) {
         callback(response.data)
       }
