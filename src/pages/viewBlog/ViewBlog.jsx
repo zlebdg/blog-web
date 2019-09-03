@@ -95,6 +95,7 @@ class ViewBlog extends React.Component {
       },
       comment: {
         text: '',
+        input: null,
       },
       comments: {
         totalElements: 0,
@@ -270,6 +271,7 @@ class ViewBlog extends React.Component {
                   author={ this.state.article.author }
                   createAt={ this.state.article.createAt }/>
                 <ArticleCommentInfo
+                  input={ this.state.input }
                   articleInfo={ this.state.article.articleInfo }/>
               </div>
             </div>
@@ -315,7 +317,9 @@ class ViewBlog extends React.Component {
                             ...state,
                             comment: { text },
                           }))
-                        } }/>
+                        } } ref={ (item) => {
+                        this.state.input = item
+                      } }/>
                     </Form.Item>
                     <Form.Item>
                       <Button htmlType="submit"
