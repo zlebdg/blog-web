@@ -6,7 +6,7 @@ import moment                      from 'moment'
 class Index extends PureComponent<{ author: any, createAt: number }> {
   render(): any {
     const { author, createAt } = this.props
-    if (!author) {
+    if (!author || !author.id) {
       return (<></>)
     }
 
