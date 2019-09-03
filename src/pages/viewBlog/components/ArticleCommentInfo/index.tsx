@@ -16,17 +16,17 @@ class Index extends PureComponent<{ articleInfo: any }> {
     liked: null,
     disliked: null,
     starred: null,
-    id: 0,
+    id: null,
     isDeleted: null,
-    createAt: 0,
-    updateAt: 0,
-    version: 0,
-    comment: 0,
-    like: 0,
-    dislike: 0,
-    read: 0,
-    star: 0,
-    trans: 0,
+    createAt: null,
+    updateAt: null,
+    version: null,
+    comment: null,
+    like: null,
+    dislike: null,
+    read: null,
+    star: null,
+    trans: null,
   }
 
   componentDidUpdate(prevProps: Readonly<{ articleInfo: any }>, prevState: Readonly<{}>): void {
@@ -35,6 +35,7 @@ class Index extends PureComponent<{ articleInfo: any }> {
   }
 
   componentDidMount(): void {
+    console.log(this.props)
     const { user, articleInfo } = this.props
     if (null !== articleInfo.id) {
       this.props.dispatch({
@@ -83,11 +84,29 @@ class Index extends PureComponent<{ articleInfo: any }> {
   }
 
   handleDislike = () => {
-    const { user } = this.props
+    const { user, loading, articleInfo } = this.props
     if (!user || !user.currentUser || !user.currentUser.authenticated) {
       message.warning('请先登录再点反对')
       return
     }
+    if (loading.effects['viewBlog/dislike']) { // querying
+      return
+    }
+    if (loading.effects['viewBlog/undislike']) { // querying
+      return
+    }
+    this.props.dispatch({
+      type: `viewBlog/${ this.state.disliked ? 'undislike' : 'dislike' }`,
+      payload: {
+        id: articleInfo.id,
+      },
+      callback: (data) => {
+        console.log(data)
+        this.setState({
+          ...data,
+        })
+      },
+    })
   }
 
   handleStar = () => {
@@ -107,13 +126,12 @@ class Index extends PureComponent<{ articleInfo: any }> {
     const { articleInfo, loading, user } = this.props
     const login = user && user.currentUser && user.currentUser.authenticated
     this.state = {
-      ...articleInfo,
-      comment: this.state.comment || articleInfo.comment,
-      like: this.state.like || articleInfo.like,
-      dislike: this.state.dislike || articleInfo.dislike,
-      read: this.state.read || articleInfo.read,
-      star: this.state.star || articleInfo.star,
-      trans: this.state.trans || articleInfo.trans,
+      comment: null !== this.state.comment ? this.state.comment : articleInfo.comment,
+      like: null !== this.state.like ? this.state.like : articleInfo.like,
+      dislike: null !== this.state.dislike ? this.state.dislike : articleInfo.dislike,
+      read: null !== this.state.read ? this.state.read : articleInfo.read,
+      star: null !== this.state.star ? this.state.star : articleInfo.star,
+      trans: null !== this.state.trans ? this.state.trans : articleInfo.trans,
       liked: this.state.liked,
       disliked: this.state.disliked,
       starred: this.state.starred,
@@ -133,13 +151,13 @@ class Index extends PureComponent<{ articleInfo: any }> {
         <span className={ styles.dontBreak } onClick={ this.handleDislike }>
           <Icon theme={ this.state.disliked ? 'twoTone' : 'outlined' }
                 type={ loading.effects['viewBlog/dislike'] || loading.effects['viewBlog/undislike'] ? 'loading' : 'dislike-o' }
-          /> { articleInfo.dislike }
+          /> { this.state.dislike }
         </span>
         <Divider type="vertical"/>
         <span className={ styles.dontBreak } onClick={ this.handleStar }>
           <Icon theme={ this.state.starred ? 'twoTone' : 'outlined' }
                 type={ loading.effects['viewBlog/star'] || loading.effects['viewBlog/unstar'] ? 'loading' : 'star-o' }
-          /> { articleInfo.star }
+          /> { this.state.star }
         </span>
         <Divider type="vertical"/>
         <span className={ styles.dontBreak } onClick={ this.handleComment }>

@@ -52,3 +52,19 @@ export async function unlike(params) {
     errorHandler: basicErrorHandler,
   })
 }
+
+export async function dislike(params) {
+  return request('/public/articleInfo/dislike', {
+    method: 'post',
+    params,
+    errorHandler: basicErrorHandler,
+  })
+}
+
+export async function undislike(params) {
+  return request('/public/articleInfo/undislike', {
+    method: 'post',
+    params,
+    errorHandler: basicErrorHandler,
+  })
+}

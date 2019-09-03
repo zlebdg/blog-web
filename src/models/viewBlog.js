@@ -1,8 +1,10 @@
 import {
   articleQuery as _articleQuery,
   comment as _comment,
+  dislike as _dislike,
   like as _like,
   readPlus as _readPlus,
+  undislike as _undislike,
   unlike as _unlike,
   userArticleInfo as _userArticleInfo,
 } from '../services/viewBlog'
@@ -48,6 +50,18 @@ export default {
     },
     * unlike({ payload, callback }, { put, call }) {
       const response = yield call(_unlike, payload)
+      if (200 === response.code) {
+        callback(response.data)
+      }
+    },
+    * dislike({ payload, callback }, { put, call }) {
+      const response = yield call(_dislike, payload)
+      if (200 === response.code) {
+        callback(response.data)
+      }
+    },
+    * undislike({ payload, callback }, { put, call }) {
+      const response = yield call(_undislike, payload)
       if (200 === response.code) {
         callback(response.data)
       }
