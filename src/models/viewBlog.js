@@ -4,8 +4,10 @@ import {
   dislike as _dislike,
   like as _like,
   readPlus as _readPlus,
+  star as _star,
   undislike as _undislike,
   unlike as _unlike,
+  unstar as _unstar,
   userArticleInfo as _userArticleInfo,
 } from '../services/viewBlog'
 
@@ -62,6 +64,18 @@ export default {
     },
     * undislike({ payload, callback }, { put, call }) {
       const response = yield call(_undislike, payload)
+      if (200 === response.code) {
+        callback(response.data)
+      }
+    },
+    * star({ payload, callback }, { put, call }) {
+      const response = yield call(_star, payload)
+      if (200 === response.code) {
+        callback(response.data)
+      }
+    },
+    * unstar({ payload, callback }, { put, call }) {
+      const response = yield call(_unstar, payload)
       if (200 === response.code) {
         callback(response.data)
       }

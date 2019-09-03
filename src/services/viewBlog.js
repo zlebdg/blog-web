@@ -68,3 +68,19 @@ export async function undislike(params) {
     errorHandler: basicErrorHandler,
   })
 }
+
+export async function star(params) {
+  return request('/public/articleInfo/star', {
+    method: 'post',
+    params,
+    errorHandler: basicErrorHandler,
+  })
+}
+
+export async function unstar(params) {
+  return request('/public/articleInfo/unstar', {
+    method: 'post',
+    params,
+    errorHandler: basicErrorHandler,
+  })
+}

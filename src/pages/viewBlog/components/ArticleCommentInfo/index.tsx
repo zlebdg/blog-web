@@ -110,11 +110,29 @@ class Index extends PureComponent<{ articleInfo: any }> {
   }
 
   handleStar = () => {
-    const { user } = this.props
+    const { user, loading, articleInfo } = this.props
     if (!user || !user.currentUser || !user.currentUser.authenticated) {
-      message.warning('请先登录再star')
+      message.warning('请先登录再给星')
       return
     }
+    if (loading.effects['viewBlog/star']) { // querying
+      return
+    }
+    if (loading.effects['viewBlog/unstar']) { // querying
+      return
+    }
+    this.props.dispatch({
+      type: `viewBlog/${ this.state.starred ? 'unstar' : 'star' }`,
+      payload: {
+        id: articleInfo.id,
+      },
+      callback: (data) => {
+        console.log(data)
+        this.setState({
+          ...data,
+        })
+      },
+    })
   }
 
   handleComment = () => {
