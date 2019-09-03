@@ -29,3 +29,11 @@ export async function readPlus(params) {
     errorHandler: basicErrorHandler,
   })
 }
+
+export async function like(params) {
+  return request('/public/articleInfo/like', {
+    method: 'post',
+    params,
+    errorHandler: basicErrorHandler,
+  })
+}

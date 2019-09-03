@@ -8,7 +8,7 @@ const styles = {
   dontBreak: 'antd-pro-pages-view-blog-components-article-comment-info-style-dont-break ',
 }
 
-@connect(({ user }) => ({ user }))
+@connect(({ user, loading }) => ({ user, loading }))
 class Index extends PureComponent<{ articleInfo: any }> {
   handleLike = () => {
     const { user } = this.props
@@ -16,6 +16,16 @@ class Index extends PureComponent<{ articleInfo: any }> {
       message.warning('请先登录再点赞')
       return
     }
+    this.props.dispatch({
+      type: 'viewBlog/like',
+      payload: {
+        id: this.props.articleInfo.id,
+        userId: user.id,
+      },
+      callback: (response) => {
+        console.log(response)
+      },
+    })
   }
 
   handleDislike = () => {
@@ -39,7 +49,7 @@ class Index extends PureComponent<{ articleInfo: any }> {
   }
 
   render(): any {
-    const { articleInfo } = this.props
+    const { articleInfo, loading } = this.props
     if (!articleInfo) {
       return (<></>)
     }
@@ -47,15 +57,15 @@ class Index extends PureComponent<{ articleInfo: any }> {
     return (
       <span style={ { margin: '0 15px' } }>
         <span className={ styles.dontBreak } onClick={ this.handleLike }>
-          <Icon type="like-o" theme="twoTone" spin/> { articleInfo.like }
+          <Icon type="like-o" theme="twoTone" spin={ loading.effects['viewBlog/like'] }/> { articleInfo.like }
         </span>
         <Divider type="vertical"/>
         <span className={ styles.dontBreak } onClick={ this.handleDislike }>
-          <Icon type="dislike-o" theme="twoTone" spin/> { articleInfo.dislike }
+          <Icon type="dislike-o" theme="twoTone" spin={ loading.effects['viewBlog/like'] }/> { articleInfo.dislike }
         </span>
         <Divider type="vertical"/>
         <span className={ styles.dontBreak } onClick={ this.handleStar }>
-          <Icon type="star-o" theme="twoTone" spin/> { articleInfo.star }
+          <Icon type="star-o" theme="twoTone" spin={ loading.effects['viewBlog/like'] }/> { articleInfo.star }
         </span>
         <Divider type="vertical"/>
         <span className={ styles.dontBreak } onClick={ this.handleComment }>

@@ -2,6 +2,7 @@ import {
   articleQuery as _articleQuery,
   comment as _comment,
   readPlus as _readPlus,
+  like as _like,
 } from '../services/viewBlog'
 
 export default {
@@ -27,6 +28,12 @@ export default {
     },
     * readPlus({ payload, callback }, { put, call }) {
       const response = yield call(_readPlus, payload)
+      if (200 === response.code) {
+        callback(response.data)
+      }
+    },
+    * like({ payload, callback }, { put, call }) {
+      const response = yield call(_like, payload)
       if (200 === response.code) {
         callback(response.data)
       }
