@@ -22,6 +22,13 @@ export async function comment(data) {
   })
 }
 
+export async function userArticleInfo(params) {
+  return request('/public/articleInfo/userArticleInfo', {
+    params,
+    errorHandler: basicErrorHandler,
+  })
+}
+
 export async function readPlus(params) {
   return request('/public/articleInfo/readPlus', {
     method: 'post',
@@ -32,6 +39,14 @@ export async function readPlus(params) {
 
 export async function like(params) {
   return request('/public/articleInfo/like', {
+    method: 'post',
+    params,
+    errorHandler: basicErrorHandler,
+  })
+}
+
+export async function unlike(params) {
+  return request('/public/articleInfo/unlike', {
     method: 'post',
     params,
     errorHandler: basicErrorHandler,
