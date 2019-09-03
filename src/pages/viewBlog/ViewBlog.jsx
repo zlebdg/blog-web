@@ -222,11 +222,20 @@ class ViewBlog extends React.Component {
                 return {
                   ...state,
                   comment: {},
+                  // 评论数加1
                   comments: {
                     page: state.comments.page,
                     size: state.comments.size,
                     content: state.comments.content,
                     totalElements: state.comments.totalElements + 1,
+                  },
+                  // 评论数加1
+                  article: {
+                    ...state.article,
+                    articleInfo: {
+                      ...state.article.articleInfo,
+                      comment: state.article.articleInfo.comment + 1,
+                    },
                   },
                 }
               },
