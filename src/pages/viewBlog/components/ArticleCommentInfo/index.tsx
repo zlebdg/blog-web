@@ -35,7 +35,6 @@ class Index extends PureComponent<{ articleInfo: any }> {
   }
 
   componentDidMount(): void {
-    console.log(this.props)
     const { user, articleInfo } = this.props
     if (null !== articleInfo.id) {
       this.props.dispatch({
@@ -75,7 +74,6 @@ class Index extends PureComponent<{ articleInfo: any }> {
         id: articleInfo.id,
       },
       callback: (data) => {
-        console.log(data)
         this.setState({
           ...data,
         })
@@ -101,7 +99,6 @@ class Index extends PureComponent<{ articleInfo: any }> {
         id: articleInfo.id,
       },
       callback: (data) => {
-        console.log(data)
         this.setState({
           ...data,
         })
@@ -127,7 +124,6 @@ class Index extends PureComponent<{ articleInfo: any }> {
         id: articleInfo.id,
       },
       callback: (data) => {
-        console.log(data)
         this.setState({
           ...data,
         })
@@ -154,6 +150,9 @@ class Index extends PureComponent<{ articleInfo: any }> {
       disliked: this.state.disliked,
       starred: this.state.starred,
     }
+    const likeQuering = loading.effects['viewBlog/like'] || loading.effects['viewBlog/unlike']
+    const dislikeQuering = loading.effects['viewBlog/dislike'] || loading.effects['viewBlog/undislike']
+    const starQuering = loading.effects['viewBlog/star'] || loading.effects['viewBlog/unstar']
     if (!articleInfo) {
       return (<></>)
     }
@@ -161,20 +160,20 @@ class Index extends PureComponent<{ articleInfo: any }> {
     return (
       <span style={ { margin: '0 15px' } }>
         <span className={ styles.dontBreak } onClick={ this.handleLike }>
-          <Icon theme={ login && this.state.liked ? 'twoTone' : 'outlined' }
-                type={ loading.effects['viewBlog/like'] || loading.effects['viewBlog/unlike'] ? 'loading' : 'like-o' }
+          <Icon theme={ !likeQuering && login && this.state.liked ? 'twoTone' : 'outlined' }
+                type={ likeQuering ? 'loading' : 'like-o' }
           /> { this.state.like }
         </span>
         <Divider type="vertical"/>
         <span className={ styles.dontBreak } onClick={ this.handleDislike }>
-          <Icon theme={ this.state.disliked ? 'twoTone' : 'outlined' }
-                type={ loading.effects['viewBlog/dislike'] || loading.effects['viewBlog/undislike'] ? 'loading' : 'dislike-o' }
+          <Icon theme={ !dislikeQuering && login && this.state.disliked ? 'twoTone' : 'outlined' }
+                type={ dislikeQuering ? 'loading' : 'dislike-o' }
           /> { this.state.dislike }
         </span>
         <Divider type="vertical"/>
         <span className={ styles.dontBreak } onClick={ this.handleStar }>
-          <Icon theme={ this.state.starred ? 'twoTone' : 'outlined' }
-                type={ loading.effects['viewBlog/star'] || loading.effects['viewBlog/unstar'] ? 'loading' : 'star-o' }
+          <Icon theme={ !starQuering && login && this.state.starred ? 'twoTone' : 'outlined' }
+                type={ starQuering ? 'loading' : 'star-o' }
           /> { this.state.star }
         </span>
         <Divider type="vertical"/>
