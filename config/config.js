@@ -356,7 +356,7 @@ export default {
   // umi:
   base: '/blog/',
   // cdn 用的
-  publicPath: 'http://px7bethft.bkt.clouddn.com/blog/',
+  publicPath: 'http://q08cdx8dh.bkt.clouddn.com/blog/',
   outputPath: 'dist/blog/',
   // //
   history: 'hash',
