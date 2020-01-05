@@ -1,17 +1,6 @@
 language: node_js
 node_js:
   - "10"
-env:
-  global:
-    - DEPLOY_CONTAINER_NAME=blog-web
-    - DEPLOY_CONTAINER_WORKNET=worknet
-    - DOCKER_ALI_REGISTRY_HANGZHOU=registry.cn-hangzhou.aliyuncs.com
-addons:
-  ssh_known_hosts:
-    - 106.12.80.76
-before_install:
-  - env
-  - sudo apt-get install -y sshpass
 install:
   - yarn
 script:
@@ -22,13 +11,12 @@ script:
   # push to docker hub
   - docker login --username $DOCKER_HUB_USERNAME --password $DOCKER_HUB_PASSWORD
   - docker push $TRAVIS_REPO_SLUG:$TRAVIS_BUILD_NUMBER
-  # push to aliyun
-  - docker login --username $DOCKER_ALI_USERNAME --password $DOCKER_ALI_PASSWORD $DOCKER_ALI_REGISTRY_HANGZHOU
-  - docker tag $TRAVIS_REPO_SLUG:$TRAVIS_BUILD_NUMBER $DOCKER_ALI_REGISTRY_HANGZHOU/$TRAVIS_REPO_SLUG:$TRAVIS_BUILD_NUMBER
-  - docker push $DOCKER_ALI_REGISTRY_HANGZHOU/$TRAVIS_REPO_SLUG:$TRAVIS_BUILD_NUMBER
+  # push to tencent cloud
+  - docker login --username $DOCKER_TECENT_USERNAME --password $DOCKER_TECENT_PASSWORD $DOCKER_TECENT_REGISTRY
+  - docker tag $TRAVIS_REPO_SLUG:$TRAVIS_BUILD_NUMBER $DOCKER_TECENT_REGISTRY/$TRAVIS_REPO_SLUG:$TRAVIS_BUILD_NUMBER
+  - docker push $DOCKER_TECENT_REGISTRY/$TRAVIS_REPO_SLUG:$TRAVIS_BUILD_NUMBER
 after_success:
   - yarn test:qiniu
-  - sshpass -p $DEPLOY_HOST_SSH_PASSWORD ssh $DEPLOY_HOST_SSH_USERNAME@$DEPLOY_HOST "docker rm -f Test-$DEPLOY_CONTAINER_NAME; docker run -itd --name Test-$DEPLOY_CONTAINER_NAME --network $DEPLOY_CONTAINER_WORKNET --restart always $DOCKER_ALI_REGISTRY_HANGZHOU/$TRAVIS_REPO_SLUG:$TRAVIS_BUILD_NUMBER; echo container Test-$DEPLOY_CONTAINER_NAME using image $DOCKER_ALI_REGISTRY_HANGZHOU/$TRAVIS_REPO_SLUG:$TRAVIS_BUILD_NUMBER started ..; exit;"
 notifications:
   email:
     recipients:
