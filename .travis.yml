@@ -1,6 +1,9 @@
 language: node_js
 node_js:
   - "10"
+env:
+  global:
+  - DOCKER_TECENT_REGISTRY_HK=hkccr.ccs.tencentyun.com
 install:
   - yarn
 script:
@@ -11,10 +14,10 @@ script:
   # push to docker hub
   - docker login --username $DOCKER_HUB_USERNAME --password $DOCKER_HUB_PASSWORD
   - docker push $TRAVIS_REPO_SLUG:$TRAVIS_BUILD_NUMBER
-  # push to tencent cloud
-  - docker login --username $DOCKER_TECENT_USERNAME --password $DOCKER_TECENT_PASSWORD $DOCKER_TECENT_REGISTRY
-  - docker tag $TRAVIS_REPO_SLUG:$TRAVIS_BUILD_NUMBER $DOCKER_TECENT_REGISTRY/$TRAVIS_REPO_SLUG:$TRAVIS_BUILD_NUMBER
-  - docker push $DOCKER_TECENT_REGISTRY/$TRAVIS_REPO_SLUG:$TRAVIS_BUILD_NUMBER
+  # push to tecent cloud
+  - docker login --username $DOCKER_TECENT_USERNAME --password $DOCKER_TECENT_PASSWORD $DOCKER_TECENT_REGISTRY_HK
+  - docker tag $TRAVIS_REPO_SLUG:$TRAVIS_BUILD_NUMBER $DOCKER_TECENT_REGISTRY_HK/$TRAVIS_REPO_SLUG:$TRAVIS_BUILD_NUMBER
+  - docker push $DOCKER_TECENT_REGISTRY_HK/$TRAVIS_REPO_SLUG:$TRAVIS_BUILD_NUMBER
 after_success:
   - yarn test:qiniu
 notifications:
