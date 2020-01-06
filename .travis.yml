@@ -3,7 +3,7 @@ node_js:
   - "10"
 env:
   global:
-  - DOCKER_TECENT_REGISTRY_HK=hkccr.ccs.tencentyun.com
+    - DOCKER_TECENT_REGISTRY_HK=hkccr.ccs.tencentyun.com
 install:
   - yarn
 script:
