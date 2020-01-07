@@ -357,6 +357,7 @@ export default {
   base: '/blog/',
   // cdn 用的
   // publicPath: 'http://q08cdx8dh.bkt.clouddn.com/blog/',
+  publicPath: '/blog/',
   outputPath: 'dist/blog/',
   // //
   history: 'hash',
