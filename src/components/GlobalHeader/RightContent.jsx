@@ -32,14 +32,7 @@ export default class Index extends React.PureComponent {
             const data = typeof resp === 'string' ? JSON.parse(resp.data) : resp.data
             if (data.logoutUri) {
               message.warn('logged out')
-              const logoutUri = data.logoutUri
-              const accessToken = data.accessToken ? data.accessToken : ''
-              const refreshToken = data.refreshToken ? data.refreshToken : ''
-              uriLogout(logoutUri, accessToken, refreshToken)
-                .then(r => {
-                  if (r && 200 === r.code) {
-                  }
-                })
+              window.location.href = `${data.logoutUri}?accessToken=${data.accessToken}&refreshToken=${data.refreshToken}&redirectUri=${encodeURIComponent(window.location.href)}`
             }
           }
         })

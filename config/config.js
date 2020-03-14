@@ -316,23 +316,23 @@ export default {
   chainWebpack: webpackPlugin,
   proxy: {
     '/login': {
-      target: 'http://blog.local:20000/',
+      target: 'http://blog.loc:20000/',
       changeOrigin: false,
     },
     '/auth/**': {
-      target: 'http://blog.local:20000/',
+      target: 'http://blog.loc:20000/',
       changeOrigin: false,
     },
     '/test**/**': {
-      target: 'http://blog.local:20000/',
+      target: 'http://blog.loc:20000/',
       changeOrigin: false,
     },
     '/public**/**': {
-      target: 'http://blog.local:20000/',
+      target: 'http://blog.loc:20000/',
       changeOrigin: false,
     },
     '/article': {
-      target: 'http://blog.local:20000/',
+      target: 'http://blog.loc:20000/',
       changeOrigin: false,
     },
   },
