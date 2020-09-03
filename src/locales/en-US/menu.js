@@ -60,4 +60,7 @@ export default {
   'menu.reset': 'Reset Password',
   'menu.reset verify': 'Set New Password',
   'menu.Blog List': 'Blog List',
+  'menu.account.seals': 'Seals',
+  'menu.account.files': 'Files',
+  'menu.account.signature': 'Signature',
 };

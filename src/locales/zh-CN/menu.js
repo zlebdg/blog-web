@@ -60,4 +60,7 @@ export default {
   'menu.reset': '找回密码',
   'menu.reset verify': '设置新登录密码',
   'menu.Blog List': '文章列表',
+  'menu.account.seals': '印章',
+  'menu.account.files': '文件',
+  'menu.account.signature': '签署',
 }
