@@ -26,7 +26,7 @@ export interface PdfSign {
 
 export interface Stamper {
   id: number
-  src: string
+  file: any
   docIndex: number
   pageIndex: number
   top: number
@@ -175,6 +175,7 @@ class Index extends React.Component<PdfSign> {
 
       const item: Stamper = {
         id: stamper.id,
+        file: stamper.file,
         left: left,
         top: top,
         width: stamper.width,
@@ -402,6 +403,7 @@ class Index extends React.Component<PdfSign> {
                           if (hasDoc) {
                             const document = documents[docIndex]
                             const { pageIndex } = document
+                            console.log(stamper)
                             if (stamper.docIndex == docIndex && stamper.pageIndex == pageIndex) {
                               return (
                                 <Drr
@@ -421,7 +423,7 @@ class Index extends React.Component<PdfSign> {
                                   zoomable='n, w, s, e, nw, ne, se, sw'
                                   key={`stamper-${stamperIndex}-drr`}
                                 >
-                                  <img src={`/file/download?id=${stamper.id}`} key={`stamper-${stamperIndex}-img`}
+                                  <img src={`/file/download?id=${stamper.file && stamper.file.id}`} key={`stamper-${stamperIndex}-img`}
                                     style={{
                                       width: stamper.width,
                                       height: stamper.height,
