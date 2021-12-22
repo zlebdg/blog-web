@@ -1,3 +1,6 @@
-FROM zlebdg/alpine-yarn-serve:latest
+FROM zlebdg/alpine-yarn-serve:latest as temp
+COPY . /
+RUN yarn && yarn build
 
-COPY ./dist/ /dist/
+FROM zlebdg/alpine-yarn-serve:latest
+COPY --from=temp /dist/ /dist/
