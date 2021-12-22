@@ -2,10 +2,10 @@ node("win10") {
     stage("Step 1 - checkout code") {
         var_of_git = checkout(scm)
     }
-    stage("Step 2 - yarn build") {
+    stage("Step 2 - npm build") {
         powershell('''
-            yarn
-            yarn build
+            npm i
+            npm run build
         ''')
     }
     stage('Step 3 - docker build') {
