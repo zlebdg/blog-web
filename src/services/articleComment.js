@@ -1,14 +1,6 @@
-import { extend } from 'umi-request'
+import request from '@/utils/request'
 import basicErrorHandler from './errorHandler'
 import md5 from 'blueimp-md5/js/md5'
-
-const request = extend({
-  maxCache: 10,
-  errorHandler: (error) => {
-    console.log(error)
-  },
-  credentials: 'include',
-})
 
 export async function post(title, text) {
   const parseType = 'draft-0.0.1' // 解析方式版本

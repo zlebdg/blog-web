@@ -400,11 +400,11 @@ export default {
   //   proxy_pass http://dev.local:5000/antd/;
   // }
   // umi:
-  base: '/blog/',
+  base: '/blog-web/',
   // cdn 用的
   // publicPath: 'http://q08cdx8dh.bkt.clouddn.com/blog/',
-  publicPath: '/blog/',
-  outputPath: 'dist/blog/',
+  publicPath: '/blog-web/',
+  outputPath: 'dist/blog-web/',
   // //
   history: 'hash',
 }

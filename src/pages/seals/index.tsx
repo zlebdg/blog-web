@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Input, Upload } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
-import request from 'umi-request';
+import request from '@/utils/request';
 
 export interface DrrData {
   src: string;
