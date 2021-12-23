@@ -54,7 +54,7 @@ export default class Index extends React.PureComponent {
 
   goLogin = () => {
     sessionStorage.setItem('hrefSavedBeforeLogin', window.location.href)
-    window.location = '/login'
+    window.location = '/blog/login'
   }
 
   render() {

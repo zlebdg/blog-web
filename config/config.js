@@ -345,39 +345,7 @@ export default {
   },
   chainWebpack: webpackPlugin,
   proxy: {
-    '/login': {
-      target: 'http://blog.loc:20000/',
-      changeOrigin: false,
-    },
-    '/auth/**': {
-      target: 'http://blog.loc:20000/',
-      changeOrigin: false,
-    },
-    '/test**/**': {
-      target: 'http://blog.loc:20000/',
-      changeOrigin: false,
-    },
-    '/public**/**': {
-      target: 'http://blog.loc:20000/',
-      changeOrigin: false,
-    },
-    '/article': {
-      target: 'http://blog.loc:20000/',
-      changeOrigin: false,
-    },
-    '/seal**/**': {
-      target: 'http://blog.loc:20000/',
-      changeOrigin: false,
-    },
-    '/file**/**': {
-      target: 'http://blog.loc:20000/',
-      changeOrigin: false,
-    },
-    '/sign': {
-      target: 'http://blog.loc:20000/',
-      changeOrigin: false,
-    },
-    '/sign**/**': {
+    '/blog/**': {
       target: 'http://blog.loc:20000/',
       changeOrigin: false,
     },
