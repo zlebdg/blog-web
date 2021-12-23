@@ -16,7 +16,7 @@ node("win10") {
 
     }
     powershell('''
-      docker run -itd --restart always -p 50001:5000 --name blog-web local/blog-web
+      docker run -itd --restart always -p 35000:5000 --name blog-web local/blog-web
     ''')
   }
 }
